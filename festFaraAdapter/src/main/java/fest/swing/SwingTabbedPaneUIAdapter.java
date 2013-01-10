@@ -21,7 +21,7 @@ import fest.FestResultBuilder;
 import fest.interfaces.TabbedPaneUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.WrongResultBuilder;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -34,7 +34,7 @@ public class SwingTabbedPaneUIAdapter implements TabbedPaneUIAdapter,
 		frameWrapper = wrapper;
 	}
 
-	@FITCommand
+	@FitCommand({"name of the tab","the title of the tab which should be selected"})
 	@Override
 	public CommandResult changeTab(String componentName, String tabTitle) {
 		CommandResult result = new CommandResult();

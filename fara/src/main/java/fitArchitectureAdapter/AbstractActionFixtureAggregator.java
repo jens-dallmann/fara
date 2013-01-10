@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import fit.ActionFixture;
 import fit.Parse;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.container.InstanceMethodPair;
 import fitArchitectureAdapter.interfaces.HasCommands;
@@ -48,6 +48,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	protected void init() {
 		commands = new HashMap<String, InstanceMethodPair>();
 		addFixtureObjects();
+		
 	}
 
 	@Override
@@ -159,7 +160,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	}
 
 	private boolean isFITCommand(Method oneClassMethod) {
-		FITCommand annotation = oneClassMethod.getAnnotation(FITCommand.class);
+		FitCommand annotation = oneClassMethod.getAnnotation(FitCommand.class);
 		return annotation != null;
 	}
 

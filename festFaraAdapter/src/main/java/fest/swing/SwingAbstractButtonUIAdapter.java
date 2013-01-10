@@ -17,7 +17,7 @@ import javax.swing.AbstractButton;
 import fest.FestResultBuilder;
 import fest.interfaces.AbstractButtonUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -29,7 +29,7 @@ public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, Ha
 		_frameWrapper = frameWrapper;
 	}
 	
-	@FITCommand
+	@FitCommand({"The name of the AbstractButton which should be selected"})
 	@Override
 	public CommandResult checkSelected(String componentName){
 		CommandResult result = new CommandResult();
@@ -48,7 +48,7 @@ public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, Ha
 		return result;
 	}
 
-	@FITCommand
+	@FitCommand({"The name of the AbstractButton which should NOT be selected"})
 	@Override
 	public CommandResult checkNotSelected(String componentName){
 		CommandResult result = new CommandResult();

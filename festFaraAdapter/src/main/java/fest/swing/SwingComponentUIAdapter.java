@@ -18,7 +18,7 @@ import org.fest.swing.query.ComponentVisibleQuery;
 import fest.FestResultBuilder;
 import fest.interfaces.ComponentUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -30,7 +30,7 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		frameWrapper = wrapper;
 	}
 
-	@FITCommand
+	@FitCommand({"Component name which should be enabled"})
 	@Override
 	public CommandResult checkEnabled(String componentName) {
 		CommandResult result = new CommandResult();
@@ -48,7 +48,7 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		return result;
 	}
 
-	@FITCommand
+	@FitCommand({"Component name which should not be enabled"})
 	@Override
 	public CommandResult checkDisabled(String componentName) {
 		CommandResult result = new CommandResult();
@@ -70,7 +70,7 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		return ComponentEnabledQuery.isEnabled(component);
 	}
 
-	@FITCommand
+	@FitCommand({"The component name which should be visible"})
 	@Override
 	public CommandResult checkVisible(String componentName) {
 		CommandResult result = new CommandResult();
@@ -88,7 +88,7 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		return result;
 	}
 
-	@FITCommand
+	@FitCommand({"The name of the component which should be invisible"})
 	@Override
 	public CommandResult checkInvisible(String componentName) {
 		CommandResult result = new CommandResult();

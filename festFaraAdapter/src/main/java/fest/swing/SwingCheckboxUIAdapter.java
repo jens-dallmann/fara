@@ -19,7 +19,7 @@ import org.fest.swing.fixture.JCheckBoxFixture;
 import fest.FestResultBuilder;
 import fest.interfaces.CheckboxUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -31,7 +31,7 @@ public class SwingCheckboxUIAdapter implements CheckboxUIAdapter, HasCommands{
 		frameWrapper = wrapper;
 	}
 	
-	@FITCommand
+	@FitCommand({"The name of the checkbox which should be selected"})
 	@Override
 	public CommandResult selectCheckbox(String checkboxName) {
 		CommandResult result = new CommandResult();

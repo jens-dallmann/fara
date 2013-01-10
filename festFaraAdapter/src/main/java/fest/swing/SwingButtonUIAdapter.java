@@ -19,7 +19,7 @@ import org.fest.swing.fixture.JButtonFixture;
 import fest.FestResultBuilder;
 import fest.interfaces.ButtonUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -31,7 +31,7 @@ public class SwingButtonUIAdapter implements ButtonUIAdapter, HasCommands {
 		_frameWrapper = frameWrapper;
 	}
 
-	@FITCommand
+	@FitCommand({"The name of the button which should be pressed"})
 	@Override
 	public CommandResult pressButton(String buttonName) {
 		CommandResult result = new CommandResult();

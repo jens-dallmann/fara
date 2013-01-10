@@ -19,7 +19,7 @@ import org.fest.swing.fixture.JListFixture;
 import fest.FestResultBuilder;
 import fest.interfaces.ListUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -31,7 +31,7 @@ public class SwingListUIAdapter implements ListUIAdapter, HasCommands {
 		frameWrapper = wrapper;
 	}
 
-	@FITCommand
+	@FitCommand({"the name of the list widget","the name of the item in the list"})
 	@Override
 	public CommandResult selectListItem(String listName, String itemName){
 		CommandResult result = new CommandResult();

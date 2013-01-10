@@ -19,7 +19,7 @@ import org.fest.swing.fixture.JTextComponentFixture;
 import fest.FestResultBuilder;
 import fest.interfaces.TextComponentUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
-import fitArchitectureAdapter.annotations.FITCommand;
+import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
@@ -31,7 +31,7 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 		frameWrapper = wrapper;
 	}
 	
-	@FITCommand
+	@FitCommand({"the name of the text field", "the text to set"})
 	@Override
 	public CommandResult setText(String textField, String text) {
 		CommandResult result = new CommandResult();
