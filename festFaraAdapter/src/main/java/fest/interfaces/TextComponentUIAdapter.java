@@ -21,4 +21,8 @@ import fitArchitectureAdapter.container.CommandResult;
 
 public interface TextComponentUIAdapter {
 	CommandResult setText(String fieldName, String text);
+
+	CommandResult isNotEditable(String textfield);
+
+	CommandResult isEditable(String textfield);
 }

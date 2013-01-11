@@ -17,6 +17,7 @@ import javax.swing.text.JTextComponent;
 import org.fest.swing.fixture.JTextComponentFixture;
 
 import fest.FestResultBuilder;
+import fest.driver.JTextComponentEditableGuiQuery;
 import fest.interfaces.TextComponentUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
@@ -36,14 +37,69 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 	public CommandResult setText(String textField, String text) {
 		CommandResult result = new CommandResult();
 		Component component = frameWrapper.findComponentByName(textField);
-		if (component instanceof JTextComponent) {
-			JTextComponentFixture componentFixture = new JTextComponentFixture(
-					frameWrapper.getRobot(), textField);
+		if (isTextComponent(component)) {
+			JTextComponentFixture componentFixture = createTextComponentFixture(component);
 			componentFixture.setText(text);
 			result.setResultState(CommandResultState.RIGHT);
 		} else {
 			FestResultBuilder.buildWrongResultComponentFailure(result, textField);
 		}
 		return result;
+	}
+	
+	@FitCommand({"Name of the text component"})
+	@Override
+	public CommandResult isEditable(String textfield) {
+		CommandResult result = new CommandResult();
+		Component component = frameWrapper.findComponentByName(textfield);
+		if(isTextComponent(component)) {
+			JTextComponent textComponent = (JTextComponent) component;
+			if(isEditable(textComponent)) {
+				result.setResultState(CommandResultState.RIGHT);
+			}
+			else {
+				FestResultBuilder.buildWrongResultWrongState(result);
+			}
+		}
+		else {
+			FestResultBuilder.buildWrongResultComponentFailure(result, textfield);
+		}
+		
+		return result;
+	}
+	
+	@FitCommand({"Name of the text component"})
+	@Override
+	public CommandResult isNotEditable(String textfield) {
+		CommandResult result = new CommandResult();
+		Component component = frameWrapper.findComponentByName(textfield);
+		if(isTextComponent(component)) {
+			JTextComponent textComponent = (JTextComponent) component;
+			if(!isEditable(textComponent)) {
+				result.setResultState(CommandResultState.RIGHT);
+			}
+			else {
+				FestResultBuilder.buildWrongResultWrongState(result);
+			}
+		}
+		else {
+			FestResultBuilder.buildWrongResultComponentFailure(result, textfield);
+		}
+		
+		return result;
+	}
+
+	private boolean isEditable(JTextComponent textComponent) {
+		return JTextComponentEditableGuiQuery.isEditable(textComponent);
+	}
+
+	private JTextComponentFixture createTextComponentFixture(Component component) {
+		JTextComponent textcomponent = (JTextComponent) component;
+		JTextComponentFixture fixture = new JTextComponentFixture(frameWrapper.getRobot(), textcomponent);
+		return fixture;
+	}
+
+	private boolean isTextComponent(Component component) {
+		return component instanceof JTextComponent;
 	}
 }

@@ -14,16 +14,15 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import docGenerator.FileClassLoader;
 import docGenerator.model.FitCommandDoc;
 import docGenerator.processors.FileProcessor;
 import fitArchitectureAdapter.annotations.FitCommand;
 
 public class ClassFileProcessor implements FileProcessor {
 
-	private FileClassLoader classLoader;
+	private ClassLoader classLoader;
 
-	public ClassFileProcessor(FileClassLoader classLoader) {
+	public ClassFileProcessor(ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
