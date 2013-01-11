@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Jens Dallmann.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Jens Dallmann - initial API and implementation
+ ******************************************************************************/
 package docGenerator;
 
 import java.util.List;
@@ -45,7 +55,7 @@ public class HTMLBuilder {
 
 	private void tableHeaderLine(int highestCountOfParams, StringBuffer buffer) {
 		buffer.append("<tr>");
-		buffer.append("<td> <b>Command</b></td>");
+		buffer.append("<td> <b>ClassName.CommandName</b></td>");
 		for(int i = 0; i < highestCountOfParams; i++) {
 			buffer.append("<td><b> Parameter "+(i+1)+ "</b></td>");
 		}
@@ -54,7 +64,7 @@ public class HTMLBuilder {
 
 	private void addCommand(StringBuffer buffer, FitCommandDoc oneDoc, int highestCountOfParams) {
 		buffer.append("<tr>");
-		buffer.append("<td>"+oneDoc.getCommandName()+"</td>");
+		buffer.append("<td>"+oneDoc.getClassName()+"."+oneDoc.getCommandName()+"</td>");
 		List<String> commandParams = oneDoc.getCommandParams();
 		for(String oneParam: commandParams) {
 			buffer.append("<td>"+oneParam+"</td>");
