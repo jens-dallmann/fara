@@ -1,6 +1,7 @@
 package docGenerator.frontend.components.pathNamePair;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -10,18 +11,22 @@ public class PathNamePairUI {
 	
 	private JTextField nameTextField;
 	private JTextField pathTextField;
+	private JLabel nameLabel;
 	private JButton filechooser;
 	private JPanel panel;
 	
 	public PathNamePairUI() {
+		nameLabel = new JLabel("Name: ");
 		nameTextField = new JTextField();
 		nameTextField.setName("Name");
 		pathTextField = new JTextField();
 		pathTextField.setName("Path");
-		filechooser = new JButton("Select Folder");
+		pathTextField.setEditable(false);
+		filechooser = new JButton("Select Class Folder");
 		
 		panel = new JPanel();
-		panel.setLayout(new MigLayout("flowx,align left, insets 0", "[][grow,fill][]"));
+		panel.setLayout(new MigLayout("flowx,align left, insets 0", "[][][grow,fill][]"));
+		panel.add(nameLabel);
 		panel.add(nameTextField, "width max(175, 25%)");
 		panel.add(pathTextField);
 		panel.add(filechooser);

@@ -22,6 +22,9 @@ public class PathNamePairController {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		        absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
+				filechooser.setSelectedFile(new File(absolutePath));
 				filechooser.setFileFilter(new FolderFilechooserFilter());
 				int showOpenDialog = filechooser.showOpenDialog(null);
 				if(showOpenDialog == JFileChooser.APPROVE_OPTION) {
