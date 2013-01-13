@@ -34,20 +34,21 @@ public class SwingTabbedPaneUIAdapter implements TabbedPaneUIAdapter,
 		frameWrapper = wrapper;
 	}
 
-	@FitCommand({"name of the tab","the title of the tab which should be selected"})
+	@FitCommand({"name of the tab","the index of the tab"})
 	@Override
-	public CommandResult changeTab(String componentName, String tabTitle) {
+	public CommandResult changeTab(String componentName, String index) {
 		CommandResult result = new CommandResult();
+		int parsedIndex = Integer.parseInt(index);
 		Component component = frameWrapper.findComponentByName(componentName);
 		if (component instanceof JTabbedPane) {
 			JTabbedPane tabbedPane = (JTabbedPane) component;
 			JTabbedPaneFixture fixture = new JTabbedPaneFixture(
 					frameWrapper.getRobot(), tabbedPane);
 			try {
-				fixture.selectTab(tabTitle);
+				fixture.selectTab(parsedIndex);
 				result.setResultState(CommandResultState.RIGHT);
 			} catch (LocationUnavailableException lue) {
-				WrongResultBuilder.buildWrongResult(result, "Title not found in tab: "+tabTitle, 2);
+				WrongResultBuilder.buildWrongResult(result, "Title not found in tab: "+index, 2);
 			}
 		} else {
 			FestResultBuilder.buildWrongResultComponentFailure(result,

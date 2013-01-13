@@ -31,7 +31,28 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 	public SwingTextComponentUIAdapter(SwingFrameWrapper wrapper) {
 		frameWrapper = wrapper;
 	}
-	
+	@FitCommand({"the name of the text field", "the text which the component should contain"})
+	@Override
+	public CommandResult checkText(String textField, String text){
+		CommandResult result = new CommandResult();
+		Component component = frameWrapper.findComponentByName(textField);
+		
+		if(isTextComponent(component)) {
+			JTextComponentFixture componentFixture = createTextComponentFixture(component);
+			String textInTextfield = componentFixture.text();
+			
+			if(text.equals(textInTextfield)) {
+				result.setResultState(CommandResultState.RIGHT);
+			}
+			else {
+				FestResultBuilder.buildWrongResultWrongText(result);
+			}
+		}
+		else {
+			FestResultBuilder.buildWrongResultComponentFailure(result, textField);
+		}
+		return result;
+	}
 	@FitCommand({"the name of the text field", "the text to set"})
 	@Override
 	public CommandResult setText(String textField, String text) {
@@ -49,7 +70,7 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 	
 	@FitCommand({"Name of the text component"})
 	@Override
-	public CommandResult isEditable(String textfield) {
+	public CommandResult checkEditable(String textfield) {
 		CommandResult result = new CommandResult();
 		Component component = frameWrapper.findComponentByName(textfield);
 		if(isTextComponent(component)) {
@@ -70,7 +91,7 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 	
 	@FitCommand({"Name of the text component"})
 	@Override
-	public CommandResult isNotEditable(String textfield) {
+	public CommandResult checkNotEditable(String textfield) {
 		CommandResult result = new CommandResult();
 		Component component = frameWrapper.findComponentByName(textfield);
 		if(isTextComponent(component)) {

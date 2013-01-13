@@ -1,4 +1,4 @@
-call %M2_HOME%\bin\mvn -f ../festFaraAdapter/pom.xml compile package install
+call %M2_HOME%\bin\mvn -f ../festFaraAdapter/pom.xml compile package install -PdocGenerator
 call %M2_HOME%\bin\mvn compile package
 mkdir "./Documentor"
 robocopy "./target" "./Documentor" "docGenerator-1.0.0-SNAPSHOT.jar"

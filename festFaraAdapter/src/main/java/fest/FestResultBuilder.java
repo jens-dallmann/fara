@@ -27,4 +27,10 @@ public class FestResultBuilder {
 		result.setWrongParameterNumber(0);
 		return result;
 	}
+	public static CommandResult buildWrongResultWrongText(CommandResult result) {
+		result.setResultState(CommandResultState.WRONG);
+		result.setFailureMessage("Wrong Text");
+		result.setWrongParameterNumber(0);
+		return result;
+	}
 }

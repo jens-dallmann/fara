@@ -1,0 +1,42 @@
+<html>
+<head>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>fixtures.TestAppAggregator</td>
+			<td>Parameter 1</td>
+			<td>Parameter 2</td>
+		</tr>
+		<tr>
+			<td>startTestApp</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>checkNotEditable</td>
+			<td>notEditableComponent</td>
+			<td></td>
+		</tr><tr>
+			<td>checkEditable</td>
+			<td>editableComponent</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>checkText</td>
+			<td>checkTextComponent</td>
+			<td>checkTextComponent</td>
+		</tr>
+		<tr>
+			<td>setText</td>
+			<td>setTextComponent</td>
+			<td>newText</td>
+		</tr>
+		<tr>
+			<td>checkText</td>
+			<td>setTextComponent</td>
+			<td>newText</td>
+		</tr>
+	</table>
+</body>
+</html>

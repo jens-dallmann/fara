@@ -22,7 +22,9 @@ import fitArchitectureAdapter.container.CommandResult;
 public interface TextComponentUIAdapter {
 	CommandResult setText(String fieldName, String text);
 
-	CommandResult isNotEditable(String textfield);
+	CommandResult checkNotEditable(String textfield);
 
-	CommandResult isEditable(String textfield);
+	CommandResult checkEditable(String textfield);
+
+	CommandResult checkText(String textField, String text);
 }
