@@ -42,15 +42,6 @@ public interface ComponentUIAdapter {
      * @return CommandResult
      */
 	CommandResult checkDisabled(String componentName);
-	
-	/**
-	 * Return if the component with the name is invisible.
-	 * Should be the negotiation of isVisible.
-	 * 
-	 * @param componentName name of the component.
-	 * @return CommandResult
-	 */
-	CommandResult checkInvisible(String componentName);
 
 	/**
 	 * Return if the component with the name is visible.

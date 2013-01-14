@@ -1,11 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jd</groupId>
 	<artifactId>fara</artifactId>
 	<version>0.2.0-SNAPSHOT</version>
 	<name>Fit action rearchitecture</name>
 	<description>Provides an Adapter for the architecture of fit which has the problem with bad scaling fixtures for action fixtures when using many commands in tests</description>
+	<parent>
+		<groupId>jd</groupId>
+		<artifactId>fara-parent</artifactId>
+		<version>1.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -15,15 +21,6 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>jd</groupId>
+    <artifactId>fara-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>Fara Parent Pom</name>
+
+    <modules>
+        <module>fara</module>
+        <module>festFaraAdapter</module>
+		<module>FestTests</module>
+		<module>testapp</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+				<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-eclipse-plugin</artifactId>
+						<configuration>
+							<downloadSources>true</downloadSources>
+							<downloadJavadocs>true</downloadJavadocs>
+						</configuration>
+					</plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

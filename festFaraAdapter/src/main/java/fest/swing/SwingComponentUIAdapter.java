@@ -88,24 +88,6 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		return result;
 	}
 
-	@FitCommand({"The name of the component which should be invisible"})
-	@Override
-	public CommandResult checkInvisible(String componentName) {
-		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(componentName);
-		if (component != null) {
-			if (!isVisible(component)) {
-				result.setResultState(CommandResultState.RIGHT);
-			} else {
-				FestResultBuilder.buildWrongResultWrongState(result);
-			}
-		}
-		else {
-			FestResultBuilder.buildWrongResultComponentFailure(result, componentName);
-		}
-		return result;
-	}
-
 	private boolean isVisible(Component component) {
 		return ComponentVisibleQuery.isVisible(component);
 	}

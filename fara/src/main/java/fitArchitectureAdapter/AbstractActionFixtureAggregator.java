@@ -63,7 +63,8 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		} catch (IllegalAccessException e) {
 			wrong(cells, "Cannot access method: " + commandName);
 		} catch (InvocationTargetException e) {
-			wrong(cells, e.getMessage());
+			System.out.println(cells);
+			wrong(cells, "To Less or to much arguments");
 		}
 
 		if (result instanceof CommandResult) {

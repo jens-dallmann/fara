@@ -12,7 +12,6 @@ public class ComponentTabUI implements TabUI{
 
 	private JPanel panel;
 	private JComponent visibleComponent;
-	private JComponent invisibleComponent;
 	private JComponent enabledComponent;
 	private JComponent disabledComponent;
 	
@@ -21,10 +20,6 @@ public class ComponentTabUI implements TabUI{
 		visibleComponent = new JLabel("Visible Component");
 		visibleComponent.setVisible(true);
 		visibleComponent.setName("visibleComponent");
-		
-		invisibleComponent = new JLabel("Invisible Component");
-		invisibleComponent.setName("invisibleComponent");
-		invisibleComponent.setVisible(false);
 		
 		enabledComponent = new JLabel("Enabled Component");
 		enabledComponent.setName("enabledComponent");
@@ -35,7 +30,6 @@ public class ComponentTabUI implements TabUI{
 		disabledComponent.setEnabled(false);
 		
 		panel.add(visibleComponent);
-		panel.add(invisibleComponent);
 		panel.add(enabledComponent);
 		panel.add(disabledComponent);
 	}

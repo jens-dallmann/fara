@@ -14,6 +14,7 @@ import java.awt.Component;
 
 import javax.swing.text.JTextComponent;
 
+import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.fixture.JTextComponentFixture;
 
 import fest.FestResultBuilder;
@@ -24,36 +25,38 @@ import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
-public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasCommands {
-	
+public class SwingTextComponentUIAdapter implements TextComponentUIAdapter,
+		HasCommands {
+
 	private SwingFrameWrapper frameWrapper;
-	
+
 	public SwingTextComponentUIAdapter(SwingFrameWrapper wrapper) {
 		frameWrapper = wrapper;
 	}
-	@FitCommand({"the name of the text field", "the text which the component should contain"})
+
+	@FitCommand({ "the name of the text field",
+			"the text which the component should contain" })
 	@Override
-	public CommandResult checkText(String textField, String text){
+	public CommandResult checkText(String textField, String text) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(textField);
-		
-		if(isTextComponent(component)) {
-			JTextComponentFixture componentFixture = createTextComponentFixture(component);
+		try {
+			JTextComponentFixture componentFixture = frameWrapper
+					.getFrameFixture().textBox(textField);
 			String textInTextfield = componentFixture.text();
-			
-			if(text.equals(textInTextfield)) {
+
+			if (text.equals(textInTextfield)) {
 				result.setResultState(CommandResultState.RIGHT);
-			}
-			else {
+			} else {
 				FestResultBuilder.buildWrongResultWrongText(result);
 			}
-		}
-		else {
-			FestResultBuilder.buildWrongResultComponentFailure(result, textField);
+		} catch (ComponentLookupException e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result,
+					textField);
 		}
 		return result;
 	}
-	@FitCommand({"the name of the text field", "the text to set"})
+
+	@FitCommand({ "the name of the text field", "the text to set" })
 	@Override
 	public CommandResult setText(String textField, String text) {
 		CommandResult result = new CommandResult();
@@ -63,50 +66,49 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 			componentFixture.setText(text);
 			result.setResultState(CommandResultState.RIGHT);
 		} else {
-			FestResultBuilder.buildWrongResultComponentFailure(result, textField);
+			FestResultBuilder.buildWrongResultComponentFailure(result,
+					textField);
 		}
 		return result;
 	}
-	
-	@FitCommand({"Name of the text component"})
+
+	@FitCommand({ "Name of the text component" })
 	@Override
 	public CommandResult checkEditable(String textfield) {
 		CommandResult result = new CommandResult();
 		Component component = frameWrapper.findComponentByName(textfield);
-		if(isTextComponent(component)) {
+		if (isTextComponent(component)) {
 			JTextComponent textComponent = (JTextComponent) component;
-			if(isEditable(textComponent)) {
+			if (isEditable(textComponent)) {
 				result.setResultState(CommandResultState.RIGHT);
-			}
-			else {
+			} else {
 				FestResultBuilder.buildWrongResultWrongState(result);
 			}
+		} else {
+			FestResultBuilder.buildWrongResultComponentFailure(result,
+					textfield);
 		}
-		else {
-			FestResultBuilder.buildWrongResultComponentFailure(result, textfield);
-		}
-		
+
 		return result;
 	}
-	
-	@FitCommand({"Name of the text component"})
+
+	@FitCommand({ "Name of the text component" })
 	@Override
 	public CommandResult checkNotEditable(String textfield) {
 		CommandResult result = new CommandResult();
 		Component component = frameWrapper.findComponentByName(textfield);
-		if(isTextComponent(component)) {
+		if (isTextComponent(component)) {
 			JTextComponent textComponent = (JTextComponent) component;
-			if(!isEditable(textComponent)) {
+			if (!isEditable(textComponent)) {
 				result.setResultState(CommandResultState.RIGHT);
-			}
-			else {
+			} else {
 				FestResultBuilder.buildWrongResultWrongState(result);
 			}
+		} else {
+			FestResultBuilder.buildWrongResultComponentFailure(result,
+					textfield);
 		}
-		else {
-			FestResultBuilder.buildWrongResultComponentFailure(result, textfield);
-		}
-		
+
 		return result;
 	}
 
@@ -116,7 +118,8 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter, HasC
 
 	private JTextComponentFixture createTextComponentFixture(Component component) {
 		JTextComponent textcomponent = (JTextComponent) component;
-		JTextComponentFixture fixture = new JTextComponentFixture(frameWrapper.getRobot(), textcomponent);
+		JTextComponentFixture fixture = new JTextComponentFixture(
+				frameWrapper.getRobot(), textcomponent);
 		return fixture;
 	}
 
