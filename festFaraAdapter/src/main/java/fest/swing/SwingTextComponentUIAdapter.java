@@ -42,6 +42,7 @@ public class SwingTextComponentUIAdapter implements TextComponentUIAdapter,
 		try {
 			JTextComponentFixture componentFixture = frameWrapper
 					.getFrameFixture().textBox(textField);
+			
 			String textInTextfield = componentFixture.text();
 
 			if (text.equals(textInTextfield)) {

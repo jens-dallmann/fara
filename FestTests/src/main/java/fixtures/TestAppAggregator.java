@@ -1,6 +1,7 @@
 package fixtures;
 import fest.swing.SwingComponentUIAdapter;
 import fest.swing.SwingFrameWrapper;
+import fest.swing.SwingLabelUIAdapter;
 import fest.swing.SwingTabbedPaneUIAdapter;
 import fest.swing.SwingTextComponentUIAdapter;
 import fitArchitectureAdapter.AbstractActionFixtureAggregator;
@@ -20,6 +21,7 @@ public class TestAppAggregator extends AbstractActionFixtureAggregator{
 		addCommandObject(new SwingTextComponentUIAdapter(wrapper));
 		addCommandObject(new SwingTabbedPaneUIAdapter(wrapper));
 		addCommandObject(new SwingComponentUIAdapter(wrapper));
+		addCommandObject(new SwingLabelUIAdapter(wrapper));
 		addCommandObject(new TestAppFixture(wrapper));
 	}
 }

@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>fixtures.TestAppAggregator</td>
+			<td>Parameter 1</td>
+			<td>Parameter 2</td>
+		</tr>
+		<tr>
+			<td>startTestApp</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>changeTab</td>
+			<td>MainTab</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>checkLabelText</td>
+			<td>label</td>
+			<td>Here is a text</td>
+		</tr>
+	</table>
+</body>
+</html>
