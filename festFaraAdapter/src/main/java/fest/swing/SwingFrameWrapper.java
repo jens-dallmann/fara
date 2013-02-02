@@ -12,6 +12,7 @@ package fest.swing;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.Window;
 
 import javax.swing.JFrame;
@@ -31,8 +32,10 @@ import fest.matcher.ButtonTextMatcher;
 public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 
 	private FrameFixture _frameFixture;
+	private String frameTitle;
 
-	public SwingFrameWrapper() {
+	public SwingFrameWrapper(String frameTitle) {
+		this.frameTitle = frameTitle;
 	}
 
 	public void init(GuiQuery<JFrame> frameQuery) {
@@ -58,9 +61,23 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	 * @return the component if one can be found
 	 */
 	public Component findComponentByName(String name) {
-		Window[] windows = JFrame.getWindows();
-		Component component =  searchThroughWindows(windows, name);
+		Window[] frame = JFrame.getWindows();
+		Window[] windows = findMainFrameWindows(frame);
+		Component component = searchThroughWindows(windows, name);
 		return component;
+	}
+
+	private Window[] findMainFrameWindows(Window[] frames) {
+		Window[] windows = null;
+		for (Window frameWindow : frames) {
+			if (frameWindow instanceof Frame) {
+				Frame frame = (Frame) frameWindow;
+				if (frame.getTitle().equals(frameTitle)) {
+					windows = new Window[] { frameWindow };
+				}
+			}
+		}
+		return windows;
 	}
 
 	private Component searchThroughWindows(Window[] windows, String name) {
@@ -95,9 +112,10 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 
 	private Component goDeeperInRecursion(String name,
 			Component foundComponent, Component oneComponent) {
-		if(isContainer(oneComponent)) {
+		if (isContainer(oneComponent)) {
 			Container container = (Container) oneComponent;
-			foundComponent = searchThroughComponent(container.getComponents(), name);
+			foundComponent = searchThroughComponent(container.getComponents(),
+					name);
 		}
 		return foundComponent;
 	}
