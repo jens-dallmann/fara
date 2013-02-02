@@ -4,15 +4,15 @@ import fest.swing.SwingFrameWrapper;
 import fest.swing.SwingLabelUIAdapter;
 import fest.swing.SwingTabbedPaneUIAdapter;
 import fest.swing.SwingTextComponentUIAdapter;
-import fitArchitectureAdapter.AbstractActionFixtureAggregator;
+import fitArchitectureAdapter.AbstractTestEditorFixtureAggregator;
 
 
-public class TestAppAggregator extends AbstractActionFixtureAggregator{
+public class TestAppAggregator extends AbstractTestEditorFixtureAggregator{
 
 	private SwingFrameWrapper wrapper;
 	
 	public TestAppAggregator() {
-		this.wrapper = new SwingFrameWrapper();
+		this.wrapper = new SwingFrameWrapper("Fest Fara Test App");
 		init();
 	}
 	
