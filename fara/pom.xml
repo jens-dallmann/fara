@@ -37,9 +37,9 @@
 			<version>20080812</version>
 		</dependency>
 		<dependency>
-			<groupId>jd</groupId>
-			<artifactId>faraTestEditor</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-swing</artifactId>
+			<version>4.2</version>
 		</dependency>
 	</dependencies>
 </project>
