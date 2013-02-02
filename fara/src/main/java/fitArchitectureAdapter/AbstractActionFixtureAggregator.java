@@ -25,16 +25,16 @@ import fitArchitectureAdapter.container.InstanceMethodPair;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
 /**
- * The core class of the new fit architecture.
- * It Overrides the action fixture and for special overrides the doCells method.
- * In doCells will the command be called with the parameters.
- * At first the command is in the first cell of the row and the parameters of
- * the command are in the following cells. The java method which should be called
- * is allocated out of the added fixture classes. It must be a method annotated
- * with @FitCommand. If a method could be allocated the parameters will be counted and 
- * as many parameters as the method has are tried to read out of the html table.
- * After this the java-method will be called and a result will be expected.
- * If no error occurs the result will be processed.
+ * The core class of the new fit architecture. It Overrides the action fixture
+ * and for special overrides the doCells method. In doCells will the command be
+ * called with the parameters. At first the command is in the first cell of the
+ * row and the parameters of the command are in the following cells. The java
+ * method which should be called is allocated out of the added fixture classes.
+ * It must be a method annotated with @FitCommand. If a method could be
+ * allocated the parameters will be counted and as many parameters as the method
+ * has are tried to read out of the html table. After this the java-method will
+ * be called and a result will be expected. If no error occurs the result will
+ * be processed.
  * 
  * @author jens.dallmann
  */
@@ -43,12 +43,12 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	private Map<String, InstanceMethodPair> commands;
 
 	/**
-	 * Init method which initializes the map and calls the adding of the fixture objects
+	 * Init method which initializes the map and calls the adding of the fixture
+	 * objects
 	 */
-	protected void init() {
+	public void init() {
 		commands = new HashMap<String, InstanceMethodPair>();
 		addFixtureObjects();
-		
 	}
 
 	@Override
@@ -63,7 +63,8 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		} catch (IllegalAccessException e) {
 			wrong(cells, "Cannot access method: " + commandName);
 		} catch (InvocationTargetException e) {
-			System.out.println(cells);
+			System.out.println("Invocation Target Exception");
+			e.printStackTrace();
 			wrong(cells, "To Less or to much arguments");
 		}
 
@@ -73,7 +74,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		}
 	}
 
-	private Object callMethod(String text) throws IllegalArgumentException,
+	protected CommandResult callMethod(String text) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
 		InstanceMethodPair pair = commands.get(text);
 		if (pair == null) {
@@ -84,7 +85,11 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		Class<?>[] parameterTypes = command.getParameterTypes();
 		int numberOfParameters = parameterTypes.length;
 		Object[] actualParameters = buildActualParameters(numberOfParameters);
-		return command.invoke(fixtureObject, actualParameters);
+		Object result = command.invoke(fixtureObject, actualParameters);
+		if(result instanceof CommandResult) {
+			return (CommandResult)result;
+		}
+		return null;
 	}
 
 	private Object[] buildActualParameters(int numberOfParameters) {
@@ -96,7 +101,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		}
 		return actualParameters;
 	}
-	
+
 	private void processResult(CommandResult commandResult) {
 		CommandResultState resultState = commandResult.getResultState();
 
@@ -120,14 +125,17 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	private void processRight() {
 		right(cells);
 	}
-	
+
 	/**
-	 * Adds an object to the map ob objects with fit commands.
-	 * In this process the class will be searched for methods annotated with
-	 * @FITCommand. If one hass been found it will be wrapped with the passed
-	 * class instance in the map. The name of the method is the commands name.
+	 * Adds an object to the map ob objects with fit commands. In this process
+	 * the class will be searched for methods annotated with
 	 * 
-	 * @param commandObject instance of the class which provides methods.
+	 * @FITCommand. If one hass been found it will be wrapped with the passed
+	 *              class instance in the map. The name of the method is the
+	 *              commands name.
+	 * 
+	 * @param commandObject
+	 *            instance of the class which provides methods.
 	 */
 	public void addCommandObject(HasCommands commandObject) {
 		boolean isCommandClass = isCommandClass(commandObject);
@@ -135,6 +143,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 			addCommandsToMap(commandObject);
 		}
 	}
+
 	private void addCommandsToMap(HasCommands commandObject) {
 		Method[] methods = extractMethods(commandObject);
 		for (Method oneClassMethod : methods) {
@@ -170,8 +179,9 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	}
 
 	/**
-	 * Method to implement to add new Fixture Objects
-	 * it will be triggered the init method. This method has to be called after constructor initialization
+	 * Method to implement to add new Fixture Objects it will be triggered the
+	 * init method. This method has to be called after constructor
+	 * initialization
 	 */
 	public abstract void addFixtureObjects();
 }

@@ -36,5 +36,10 @@
 			<artifactId>fitlibrary</artifactId>
 			<version>20080812</version>
 		</dependency>
+		<dependency>
+			<groupId>jd</groupId>
+			<artifactId>faraTestEditor</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
