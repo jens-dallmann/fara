@@ -7,4 +7,6 @@ public interface ToolbarDelegate {
 	void play();
 
 	void skip();
+
+	void save();
 }

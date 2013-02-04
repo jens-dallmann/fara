@@ -1,12 +1,10 @@
 package testEditor.frontend.editorTable.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import testEditor.frontend.editorTable.RowState;
-
 import fit.Parse;
 
 public class FitRowTableModel extends AbstractTableModel {
@@ -20,31 +18,24 @@ public class FitRowTableModel extends AbstractTableModel {
 	public static final int STATE_CELL = 1;
 	public static final int COMMAND_CELL = 2;
 
-	public FitRowTableModel(Parse rows) {
-		createRowList(rows);
-		calculateColumnCount();
-		prepareFirstRow();
-	}
-
-	private void prepareFirstRow() {
+	public void prepareFirstRow() {
 		actualRowIndex = 0;
 		Row row = rowsList.get(actualRowIndex);
 		row.setState(RowState.WAIT);
 	}
 
-	private void createRowList(Parse rows) {
-		rowsList = new ArrayList<Row>();
-		while (rows != null) {
-			rowsList.add(new Row(rows));
-			rows = rows.more;
-		}
-	}
-
-	private void calculateColumnCount() {
+	public void calculateColumnCount() {
 		for (Row oneRow : rowsList) {
 			int rowColumns = oneRow.countCells();
 			columnCount = Math.max(columnCount, rowColumns);
 		}
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		rowsList.get(rowIndex).setCellText(columnIndex-2, (String)aValue);
+		fireTableCellUpdated(rowIndex, columnIndex);
+		super.setValueAt(aValue, rowIndex, columnIndex);
 	}
 
 	@Override
@@ -74,14 +65,13 @@ public class FitRowTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		Row row = getRow(rowIndex);
 		if (columnIndex == NUMBER_CELL) {
-			Row row = getRow(rowIndex);
 			if (row.hasBreakpoint()) {
-				return rowIndex + "" + "*";
+				return rowIndex + "(BP)";
 			}
 			return rowIndex;
 		}
-		Row row = rowsList.get(rowIndex);
 		if (columnIndex == STATE_CELL) {
 			return row.getState();
 		}
@@ -125,34 +115,15 @@ public class FitRowTableModel extends AbstractTableModel {
 		return columnIndex > 1 && !isErrorCell(columnIndex);
 	}
 
-	public Parse startProcessActualRow() {
-		Row row = rowsList.get(actualRowIndex);
-		row.setProcessing();
-		fireTableCellUpdated(actualRowIndex, STATE_CELL);
-		return row.getOriginalRow();
+	public int getNextRowIndex() {
+		return actualRowIndex + 1;
 	}
 
-	public void actualRowProcessed(RowState state, String message) {
-		handleProcessedActualRow(state, message);
-		enableNextRow();
-	}
-
-	private void handleProcessedActualRow(RowState state, String message) {
-		Row row = rowsList.get(actualRowIndex);
-		row.setState(state);
-		if (state == RowState.FAILED) {
-			row.setMessage(message);
-		}
-		fireTableRowsUpdated(actualRowIndex, actualRowIndex);
-	}
-
-	private void enableNextRow() {
+	public void increaseActualRowIndex() {
 		actualRowIndex++;
-		if (actualRowIndex < rowsList.size()) {
-			Row row = rowsList.get(actualRowIndex);
-			row.setState(RowState.WAIT);
-			fireTableRowsUpdated(actualRowIndex, actualRowIndex);
-		}
+	}
+	public void decreaseActualRowIndex() {
+		actualRowIndex--;
 	}
 
 	public Row getRow(int row) {
@@ -160,15 +131,12 @@ public class FitRowTableModel extends AbstractTableModel {
 	}
 
 	public boolean hasMoreRows() {
-		return actualRowIndex < getRowCount();
+		return actualRowIndex + 1 < getRowCount();
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0) {
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	public void toggleBreakpoint(int row, int column) {
@@ -178,26 +146,48 @@ public class FitRowTableModel extends AbstractTableModel {
 		}
 	}
 
-	public boolean rowHasBreakpoint() {
-		if (hasMoreRows()) {
-			Row row = rowsList.get(actualRowIndex);
-			return row.hasBreakpoint();
-		} else {
-			return false;
-		}
+	public boolean actualRowHasBreakpoint() {
+		return getActualRow().hasBreakpoint();
+	}
+	public boolean isBeforeActualRow(int index) {
+		return index < actualRowIndex;
+	}
+	public boolean isAfterActualRow(int index) {
+		return index > actualRowIndex;
+	}
+	public boolean isActualRow(int index) {
+		return index == actualRowIndex;
 	}
 
-	public void jumpTo(int selectedRow) {
-		while(actualRowIndex != selectedRow) {
-			getRow(actualRowIndex).setState(RowState.SKIPPED);
-			if(selectedRow > actualRowIndex) {
-				actualRowIndex ++;
-			}
-			else if(selectedRow < actualRowIndex) {
-				actualRowIndex --;
-			}
-		}
-		getRow(actualRowIndex).setState(RowState.WAIT);
-		fireTableRowsUpdated(0, getRowCount());
+	public void removeBreakpointAtActualRow() {
+		getActualRow().removeBreakpoint();
+	}
+
+	public void setRows(List<Row> rows) {
+		rowsList = rows;
+	}
+
+	public Row getActualRow() {
+		return getRow(actualRowIndex);
+	}
+
+	public void updateActualRow(int cell) {
+		fireTableCellUpdated(actualRowIndex, cell);
+	}
+
+	public void updateRow(int index) {
+		fireTableRowsUpdated(index, index);
+	}
+
+	public List<Row> getRows() {
+		return rowsList;
+	}
+
+	public void updateActualRow() {
+		updateRow(actualRowIndex);
+	}
+	
+	public boolean isLastRow() {
+		return getRowCount() - 1 == actualRowIndex;
 	}
 }

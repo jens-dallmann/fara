@@ -1,18 +1,22 @@
 package testEditor.frontend;
 
+import fit.Parse;
 import interfaces.DoNextRowObservable;
 import interfaces.FaraTestEditor;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import testEditor.frontend.editorTable.FitTableController;
 import testEditor.frontend.editorTable.RowState;
 import testEditor.frontend.toolbar.ToolbarController;
 import testEditor.frontend.toolbar.ToolbarDelegate;
-import fit.Parse;
 
 public class TestEditorController implements ToolbarDelegate {
 	private FitTableController fitTable;
 	private ToolbarController toolbar;
 	private TestEditorUI ui;
-	private boolean stepForward = false;
 	private boolean play;
 	private final DoNextRowObservable testEditor;
 
@@ -24,21 +28,9 @@ public class TestEditorController implements ToolbarDelegate {
 		ui.addPanel(toolbar.getPanel());
 		ui.addPanel(fitTable.getPanel());
 	}
-	private boolean canProcessNext() {
-		return shouldStepForward() || shouldPlay();
-	}
-
-	public boolean shouldPlay() {
-		return play;
-	}
-
-	public boolean shouldStepForward() {
-		return stepForward;
-	}
 
 	public Parse startProcessNextRow() {
 		toolbar.setButtonsEnabled(false);
-		stepForward = false;
 		return fitTable.startRowProcessing();
 	}
 
@@ -46,9 +38,20 @@ public class TestEditorController implements ToolbarDelegate {
 		RowState rowState = toRowState(result);
 		fitTable.actualRowProcessed(rowState, message);
 		toolbar.setButtonsEnabled(true);
-		if (rowState == RowState.FAILED || fitTable.rowHasBreakpoint()) {
-			play = false;
+		if (hasMoreRows()) {
+			fitTable.enableNextRow();
+			if (!canProceed(rowState)) {
+				play = false;
+			}
+			if (play) {
+				nextStep();
+			}
 		}
+	}
+
+	private boolean canProceed(RowState rowState) {
+		return rowState != RowState.FAILED && !fitTable.rowHasBreakpoint()
+				&& (hasMoreRows() || fitTable.isLastRow()) ;
 	}
 
 	private RowState toRowState(String result) {
@@ -68,18 +71,39 @@ public class TestEditorController implements ToolbarDelegate {
 
 	@Override
 	public void nextStep() {
-		Parse nextRow = startProcessNextRow();
-		testEditor.informListenerNextRow(nextRow);
+		if (!(fitTable.rowHasBreakpoint() && play)) {
+			Parse nextRow = startProcessNextRow();
+			testEditor.informListenerNextRow(nextRow);
+		} else {
+			fitTable.removeRowBreakpoint();
+		}
 	}
 
 	@Override
 	public void play() {
 		this.play = true;
+		nextStep();
 	}
 
 	@Override
 	public void skip() {
-		int selectedRow = fitTable.getSelectedRowIndex();
-		fitTable.jumpTo(selectedRow);
+		fitTable.jumpTo();
+		
 	}
+	
+	@Override
+	public void save() {
+		String htmlTable = fitTable.tableAsHtml();
+		
+		File test = new File("C:\\data\\fara\\trunk\\fara\\test.html");
+		try {
+			test.createNewFile();
+			FileWriter fileWriter = new FileWriter(test);
+            fileWriter.write(htmlTable);
+            fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

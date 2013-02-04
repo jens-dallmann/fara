@@ -8,15 +8,27 @@ public class ToolbarUI {
 	private JButton nextStep;
 	private JButton play;
 	private JButton skip;
+	private JButton save;
 	
 	public ToolbarUI() {
 		panel = new JPanel();
+		
 		nextStep = new JButton("Step");
+		nextStep.setName("step");
+		
 		play = new JButton("Play");
+		play.setName("play");
+		
 		skip = new JButton("Skip");
+		skip.setName("skip");
+		
+		save = new JButton("Save");
+		save.setName("save");
+		
 		panel.add(nextStep);
 		panel.add(play);
 		panel.add(skip);
+		panel.add(save);
 	}
 	
 	public JButton getSkipButton() {
@@ -30,6 +42,10 @@ public class ToolbarUI {
 	public JButton getPlayButton() {
 		return play;
 	}
+	
+	public JButton getSaveButton() {
+		return save;
+	}
 
 	public JPanel getPanel() {
 		return panel;
@@ -37,5 +53,6 @@ public class ToolbarUI {
 	
 	public void setButtonsEnabled(boolean state) {
 		nextStep.setEnabled(state);
+		play.setEnabled(state);
 	}
 }

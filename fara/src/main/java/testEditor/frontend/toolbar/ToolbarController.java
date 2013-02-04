@@ -38,6 +38,13 @@ public class ToolbarController{
 				toolbarDelegate.skip();
 			}
 		});
+		
+		ui.getSaveButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toolbarDelegate.save();
+			}
+		});
 	}
 	
 	public JPanel getPanel() {

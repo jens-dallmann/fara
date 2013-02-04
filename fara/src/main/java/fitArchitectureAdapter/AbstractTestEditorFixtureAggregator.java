@@ -11,10 +11,10 @@ import testEditor.FaraTestEditorImpl;
 
 public abstract class AbstractTestEditorFixtureAggregator extends AbstractActionFixtureAggregator implements DoRowsListener{
 	private FaraTestEditor testEditor;
-	private boolean finished;
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
 	 * objects
+	 * also it inits the test editor.
 	 */
 	public void init() {
 		super.init();
@@ -26,6 +26,10 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 		testEditor.registerListener(this);
 	}
 	
+	@Override
+	protected void handleErrorMessages(Parse cell, String errorMessage) {
+		testEditor.publishResult(CommandResultState.WRONG.toString(), errorMessage);
+	}
 	@Override
 	protected CommandResult callMethod(String text)
 			throws IllegalArgumentException, IllegalAccessException,
@@ -39,10 +43,5 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	@Override
 	public void doNextRow(Parse parse) {
 		doRow(parse);
-	}
-	
-	@Override
-	public void finish() {
-		finished = true;
 	}
 }

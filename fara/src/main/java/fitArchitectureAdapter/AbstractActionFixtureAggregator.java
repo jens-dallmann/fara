@@ -59,13 +59,11 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		try {
 			result = callMethod(commandName);
 		} catch (IllegalArgumentException e) {
-			wrong(cells, "Command not found: " + commandName);
+			handleErrorMessages(cells, "Command not found: " + commandName);
 		} catch (IllegalAccessException e) {
-			wrong(cells, "Cannot access method: " + commandName);
+			handleErrorMessages(cells, "Cannot access method: " + commandName);
 		} catch (InvocationTargetException e) {
-			System.out.println("Invocation Target Exception");
-			e.printStackTrace();
-			wrong(cells, "To Less or to much arguments");
+			handleErrorMessages(cells, "To Less or to much arguments");
 		}
 
 		if (result instanceof CommandResult) {
@@ -74,6 +72,9 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		}
 	}
 
+	protected void handleErrorMessages(Parse cell, String errorMessage) {
+		wrong(cell,errorMessage);
+	}
 	protected CommandResult callMethod(String text) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
 		InstanceMethodPair pair = commands.get(text);
