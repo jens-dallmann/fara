@@ -54,5 +54,7 @@ public class ToolbarUI {
 	public void setButtonsEnabled(boolean state) {
 		nextStep.setEnabled(state);
 		play.setEnabled(state);
+		skip.setEnabled(state);
+		save.setEnabled(state);
 	}
 }

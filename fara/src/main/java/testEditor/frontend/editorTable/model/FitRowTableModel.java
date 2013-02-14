@@ -1,40 +1,45 @@
 package testEditor.frontend.editorTable.model;
 
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
 import testEditor.frontend.editorTable.RowState;
+import core.faraTable.AbstractProcessableTableModel;
 import fit.Parse;
 
-public class FitRowTableModel extends AbstractTableModel {
+public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private List<Row> rowsList;
+	private Parse table;
 	private int columnCount;
-	private int actualRowIndex;
 
 	public static final int NUMBER_CELL = 0;
 	public static final int STATE_CELL = 1;
 	public static final int COMMAND_CELL = 2;
 
-	public void prepareFirstRow() {
-		actualRowIndex = 0;
-		Row row = rowsList.get(actualRowIndex);
-		row.setState(RowState.WAIT);
+	public void calculateColumnCount() {
+		if (table != null) {
+			Parse rowTemp = table.parts;
+			while (rowTemp != null) {
+				int rowColumns = countCells(rowTemp);
+				columnCount = Math.max(columnCount, rowColumns);
+				rowTemp = rowTemp.more;
+			}
+		}
 	}
 
-	public void calculateColumnCount() {
-		for (Row oneRow : rowsList) {
-			int rowColumns = oneRow.countCells();
-			columnCount = Math.max(columnCount, rowColumns);
+	private int countCells(Parse rowTemp) {
+		Parse cells = rowTemp.parts;
+		int counter = 0;
+		while (cells != null) {
+			counter++;
+			cells = cells.more;
 		}
+		return counter;
 	}
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		rowsList.get(rowIndex).setCellText(columnIndex-2, (String)aValue);
-		fireTableCellUpdated(rowIndex, columnIndex);
+		getCell(rowIndex, columnIndex).body = (String) aValue;
+		getRow(rowIndex).at(0,columnIndex);
+		updateRow(rowIndex);
 		super.setValueAt(aValue, rowIndex, columnIndex);
 	}
 
@@ -43,9 +48,9 @@ public class FitRowTableModel extends AbstractTableModel {
 		if (column == NUMBER_CELL) {
 			return "No";
 		} else if (column == STATE_CELL) {
-			return "Command";
-		} else if (column == COMMAND_CELL) {
 			return "State";
+		} else if (column == COMMAND_CELL) {
+			return "Command";
 		} else if (getColumnCount() - 1 == column) {
 			return "Error Message";
 		} else {
@@ -55,7 +60,16 @@ public class FitRowTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return rowsList.size();
+		int counter = 0;
+		if (table != null) {
+			Parse rowsTemp = table.parts;
+			while (rowsTemp != null) {
+				counter++;
+				rowsTemp = rowsTemp.more;
+			}
+			counter -= 1;
+		}
+		return counter; //-1 because the first one is the fixture row and is not listed in the table
 	}
 
 	@Override
@@ -65,38 +79,39 @@ public class FitRowTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Row row = getRow(rowIndex);
 		if (columnIndex == NUMBER_CELL) {
-			if (row.hasBreakpoint()) {
+			if (breakpointAt(rowIndex)) {
 				return rowIndex + "(BP)";
 			}
 			return rowIndex;
 		}
 		if (columnIndex == STATE_CELL) {
-			return row.getState();
+			return rowStateAt(rowIndex);
 		}
 		if (isParameter(columnIndex)) {
-			return prepareParameterValue(columnIndex, row);
+			return prepareParameterValue(columnIndex, rowIndex);
 		}
 		if (isErrorCell(columnIndex)) {
-			if (row.hasFailed()) {
-				return row.getMessage();
+			if (rowStateAt(rowIndex) == RowState.FAILED) {
+				return messageAt(rowIndex);
 			}
 		}
 		return "";
 	}
 
-	private Object prepareParameterValue(int columnIndex, Row row) {
-		Parse cell = row.getCell(columnIndex - 2);
+	private Object prepareParameterValue(int columnIndex, int rowIndex) {
+		Parse cell = getCell(rowIndex,columnIndex);
 		String parameterText = null;
-		if (row.hasFailed()) {
+		if (rowStateAt(rowIndex) == RowState.FAILED) {
 			parameterText = extractParameterText(cell.body);
 		} else {
 			parameterText = cell.text();
 		}
 		return parameterText;
 	}
-
+	private Parse getCell(int rowIndex, int columnIndex) {
+		return getRow(rowIndex).at(0,columnIndex-2);
+	}
 	private boolean isErrorCell(int columnIndex) {
 		return columnIndex == getColumnCount() - 1;
 	}
@@ -115,23 +130,8 @@ public class FitRowTableModel extends AbstractTableModel {
 		return columnIndex > 1 && !isErrorCell(columnIndex);
 	}
 
-	public int getNextRowIndex() {
-		return actualRowIndex + 1;
-	}
-
-	public void increaseActualRowIndex() {
-		actualRowIndex++;
-	}
-	public void decreaseActualRowIndex() {
-		actualRowIndex--;
-	}
-
-	public Row getRow(int row) {
-		return rowsList.get(row);
-	}
-
-	public boolean hasMoreRows() {
-		return actualRowIndex + 1 < getRowCount();
+	public Parse getRow(int row) {
+		return table.at(0, row+1); //the first row is the fixture name not a command
 	}
 
 	@Override
@@ -139,55 +139,29 @@ public class FitRowTableModel extends AbstractTableModel {
 		return true;
 	}
 
-	public void toggleBreakpoint(int row, int column) {
-		if (column == NUMBER_CELL) {
-			getRow(row).toggleBreakpoint();
-			fireTableRowsUpdated(row, row);
-		}
+	public void setTable(Parse table) {
+		this.table = table;
+		fireTableDataChanged();
 	}
 
-	public boolean actualRowHasBreakpoint() {
-		return getActualRow().hasBreakpoint();
-	}
-	public boolean isBeforeActualRow(int index) {
-		return index < actualRowIndex;
-	}
-	public boolean isAfterActualRow(int index) {
-		return index > actualRowIndex;
-	}
-	public boolean isActualRow(int index) {
-		return index == actualRowIndex;
-	}
-
-	public void removeBreakpointAtActualRow() {
-		getActualRow().removeBreakpoint();
-	}
-
-	public void setRows(List<Row> rows) {
-		rowsList = rows;
-	}
-
-	public Row getActualRow() {
-		return getRow(actualRowIndex);
-	}
-
-	public void updateActualRow(int cell) {
-		fireTableCellUpdated(actualRowIndex, cell);
+	public Parse getActualRow() {
+		return getRow(getPointer());
 	}
 
 	public void updateRow(int index) {
 		fireTableRowsUpdated(index, index);
 	}
 
-	public List<Row> getRows() {
-		return rowsList;
+	public Parse getTable() {
+		return table;
 	}
 
-	public void updateActualRow() {
-		updateRow(actualRowIndex);
+	public void setFixtureName(String text) {
+		table.at(0, 0, 0).body = text;
 	}
-	
-	public boolean isLastRow() {
-		return getRowCount() - 1 == actualRowIndex;
+
+	public String getFixtureName() {
+		return table.at(0, 0, 0).text();
 	}
+
 }

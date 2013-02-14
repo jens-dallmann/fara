@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import testEditor.frontend.editorTable.model.FitRowTableModel;
-import testEditor.frontend.editorTable.model.Row;
 
 
 public class FitTableCellRenderer extends DefaultTableCellRenderer {
@@ -26,8 +25,7 @@ public class FitTableCellRenderer extends DefaultTableCellRenderer {
 	private void decorateBreakpoint(JTable table, int row, int column) {
 		if (column == FitRowTableModel.NUMBER_CELL) {
 			FitRowTableModel model = extractFitModel(table);
-			Row rowModel = model.getRow(row);
-			if (rowModel.hasBreakpoint()) {
+			if (model.breakpointAt(row)) {
 				setBackground(Color.ORANGE);
 			} else {
 				setBackground(Color.WHITE);
@@ -46,16 +44,15 @@ public class FitTableCellRenderer extends DefaultTableCellRenderer {
 	private void decorateStateCell(JTable table, int row, int column) {
 		if (column == FitRowTableModel.STATE_CELL) {
 			FitRowTableModel fitModel = extractFitModel(table);
-			Row rowObj = fitModel.getRow(row);
-			if (rowObj.isProcessing()) {
+			if (fitModel.rowStateAt(row) == RowState.PROCESSING) {
 				setBackground(Color.CYAN);
-			} else if (rowObj.isSuccess()) {
+			} else if (fitModel.rowStateAt(row) == RowState.SUCCESS) {
 				setBackground(Color.GREEN);
-			} else if (rowObj.hasFailed()) {
+			} else if (fitModel.rowStateAt(row) == RowState.FAILED) {
 				setBackground(Color.RED);
-			} else if (rowObj.isWaiting()) {
+			} else if (fitModel.rowStateAt(row) == RowState.WAIT) {
 				setBackground(Color.LIGHT_GRAY);
-			} else if (rowObj.isSkipped()) {
+			} else if (fitModel.rowStateAt(row) == RowState.SKIPPED) {
 				setBackground(Color.YELLOW);
 			} 
 			else {

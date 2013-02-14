@@ -20,8 +20,8 @@ public class FaraTestEditorImpl implements FaraTestEditor{
 	}
 	
 	@Override
-	public void startTestEditor(Parse rows) {
-		testEditor = new TestEditorController(this, rows);
+	public void startTestEditor() {
+		testEditor = new TestEditorController(this);
 	}
 	
 	@Override
@@ -46,5 +46,10 @@ public class FaraTestEditorImpl implements FaraTestEditor{
 				}
 			});
 		}
+	}
+
+	@Override
+	public void injectTable(Parse table) {
+		testEditor.initTable(table);
 	}
 }

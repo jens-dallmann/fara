@@ -3,24 +3,22 @@ package testEditor.frontend.editorTable;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import testEditor.frontend.editorTable.model.FitRowTableModel;
-import testEditor.frontend.editorTable.model.Row;
 import fit.Parse;
 
 public class FitTableController {
 
 	private FitTableUI ui;
 	private FitRowTableModel model;
-	
-	public FitTableController(Parse rows) {
-		model = createTableModel(rows);
-		ui = new FitTableUI(model);
+
+	public void init(Parse table) {
+		model = createTableModel(table);
+		String fixtureName = extractFixtureName(table);
+		ui = new FitTableUI(model, fixtureName);
 		ui.getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -28,27 +26,36 @@ public class FitTableController {
 				Point p = e.getPoint();
 				int row = table.rowAtPoint(p);
 				int column = table.columnAtPoint(p);
-				model.toggleBreakpoint(row,column);
-				table.getSelectionModel().clearSelection();
+				if (column == FitRowTableModel.NUMBER_CELL) {
+					model.toggleBreakpoint(row);
+				}
 			}
 		});
+		ui.getFixtureComponent().setFixtureChangedDelegate(
+				new FixtureChangedDelegate() {
+					@Override
+					public void fixtureChanged(String text) {
+						model.setFixtureName(text);
+					}
+				});
 	}
-	
-	private FitRowTableModel createTableModel(Parse rows) {
+
+	private String extractFixtureName(Parse table) {
+		if(table == null) {
+			return "";
+		}
+		else {
+			return table.at(0,0,0).text();
+		}
+	}
+
+	private FitRowTableModel createTableModel(Parse table) {
 		FitRowTableModel model = new FitRowTableModel();
-		createRowListInModel(rows, model);
+		model.setTable(table);
+		model.initRowStates();
 		model.prepareFirstRow();
 		model.calculateColumnCount();
 		return model;
-	}
-
-	private void createRowListInModel(Parse rows, FitRowTableModel model) {
-		List<Row> rowsList = new ArrayList<Row>();
-		model.setRows(rowsList);
-		while (rows != null) {
-			rowsList.add(new Row(rows));
-			rows = rows.more;
-		}
 	}
 
 	public JComponent getPanel() {
@@ -56,19 +63,17 @@ public class FitTableController {
 	}
 
 	public Parse startRowProcessing() {
-		Row actualRow = model.getActualRow();
-		actualRow.setProcessing();
-		model.updateActualRow(FitRowTableModel.STATE_CELL);
-		return actualRow.getOriginalRow();
+		model.setRowStateAtPointer(RowState.PROCESSING);
+
+		return model.getActualRow();
 	}
 
 	public void actualRowProcessed(RowState state, String message) {
-		Row row = model.getActualRow();
-		row.setState(state);
-		if(state == RowState.FAILED) {
-			row.setMessage(message);
+		if (message == null) {
+			message = "";
 		}
-		model.updateActualRow();
+		model.publishResult(state, message);
+		model.updatePointerRow();
 	}
 
 	public boolean hasMoreRows() {
@@ -76,7 +81,7 @@ public class FitTableController {
 	}
 
 	public boolean rowHasBreakpoint() {
-		return model.actualRowHasBreakpoint();
+		return model.breakpointAtPointer();
 	}
 
 	public int getSelectedRowIndex() {
@@ -86,44 +91,44 @@ public class FitTableController {
 	public void jumpTo() {
 		int selectedRow = ui.getTable().getSelectedRow();
 		if (selectedRow >= 0) {
-			while (!model.isActualRow(selectedRow)) {
-				model.getActualRow().setState(RowState.SKIPPED);
-				if (model.isAfterActualRow(selectedRow)) {
-					model.increaseActualRowIndex();
-				} else if (model.isBeforeActualRow(selectedRow)) {
-					model.decreaseActualRowIndex();
+			while (!model.isPointer(selectedRow)) {
+				model.setRowStateAtPointer(RowState.SKIPPED);
+				if (model.isAfterPointer(selectedRow)) {
+					model.rowPointerNext();
+				} else if (model.isBeforePointer(selectedRow)) {
+					model.rowPointerPrevious();
 				}
 			}
-			model.getActualRow().setState(RowState.WAIT);
+			model.setRowStateAtPointer(RowState.WAIT);
 			model.fireTableRowsUpdated(0, model.getRowCount() - 1);
 		}
 	}
+
 	public void enableNextRow() {
-		if(model.hasMoreRows()) {
-			model.increaseActualRowIndex();
-			Row row = model.getActualRow();
-			row.setState(RowState.WAIT);
-			model.updateActualRow();
+		if (model.hasMoreRows()) {
+			model.rowPointerNext();
+			model.setRowStateAtPointer(RowState.WAIT);
+			model.updatePointerRow();
 		}
 	}
 
 	public void removeRowBreakpoint() {
-		model.removeBreakpointAtActualRow();
+		model.removeBreakpointAtPointer();
 	}
 
-	public List<Row> getRows() {
-		return model.getRows();
+	public Parse getRows() {
+		return model.getTable().parts;
 	}
 
 	public String tableAsHtml() {
-		List<Row> rows = getRows();
+		Parse originalRow = getRows();
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<table border='1'>");
-		for(Row oneRow: rows) {
-			Parse originalRow = oneRow.getOriginalRow();
+		while (originalRow != null) {
 			buffer.append(originalRow.tag);
 			buffer.append(buildCells(originalRow.parts));
 			buffer.append(originalRow.end);
+			originalRow = originalRow.more;
 		}
 		buffer.append("</table>");
 		return buffer.toString();
@@ -132,18 +137,22 @@ public class FitTableController {
 	private String buildCells(Parse parts) {
 		StringBuffer buffer = new StringBuffer();
 		Parse cells = parts;
-		while(cells != null) {
-			
+		while (cells != null) {
+
 			buffer.append(cells.tag);
 			buffer.append(cells.text());
 			buffer.append(cells.end);
 			cells = cells.more;
 		}
-		
+
 		return buffer.toString();
 	}
 
 	public boolean isLastRow() {
-		return model.isLastRow();
+		return model.pointsToLastRow();
+	}
+
+	public FitRowTableModel getModel() {
+		return model;
 	}
 }

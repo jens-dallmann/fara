@@ -11,6 +11,9 @@ import testEditor.FaraTestEditorImpl;
 
 public abstract class AbstractTestEditorFixtureAggregator extends AbstractActionFixtureAggregator implements DoRowsListener{
 	private FaraTestEditor testEditor;
+	public AbstractTestEditorFixtureAggregator() {
+		this.testEditor = new FaraTestEditorImpl();
+	}
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
 	 * objects
@@ -18,14 +21,18 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	 */
 	public void init() {
 		super.init();
-		this.testEditor = new FaraTestEditorImpl();
+	}
+	@Override
+	public void doTable(Parse table) {
+		testEditor.startTestEditor();
+		testEditor.injectTable(table);
+		testEditor.registerListener(this);
+		super.doTable(table);
 	}
 	@Override
 	public void doRows(Parse rows) {
-		testEditor.startTestEditor(rows);
-		testEditor.registerListener(this);
+		
 	}
-	
 	@Override
 	protected void handleErrorMessages(Parse cell, String errorMessage) {
 		testEditor.publishResult(CommandResultState.WRONG.toString(), errorMessage);

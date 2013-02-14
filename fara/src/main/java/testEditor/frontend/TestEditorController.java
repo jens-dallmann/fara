@@ -2,7 +2,6 @@ package testEditor.frontend;
 
 import fit.Parse;
 import interfaces.DoNextRowObservable;
-import interfaces.FaraTestEditor;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,26 +11,37 @@ import testEditor.frontend.editorTable.FitTableController;
 import testEditor.frontend.editorTable.RowState;
 import testEditor.frontend.toolbar.ToolbarController;
 import testEditor.frontend.toolbar.ToolbarDelegate;
+import core.state.AbstractStateCalculator;
+import core.state.StateListener;
 
-public class TestEditorController implements ToolbarDelegate {
+public class TestEditorController implements ToolbarDelegate, StateListener<TestEditorState>{
 	private FitTableController fitTable;
 	private ToolbarController toolbar;
 	private TestEditorUI ui;
 	private boolean play;
 	private final DoNextRowObservable testEditor;
+	private AbstractStateCalculator<TestEditorState> stateCalculator;
 
-	public TestEditorController(FaraTestEditor testEditor, Parse rows) {
+	public TestEditorController(DoNextRowObservable testEditor) {
 		this.testEditor = testEditor;
-		fitTable = new FitTableController(rows);
+		fitTable = new FitTableController();
 		toolbar = new ToolbarController(this);
 		ui = new TestEditorUI();
 		ui.addPanel(toolbar.getPanel());
-		ui.addPanel(fitTable.getPanel());
+		initTable(null);
 	}
-
+	public void initTable(Parse table) {
+		fitTable.init(table);
+		stateCalculator = new TestEditorStateCalculator(fitTable.getModel());
+		stateCalculator.registerListener(this);
+		stateCalculator.calculateState();
+		ui.addTablePanel(fitTable.getPanel());
+	}
 	public Parse startProcessNextRow() {
 		toolbar.setButtonsEnabled(false);
-		return fitTable.startRowProcessing();
+		Parse startRowProcessing = fitTable.startRowProcessing();
+		stateCalculator.calculateState();
+		return startRowProcessing;
 	}
 
 	public void setResult(String result, String message) {
@@ -47,6 +57,7 @@ public class TestEditorController implements ToolbarDelegate {
 				nextStep();
 			}
 		}
+		stateCalculator.calculateState();
 	}
 
 	private boolean canProceed(RowState rowState) {
@@ -65,7 +76,7 @@ public class TestEditorController implements ToolbarDelegate {
 		return null;
 	}
 
-	public boolean hasMoreRows() {
+	private boolean hasMoreRows() {
 		return fitTable.hasMoreRows();
 	}
 
@@ -106,4 +117,16 @@ public class TestEditorController implements ToolbarDelegate {
 		}
 	}
 
+	@Override
+	public void onStateChange(TestEditorState newState) {
+		if(newState == TestEditorState.EMPTY_TABLE) {
+			toolbar.setButtonsEnabled(false);
+		}
+		else if(newState == TestEditorState.IDLE) {
+			toolbar.setButtonsEnabled(true);
+		}
+		else if(newState == TestEditorState.RUNNING) {
+			toolbar.setButtonsEnabled(false);
+		}
+	}
 }
