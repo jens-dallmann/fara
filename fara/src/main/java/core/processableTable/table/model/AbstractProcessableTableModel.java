@@ -1,4 +1,4 @@
-package core.faraTable;
+package core.processableTable.table.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +7,51 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import testEditor.frontend.editorTable.RowState;
+
 
 public abstract class AbstractProcessableTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private List<ProcessableRowStates> rowStates;
 	private int rowPointer;
+	private int breakpointColumn;
+	private int stateColumn;
+	private int failureMessageColumn;
 
+	public AbstractProcessableTableModel() {
+		rowPointer = 0;
+		breakpointColumn = 0;
+		stateColumn = 1;
+		failureMessageColumn = 2;
+	}
+	
+	public abstract Object getRowAtPointer();
+	@Override
+	public int getColumnCount() {
+		return 3;
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if (columnIndex == getBreakpointColumn()) {
+			if (breakpointAt(rowIndex)) {
+				return rowIndex + "(BP)";
+			}
+			return rowIndex;
+		}
+		if (columnIndex == getStateColumn()) {
+			return rowStateAt(rowIndex);
+		}
+		if (isErrorCell(columnIndex)) {
+			if (rowStateAt(rowIndex) == RowState.FAILED) {
+				return messageAt(rowIndex);
+			}
+		}
+		return null;
+	}
+	protected boolean isErrorCell(int columnIndex) {
+		return columnIndex == getColumnCount() - 1;
+	}
 	public void initRowStates() {
 		int rowCount = getRowCount();
 		rowStates = new ArrayList<ProcessableRowStates>(rowCount);
@@ -115,5 +152,29 @@ public abstract class AbstractProcessableTableModel extends AbstractTableModel {
 
 	public String messageAt(int index) {
 		return rowStates.get(index).getFailureMessage();
+	}
+
+	public int getBreakpointColumn() {
+		return breakpointColumn;
+	}
+
+	public void setBreakpointColumn(int breakpointColumn) {
+		this.breakpointColumn = breakpointColumn;
+	}
+
+	public int getStateColumn() {
+		return stateColumn;
+	}
+
+	public void setStateColumn(int stateColumn) {
+		this.stateColumn = stateColumn;
+	}
+
+	public int getFailureMessageColumn() {
+		return failureMessageColumn;
+	}
+
+	public void setFailureMessageColumn(int failureMessageColumn) {
+		this.failureMessageColumn = failureMessageColumn;
 	}
 }

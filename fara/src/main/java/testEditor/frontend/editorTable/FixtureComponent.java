@@ -84,7 +84,7 @@ public class FixtureComponent {
 
 	private Class<?> tryToFindOnClassPath(String text, Class<?> fixtureClass) {
 		try {
-			fixtureClass = FitTableController.class.getClassLoader()
+			fixtureClass = FitHtmlRepresentationController.class.getClassLoader()
 					.loadClass(text);
 		} catch (ClassNotFoundException e) {
 			markFixtureTextFieldWrong("class not found on classpath");

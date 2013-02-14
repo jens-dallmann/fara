@@ -1,6 +1,6 @@
-package core.faraTable;
+package core.processableTable.table.model;
 
-import testEditor.frontend.editorTable.RowState;
+
 
 public class ProcessableRowStates {
 

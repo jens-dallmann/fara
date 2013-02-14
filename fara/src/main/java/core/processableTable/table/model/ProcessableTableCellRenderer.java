@@ -1,4 +1,4 @@
-package testEditor.frontend.editorTable;
+package core.processableTable.table.model;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,10 +7,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import testEditor.frontend.editorTable.model.FitRowTableModel;
 
-
-public class FitTableCellRenderer extends DefaultTableCellRenderer {
+public class ProcessableTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -23,8 +21,8 @@ public class FitTableCellRenderer extends DefaultTableCellRenderer {
 	}
 
 	private void decorateBreakpoint(JTable table, int row, int column) {
-		if (column == FitRowTableModel.NUMBER_CELL) {
-			FitRowTableModel model = extractFitModel(table);
+		AbstractProcessableTableModel model = extractFitModel(table);
+		if (column == model.getBreakpointColumn()) {
 			if (model.breakpointAt(row)) {
 				setBackground(Color.ORANGE);
 			} else {
@@ -33,17 +31,17 @@ public class FitTableCellRenderer extends DefaultTableCellRenderer {
 		}
 	}
 
-	private FitRowTableModel extractFitModel(JTable table) {
+	private AbstractProcessableTableModel extractFitModel(JTable table) {
 		TableModel model = table.getModel();
-		if (model instanceof FitRowTableModel) {
-			return (FitRowTableModel) model;
+		if (model instanceof AbstractProcessableTableModel) {
+			return (AbstractProcessableTableModel) model;
 		}
 		return null;
 	}
 
 	private void decorateStateCell(JTable table, int row, int column) {
-		if (column == FitRowTableModel.STATE_CELL) {
-			FitRowTableModel fitModel = extractFitModel(table);
+		AbstractProcessableTableModel fitModel = extractFitModel(table);
+		if (column == fitModel.getStateColumn()) {
 			if (fitModel.rowStateAt(row) == RowState.PROCESSING) {
 				setBackground(Color.CYAN);
 			} else if (fitModel.rowStateAt(row) == RowState.SUCCESS) {

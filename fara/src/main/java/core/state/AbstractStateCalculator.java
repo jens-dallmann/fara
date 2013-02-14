@@ -1,9 +1,10 @@
 package core.state;
 
-import interfaces.StateCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import core.StateCalculator;
 
 
 public abstract class AbstractStateCalculator<StateEnum extends Enum<?>> implements StateCalculator<StateEnum>{

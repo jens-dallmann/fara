@@ -1,18 +1,20 @@
 package fitArchitectureAdapter;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
+import testEditor.frontend.TestEditorController;
+import core.processableTable.ProcessResultListener;
+import core.processableTable.ProcessService;
 import fit.Parse;
 import fitArchitectureAdapter.container.CommandResult;
-import interfaces.DoRowsListener;
-import interfaces.FaraTestEditor;
 
-import java.lang.reflect.InvocationTargetException;
-
-import testEditor.FaraTestEditorImpl;
-
-public abstract class AbstractTestEditorFixtureAggregator extends AbstractActionFixtureAggregator implements DoRowsListener{
-	private FaraTestEditor testEditor;
+public abstract class AbstractTestEditorFixtureAggregator extends AbstractActionFixtureAggregator implements ProcessService{
+	private List<ProcessResultListener> listeners;
+	
 	public AbstractTestEditorFixtureAggregator() {
-		this.testEditor = new FaraTestEditorImpl();
+		listeners = new ArrayList<ProcessResultListener>();
 	}
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
@@ -24,9 +26,7 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	}
 	@Override
 	public void doTable(Parse table) {
-		testEditor.startTestEditor();
-		testEditor.injectTable(table);
-		testEditor.registerListener(this);
+		new TestEditorController(this, table);
 		super.doTable(table);
 	}
 	@Override
@@ -35,20 +35,37 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	}
 	@Override
 	protected void handleErrorMessages(Parse cell, String errorMessage) {
-		testEditor.publishResult(CommandResultState.WRONG.toString(), errorMessage);
+		publishResultToListeners(CommandResultState.WRONG.toString(), errorMessage);
 	}
 	@Override
 	protected CommandResult callMethod(String text)
 			throws IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
 		CommandResult result = super.callMethod(text);
-		testEditor.publishResult(result.getResultState().toString(),
+		publishResultToListeners(result.getResultState().toString(),
 				result.getFailureMessage());
 		return result;
 	}
+	public void doNextStep(Object row) {
+		if(row instanceof Parse) {
+			Parse parse = (Parse) row;
+			doRow(parse);
+		}
+	}
 	
 	@Override
-	public void doNextRow(Parse parse) {
-		doRow(parse);
+	public void registerResultListener(ProcessResultListener listener) {
+		listeners.add(listener);
+	}
+	
+	@Override
+	public void removeResultListener(ProcessResultListener listener) {
+		listeners.remove(listener);
+	}
+	
+	public void publishResultToListeners(String state, String message) {
+		for(ProcessResultListener listener: listeners) {
+			listener.publishResult(state, message);
+		}
 	}
 }

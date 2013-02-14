@@ -1,53 +1,50 @@
-package testEditor.frontend.toolbar;
+package core.processableTable.toolbar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
-public class ToolbarController{
+
+
+public class ProcessToolbarController{
 	
-	private ToolbarUI ui;
+	private ProcessToolbarUI ui;
 	
-	private ToolbarDelegate toolbarDelegate;
+	private ProcessToolbarDelegate processToolbarDelegate;
 	
-	public ToolbarController(ToolbarDelegate toolbarDelegate) {
-		ui = new ToolbarUI();
+	public ProcessToolbarController() {
+		ui = new ProcessToolbarUI();
 		registerListener();
-		this.toolbarDelegate = toolbarDelegate;
 	}
 
+	public void setProcessToolbarDelegate(ProcessToolbarDelegate processToolbarDelegate) {
+		this.processToolbarDelegate = processToolbarDelegate;
+	}
 	private void registerListener() {
 		ui.getNextStepButton().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				toolbarDelegate.nextStep();
+				processToolbarDelegate.nextStep();
 			}
 		});
 		
 		ui.getPlayButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				toolbarDelegate.play();
+				processToolbarDelegate.play();
 			}
 		});
 		
 		ui.getSkipButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				toolbarDelegate.skip();
-			}
-		});
-		
-		ui.getSaveButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				toolbarDelegate.save();
+				processToolbarDelegate.skip();
 			}
 		});
 	}
 	
-	public JPanel getPanel() {
+	public JComponent getComponent() {
 		return ui.getPanel();
 	}
 	

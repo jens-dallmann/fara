@@ -1,7 +1,7 @@
-package testEditor.frontend.editorTable.model;
+package testEditor.frontend.editorTable;
 
-import testEditor.frontend.editorTable.RowState;
-import core.faraTable.AbstractProcessableTableModel;
+import core.processableTable.table.model.AbstractProcessableTableModel;
+import core.processableTable.table.model.RowState;
 import fit.Parse;
 
 public class FitRowTableModel extends AbstractProcessableTableModel {
@@ -10,8 +10,6 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 	private Parse table;
 	private int columnCount;
 
-	public static final int NUMBER_CELL = 0;
-	public static final int STATE_CELL = 1;
 	public static final int COMMAND_CELL = 2;
 
 	public void calculateColumnCount() {
@@ -23,6 +21,7 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 				rowTemp = rowTemp.more;
 			}
 		}
+		setFailureMessageColumn(getColumnCount()-1);
 	}
 
 	private int countCells(Parse rowTemp) {
@@ -45,9 +44,9 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-		if (column == NUMBER_CELL) {
+		if (column == getBreakpointColumn()) {
 			return "No";
-		} else if (column == STATE_CELL) {
+		} else if (column == getStateColumn()) {
 			return "State";
 		} else if (column == COMMAND_CELL) {
 			return "Command";
@@ -74,29 +73,17 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return columnCount + 3;
+		return columnCount + super.getColumnCount();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if (columnIndex == NUMBER_CELL) {
-			if (breakpointAt(rowIndex)) {
-				return rowIndex + "(BP)";
-			}
-			return rowIndex;
-		}
-		if (columnIndex == STATE_CELL) {
-			return rowStateAt(rowIndex);
-		}
 		if (isParameter(columnIndex)) {
 			return prepareParameterValue(columnIndex, rowIndex);
 		}
-		if (isErrorCell(columnIndex)) {
-			if (rowStateAt(rowIndex) == RowState.FAILED) {
-				return messageAt(rowIndex);
-			}
+		else {
+			return super.getValueAt(rowIndex, columnIndex);
 		}
-		return "";
 	}
 
 	private Object prepareParameterValue(int columnIndex, int rowIndex) {
@@ -112,9 +99,7 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 	private Parse getCell(int rowIndex, int columnIndex) {
 		return getRow(rowIndex).at(0,columnIndex-2);
 	}
-	private boolean isErrorCell(int columnIndex) {
-		return columnIndex == getColumnCount() - 1;
-	}
+
 
 	private String extractParameterText(String text) {
 		int end = text.indexOf("<span");
@@ -144,10 +129,6 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		fireTableDataChanged();
 	}
 
-	public Parse getActualRow() {
-		return getRow(getPointer());
-	}
-
 	public void updateRow(int index) {
 		fireTableRowsUpdated(index, index);
 	}
@@ -164,4 +145,15 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		return table.at(0, 0, 0).text();
 	}
 
+	@Override
+	public Object getRowAtPointer() {
+		return getRow(getPointer());
+	}
+
+	public void setNewTable(Parse parse) {
+		this.table = parse;
+		calculateColumnCount();
+		fireTableDataChanged();
+	}
 }
+
