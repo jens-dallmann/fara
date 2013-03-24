@@ -8,6 +8,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class PersistenceToolbarUI {
 	private JButton save;
+	private JButton saveAs;
 	private JButton load;
 	private JPanel panel;
 	
@@ -17,8 +18,10 @@ public class PersistenceToolbarUI {
 		
 		save = new JButton("Save");
 		load = new JButton("Load");
+		saveAs = new JButton("Save As");
 		
 		panel.add(save);
+		panel.add(saveAs);
 		panel.add(load);
 	}
 	
@@ -26,6 +29,9 @@ public class PersistenceToolbarUI {
 		return save;
 	}
 	
+	public JButton getSaveAs() {
+		return saveAs;
+	}
 	public JButton getLoad() {
 		return load;
 	}

@@ -1,5 +1,7 @@
 package testEditor.frontend;
 
+import java.awt.Window;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,5 +38,9 @@ public class TestEditorUI {
 		this.panel.add(panel,1);
 		tablePanel = panel;
 		frame.validate();
+	}
+
+	public Window getFrame() {
+		return frame;
 	}
 }

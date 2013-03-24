@@ -1,6 +1,7 @@
 package core.processableTable;
 
 import core.processableTable.table.ProcessableTableController;
+import core.processableTable.table.ProcessableTableDelegate;
 import core.processableTable.table.model.AbstractProcessableTableModel;
 import core.processableTable.toolbar.ProcessToolbarController;
 import core.state.StateListener;
@@ -9,9 +10,9 @@ public class ProcessableTableComponent implements StateListener<ProcessTableStat
 	private ProcessableTableController tableController;
 	private ProcessToolbarController toolbarController;
 	
-	public ProcessableTableComponent(AbstractProcessableTableModel model, ProcessService service) {
+	public ProcessableTableComponent(AbstractProcessableTableModel model, ProcessService service, ProcessableTableDelegate delegate) {
 		toolbarController = new ProcessToolbarController();
-		tableController = new ProcessableTableController(model, service, this);
+		tableController = new ProcessableTableController(model, service, this, delegate);
 		toolbarController.setProcessToolbarDelegate(tableController);
 	}
 

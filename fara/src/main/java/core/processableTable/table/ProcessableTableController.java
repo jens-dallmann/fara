@@ -26,8 +26,10 @@ public class ProcessableTableController extends ProcessTableObservable implement
 	private boolean play;
 	private final ProcessService service;
 	private ProcessTableStateCalculator stateCalculator;
+	private ProcessableTableDelegate delegate;
 	
-	public ProcessableTableController(final AbstractProcessableTableModel model, ProcessService service, StateListener<ProcessTableStates> stateListener) {
+	public ProcessableTableController(final AbstractProcessableTableModel model, ProcessService service, StateListener<ProcessTableStates> stateListener, ProcessableTableDelegate delegate) {
+		this.delegate = delegate;
 		this.model = model;
 		this.service = service;
 		stateCalculator = new ProcessTableStateCalculator(model);
@@ -115,6 +117,10 @@ public class ProcessableTableController extends ProcessTableObservable implement
 			if (play) {
 				nextStep();
 			}
+		}
+		else {
+			delegate.lastRowProcessed();
+			play = false;
 		}
 	}
 

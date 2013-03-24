@@ -35,15 +35,14 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	}
 	@Override
 	protected void handleErrorMessages(Parse cell, String errorMessage) {
-		publishResultToListeners(CommandResultState.WRONG.toString(), errorMessage);
+		publishResult(CommandResultState.WRONG.toString(), errorMessage);
 	}
 	@Override
 	protected CommandResult callMethod(String text)
 			throws IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
 		CommandResult result = super.callMethod(text);
-		publishResultToListeners(result.getResultState().toString(),
-				result.getFailureMessage());
+		
 		return result;
 	}
 	public void doNextStep(Object row) {
@@ -62,10 +61,11 @@ public abstract class AbstractTestEditorFixtureAggregator extends AbstractAction
 	public void removeResultListener(ProcessResultListener listener) {
 		listeners.remove(listener);
 	}
-	
-	public void publishResultToListeners(String state, String message) {
+	@Override
+	public void publishResult(String state, String failureMessage) {
 		for(ProcessResultListener listener: listeners) {
-			listener.publishResult(state, message);
+			listener.publishResult(state, failureMessage);
 		}
+		super.publishResult(state, failureMessage);
 	}
 }

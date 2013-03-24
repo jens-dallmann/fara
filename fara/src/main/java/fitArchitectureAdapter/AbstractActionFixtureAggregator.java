@@ -113,6 +113,12 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 			String message = commandResult.getFailureMessage();
 			processWrong(parameterNumer, message);
 		}
+		publishResult(commandResult.getResultState().toString(),
+				commandResult.getFailureMessage());
+	}
+
+	public void publishResult(String state, String failureMessage) {
+		
 	}
 
 	private void processWrong(int parameterNumber, String message) {

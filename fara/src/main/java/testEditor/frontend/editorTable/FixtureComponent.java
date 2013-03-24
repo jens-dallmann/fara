@@ -116,4 +116,8 @@ public class FixtureComponent {
 		fixture.repaint();
 		validateFixtureTextField(text);
 	}
+
+	public String getText() {
+		return fixture.getText();
+	}
 }

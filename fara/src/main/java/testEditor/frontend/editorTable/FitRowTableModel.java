@@ -1,14 +1,17 @@
 package testEditor.frontend.editorTable;
 
+import java.io.File;
+
 import core.processableTable.table.model.AbstractProcessableTableModel;
 import core.processableTable.table.model.RowState;
 import fit.Parse;
 
-public class FitRowTableModel extends AbstractProcessableTableModel {
+public class FitRowTableModel extends AbstractProcessableTableModel{
 
 	private static final long serialVersionUID = 1L;
 	private Parse table;
 	private int columnCount;
+	private File testFile;
 
 	public static final int COMMAND_CELL = 2;
 
@@ -37,7 +40,6 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		getCell(rowIndex, columnIndex).body = (String) aValue;
-		getRow(rowIndex).at(0,columnIndex);
 		updateRow(rowIndex);
 		super.setValueAt(aValue, rowIndex, columnIndex);
 	}
@@ -154,6 +156,23 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		this.table = parse;
 		calculateColumnCount();
 		fireTableDataChanged();
+	}
+	
+	@Override
+	public void publishResult(RowState state, String message) {
+		super.publishResult(state, message);
+	}
+	
+	public File getTestFile() {
+		return testFile;
+	}
+	
+	public void setTestFile(File file) {
+		this.testFile = file;
+	}
+
+	public boolean hasFile() {
+		return testFile != null;
 	}
 }
 
