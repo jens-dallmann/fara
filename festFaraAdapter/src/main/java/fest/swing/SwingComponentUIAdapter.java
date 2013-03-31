@@ -12,6 +12,7 @@ package fest.swing;
 
 import java.awt.Component;
 
+import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.query.ComponentEnabledQuery;
 import org.fest.swing.query.ComponentVisibleQuery;
 
@@ -34,8 +35,8 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 	@Override
 	public CommandResult checkEnabled(String componentName) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(componentName);
-		if (component != null) {
+		Component component = allocateComponent(componentName, result);
+		if (isResultStateWrong(result)) {
 			if (isEnabled(component)) {
 				result.setResultState(CommandResultState.RIGHT);
 			} else {
@@ -48,12 +49,27 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 		return result;
 	}
 
+	private boolean isResultStateWrong(CommandResult result) {
+		return result.getResultState() != CommandResultState.WRONG;
+	}
+
+	private Component allocateComponent(String componentName, CommandResult result) {
+		try {
+			Component component = frameWrapper.getFrameFixture().robot.finder().findByName(componentName);
+			return component;
+		}
+		catch(ComponentLookupException e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result, componentName);
+			return null;
+		}
+	}
+
 	@FitCommand({"Component name which should not be enabled"})
 	@Override
 	public CommandResult checkDisabled(String componentName) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(componentName);
-		if (component != null) {
+		Component component = allocateComponent(componentName, result);
+		if (isResultStateWrong(result)) {
 			if (!isEnabled(component)) {
 				result.setResultState(CommandResultState.RIGHT);
 			} else {
@@ -74,8 +90,8 @@ public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands 
 	@Override
 	public CommandResult checkVisible(String componentName) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(componentName);
-		if (component != null) {
+		Component component = allocateComponent(componentName, result);
+		if (isResultStateWrong(result)) {
 			if (isVisible(component)) {
 				result.setResultState(CommandResultState.RIGHT);
 			} else {

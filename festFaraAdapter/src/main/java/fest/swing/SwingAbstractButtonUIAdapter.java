@@ -10,8 +10,6 @@
  ******************************************************************************/
 package fest.swing;
 
-import java.awt.Component;
-
 import javax.swing.AbstractButton;
 
 import fest.FestResultBuilder;
@@ -33,8 +31,8 @@ public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, Ha
 	@Override
 	public CommandResult checkSelected(String componentName){
 		CommandResult result = new CommandResult();
-		Component component = _frameWrapper.findComponentByName(componentName);
-		if (component instanceof AbstractButton) {
+		AbstractButton component = allocateButton(componentName, result);
+		if (result.getResultState() != CommandResultState.WRONG) {
 			AbstractButton fixture = (AbstractButton) component;
 			if(fixture.isSelected()) {
 				result.setResultState(CommandResultState.RIGHT);
@@ -52,10 +50,9 @@ public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, Ha
 	@Override
 	public CommandResult checkNotSelected(String componentName){
 		CommandResult result = new CommandResult();
-		Component component = _frameWrapper.findComponentByName(componentName);
-		if (component instanceof AbstractButton) {
-			AbstractButton fixture = (AbstractButton) component;
-			if(!fixture.isSelected()) {
+		AbstractButton abstractButton = allocateButton(componentName, result);
+		if (result.getResultState() != CommandResultState.WRONG) {
+			if(!abstractButton.isSelected()) {
 				result.setResultState(CommandResultState.RIGHT);
 			}
 			else {
@@ -65,5 +62,15 @@ public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, Ha
 			FestResultBuilder.buildWrongResultComponentFailure(result, componentName);
 		}
 		return result;
+	}
+
+	private AbstractButton allocateButton(String componentName,
+			CommandResult result) {
+		try {
+			return (AbstractButton) _frameWrapper.getFrameFixture().robot.finder().findByName(componentName);
+		} catch(Exception e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result, componentName);
+			return null;
+		}
 	}
 }

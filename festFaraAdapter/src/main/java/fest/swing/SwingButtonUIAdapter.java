@@ -10,10 +10,7 @@
  ******************************************************************************/
 package fest.swing;
 
-import java.awt.Component;
-
-import javax.swing.JButton;
-
+import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.fixture.JButtonFixture;
 
 import fest.FestResultBuilder;
@@ -35,22 +32,25 @@ public class SwingButtonUIAdapter implements ButtonUIAdapter, HasCommands {
 	@Override
 	public CommandResult pressButton(String buttonName) {
 		CommandResult result = new CommandResult();
-		Component component = null;
-		component = _frameWrapper.findComponentByName(buttonName);
-		if(component == null) {
-			component = _frameWrapper.findButtonByText(buttonName);
-		}
-
-		if (component instanceof JButton) {
-			JButton button = (JButton) component;
-			JButtonFixture buttonFixture = new JButtonFixture(
-					_frameWrapper.getRobot(), button);
-			buttonFixture.click();
+		JButtonFixture button = allocateButton(buttonName, result);
+		if (result.getResultState() != CommandResultState.WRONG) {
+			button.click();
 			result.setResultState(CommandResultState.RIGHT);
 		} else {
 			FestResultBuilder.buildWrongResultComponentFailure(result,
 					buttonName);
 		}
 		return result;
+	}
+
+	private JButtonFixture allocateButton(String buttonName, CommandResult result) {
+		try {
+			return _frameWrapper.getFrameFixture().button(buttonName);
+		}
+		catch(ComponentLookupException e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result, buttonName);
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

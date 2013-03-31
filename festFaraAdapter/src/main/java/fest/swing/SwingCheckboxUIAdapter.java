@@ -10,10 +10,7 @@
  ******************************************************************************/
 package fest.swing;
 
-import java.awt.Component;
-
-import javax.swing.JCheckBox;
-
+import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.fixture.JCheckBoxFixture;
 
 import fest.FestResultBuilder;
@@ -35,15 +32,31 @@ public class SwingCheckboxUIAdapter implements CheckboxUIAdapter, HasCommands{
 	@Override
 	public CommandResult selectCheckbox(String checkboxName) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(checkboxName);
-		if (component instanceof JCheckBox) {
-			JCheckBox checkbox = (JCheckBox) component;
-			JCheckBoxFixture fixture = new JCheckBoxFixture(frameWrapper.getRobot(), checkbox);
-			fixture.check();
-			result.setResultState(CommandResultState.RIGHT);
+		JCheckBoxFixture fixture = allocateCheckbox(checkboxName, result);
+		if (result.getResultState() != CommandResultState.WRONG) {
+			try {
+				fixture.check();
+				result.setResultState(CommandResultState.RIGHT);
+			} 
+			catch(IllegalArgumentException e) {
+				result.setResultState(CommandResultState.WRONG);
+				result.setFailureMessage("Checkbox is not visible or is disabled");
+				result.setWrongParameterNumber(1);
+			}
 		} else {
 			FestResultBuilder.buildWrongResultComponentFailure(result, checkboxName);
 		}
 		return result;
+	}
+
+	private JCheckBoxFixture allocateCheckbox(String checkboxName,
+			CommandResult result) {
+		try {
+			return frameWrapper.getFrameFixture().checkBox(checkboxName);
+		}
+		catch(ComponentLookupException e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result, checkboxName);
+			return null;
+		}
 	}
 }

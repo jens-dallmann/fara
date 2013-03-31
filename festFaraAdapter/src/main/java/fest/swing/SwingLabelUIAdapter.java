@@ -1,9 +1,6 @@
 package fest.swing;
 
-import java.awt.Component;
-
-import javax.swing.JLabel;
-
+import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.fixture.JLabelFixture;
 
 import fest.FestResultBuilder;
@@ -25,10 +22,8 @@ public class SwingLabelUIAdapter implements LabelUIAdapter, HasCommands{
 	@Override
 	public CommandResult checkLabelText(String labelname, String text) {
 		CommandResult result = new CommandResult();
-		Component component = frameWrapper.findComponentByName(labelname);
-		if(component instanceof JLabel) {
-			JLabel label = (JLabel) component;
-			JLabelFixture fixture = new JLabelFixture(frameWrapper.getRobot(), label);
+		JLabelFixture fixture = allocateLabel(labelname, result);
+		if(result.getResultState() != CommandResultState.WRONG) {
 			if(fixture.text().equals(text)) {
 				result.setResultState(CommandResultState.RIGHT);
 			}
@@ -39,6 +34,15 @@ public class SwingLabelUIAdapter implements LabelUIAdapter, HasCommands{
 			FestResultBuilder.buildWrongResultComponentFailure(result, labelname);
 		}
 		return result;
+	}
+	private JLabelFixture allocateLabel(String labelname, CommandResult result) {
+		try {
+			return frameWrapper.getFrameFixture().label(labelname);
+		}
+		catch(ComponentLookupException e) {
+			FestResultBuilder.buildWrongResultComponentFailure(result, labelname);
+			return null;
+		}
 	}
 	
 }

@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import core.processableTable.ProcessService;
 import fit.ActionFixture;
 import fit.Parse;
 import fitArchitectureAdapter.annotations.FitCommand;
@@ -39,7 +38,7 @@ import fitArchitectureAdapter.interfaces.HasCommands;
  * 
  * @author jens.dallmann
  */
-public abstract class AbstractActionFixtureAggregator extends ActionFixture implements ProcessService{
+public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 
 	private Map<String, InstanceMethodPair> commands;
 

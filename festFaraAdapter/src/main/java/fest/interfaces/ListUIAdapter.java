@@ -35,4 +35,8 @@ public interface ListUIAdapter {
 	 * @return CommandResult
 	 */
 	CommandResult selectListItem(String listName, String itemName);
+
+	CommandResult checkListItemExist(String listName, String itemDescriptor);
+
+	CommandResult checkNoListItemSelected(String listName);
 }

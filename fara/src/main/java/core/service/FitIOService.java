@@ -33,7 +33,7 @@ public class FitIOService {
 		try {
 			parse = new Parse(input);
 		} catch (FitParseException e) {
-			throw new FitIOException("Error on parsing input file", e);
+			throw new FitIOException("Error on parsing input file: "+e.getMessage(), e);
 		}
 		return parse;
 	}
