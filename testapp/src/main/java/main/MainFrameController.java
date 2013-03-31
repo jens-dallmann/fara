@@ -1,5 +1,6 @@
 package main;
 
+import filechooserTab.FilechooserTabController;
 import interfaces.TabController;
 
 import javax.swing.JFrame;
@@ -18,9 +19,11 @@ public class MainFrameController {
 		TabController textComponentTab = new TextComponentTabController();
 		TabController componentTab = new ComponentTabController();
 		TabController labelTab = new LabelTabController();
+		TabController filechooserTab = new FilechooserTabController();
 		ui.addTab(textComponentTab.getTabPanel(), textComponentTab.getTabName());
 		ui.addTab(componentTab.getTabPanel(), componentTab.getTabName());
 		ui.addTab(labelTab.getTabPanel(), labelTab.getTabName());
+		ui.addTab(filechooserTab.getTabPanel(), filechooserTab.getTabName());
 	}
 	
 	public JFrame getFrame() {
