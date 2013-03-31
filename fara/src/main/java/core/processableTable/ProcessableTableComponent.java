@@ -1,18 +1,20 @@
 package core.processableTable;
 
+import javax.swing.JComponent;
+
 import core.processableTable.table.ProcessableTableController;
 import core.processableTable.table.ProcessableTableDelegate;
 import core.processableTable.table.model.AbstractProcessableTableModel;
 import core.processableTable.toolbar.ProcessToolbarController;
 import core.state.StateListener;
 
-public class ProcessableTableComponent implements StateListener<ProcessTableStates>{
-	private ProcessableTableController tableController;
+public class ProcessableTableComponent<Model extends AbstractProcessableTableModel> implements StateListener<ProcessTableStates>{
+	private ProcessableTableController<Model> tableController;
 	private ProcessToolbarController toolbarController;
 	
-	public ProcessableTableComponent(AbstractProcessableTableModel model, ProcessService service, ProcessableTableDelegate delegate) {
+	public ProcessableTableComponent(Model model, ProcessService service, ProcessableTableDelegate delegate) {
 		toolbarController = new ProcessToolbarController();
-		tableController = new ProcessableTableController(model, service, this, delegate);
+		tableController = new ProcessableTableController<Model>(model, service, this, delegate);
 		toolbarController.setProcessToolbarDelegate(tableController);
 	}
 
@@ -29,11 +31,15 @@ public class ProcessableTableComponent implements StateListener<ProcessTableStat
 		}
 	}
 
-	public ProcessableTableController getTable() {
-		return tableController;
+	public JComponent getTable() {
+		return tableController.getComponent();
 	}
 
-	public ProcessToolbarController getToolbar() {
-		return toolbarController;
+	public JComponent getToolbar() {
+		return toolbarController.getComponent();
+	}
+
+	public void setNewProcessService(ProcessService newProcessService) {
+		tableController.setNewProcessService(newProcessService);
 	}
 }

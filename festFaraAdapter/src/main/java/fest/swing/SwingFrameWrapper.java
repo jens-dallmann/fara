@@ -12,8 +12,9 @@ package fest.swing;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Frame;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -32,10 +33,9 @@ import fest.matcher.ButtonTextMatcher;
 public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 
 	private FrameFixture _frameFixture;
-	private String frameTitle;
+	private JFrame testeditorFrame;
 
-	public SwingFrameWrapper(String frameTitle) {
-		this.frameTitle = frameTitle;
+	public SwingFrameWrapper() {
 	}
 
 	public void init(GuiQuery<JFrame> frameQuery) {
@@ -44,6 +44,7 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 				ComponentLookupScope.SHOWING_ONLY);
 		_frameFixture = new FrameFixture(robot(),
 				startupInGuiThread(frameQuery));
+		
 
 	}
 
@@ -62,22 +63,19 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	 */
 	public Component findComponentByName(String name) {
 		Window[] frame = JFrame.getWindows();
-		Window[] windows = findMainFrameWindows(frame);
+		Window[] windows = findRelevantWindows(frame);
 		Component component = searchThroughWindows(windows, name);
 		return component;
 	}
 
-	private Window[] findMainFrameWindows(Window[] frames) {
-		Window[] windows = null;
-		for (Window frameWindow : frames) {
-			if (frameWindow instanceof Frame) {
-				Frame frame = (Frame) frameWindow;
-				if (frame.getTitle().equals(frameTitle)) {
-					windows = new Window[] { frameWindow };
-				}
+	private Window[] findRelevantWindows(Window[] frames) {
+		List<Window> windows = new ArrayList<Window>();
+		for (Window toplevelwindow : frames) {
+			if (toplevelwindow != testeditorFrame) {
+				windows.add(toplevelwindow);
 			}
 		}
-		return windows;
+		return (Window[]) windows.toArray(new Window[windows.size()]);
 	}
 
 	private Component searchThroughWindows(Window[] windows, String name) {
@@ -157,4 +155,9 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	public FrameFixture getFrameFixture() {
 		return _frameFixture;
 	}
+
+	public void setTestEditorController(JFrame frame) {
+		this.testeditorFrame = frame;
+	}
+	
 }

@@ -120,4 +120,8 @@ public class FixtureComponent {
 	public String getText() {
 		return fixture.getText();
 	}
+
+	public boolean isValidFixture() {
+		return false;
+	}
 }

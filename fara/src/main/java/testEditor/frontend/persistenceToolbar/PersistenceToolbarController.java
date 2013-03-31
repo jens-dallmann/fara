@@ -58,6 +58,7 @@ public class PersistenceToolbarController {
 
 	private File acceptFile() {
 		JFileChooser chooser = new JFileChooser();
+		chooser.setName("persistence.filechooser");
 		chooser.setFileFilter(new HtmlFileFilter());
 		int returnValue = chooser.showOpenDialog(ui.getComponent());
 		File file = null;

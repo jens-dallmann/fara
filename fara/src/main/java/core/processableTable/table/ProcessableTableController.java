@@ -7,6 +7,10 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+
+import org.apache.commons.lang3.StringUtils;
 
 import core.processableTable.ProcessResultListener;
 import core.processableTable.ProcessService;
@@ -16,22 +20,25 @@ import core.processableTable.ProcessTableStates;
 import core.processableTable.table.model.AbstractProcessableTableModel;
 import core.processableTable.table.model.RowState;
 import core.processableTable.toolbar.ProcessToolbarDelegate;
+import core.service.ReflectionService;
 import core.state.StateListener;
 
 
-public class ProcessableTableController extends ProcessTableObservable implements ProcessToolbarDelegate, ProcessResultListener{
+public class ProcessableTableController<Model extends AbstractProcessableTableModel> extends ProcessTableObservable implements ProcessToolbarDelegate, ProcessResultListener{
 
-	private AbstractProcessableTableModel model;
+	private Model model;
 	private ProcessableTableUI ui;
 	private boolean play;
-	private final ProcessService service;
+	private ProcessService service;
 	private ProcessTableStateCalculator stateCalculator;
 	private ProcessableTableDelegate delegate;
+	private ReflectionService reflectionService;
 	
-	public ProcessableTableController(final AbstractProcessableTableModel model, ProcessService service, StateListener<ProcessTableStates> stateListener, ProcessableTableDelegate delegate) {
+	public ProcessableTableController(final Model model, ProcessService service, StateListener<ProcessTableStates> stateListener, ProcessableTableDelegate delegate) {
 		this.delegate = delegate;
 		this.model = model;
 		this.service = service;
+		this.reflectionService = new ReflectionService();
 		stateCalculator = new ProcessTableStateCalculator(model);
 		stateCalculator.registerListener(stateListener);
 		model.initRowStates();
@@ -47,6 +54,12 @@ public class ProcessableTableController extends ProcessTableObservable implement
 				if (column == model.getBreakpointColumn()) {
 					model.toggleBreakpoint(row);
 				}
+			}
+		});
+		model.addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				stateCalculator.calculateState();
 			}
 		});
 		stateCalculator.calculateState();
@@ -150,5 +163,17 @@ public class ProcessableTableController extends ProcessTableObservable implement
 		model.updatePointerRow();
 		stateCalculator.calculateState();
 		prepareAndProceedIfPossible(rowState);
+	}
+
+	public void loadNewProcessService(String text) {
+		if(StringUtils.isNotEmpty(text)) {
+			this.service = reflectionService.loadProcessService(text);
+		}
+		this.service.registerResultListener(this);
+	}
+
+	public void setNewProcessService(ProcessService newProcessService) {
+		this.service = newProcessService;
+		service.registerResultListener(this);
 	}
 }

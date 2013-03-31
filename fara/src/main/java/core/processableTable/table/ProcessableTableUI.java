@@ -14,6 +14,7 @@ public class ProcessableTableUI {
 
 	public ProcessableTableUI(AbstractProcessableTableModel model) {
 		table = new JTable(model);
+		table.setName("processableTable");
 		scrollPanel = new JScrollPane(table);
 		table.setDefaultRenderer(Object.class, new ProcessableTableCellRenderer());
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);

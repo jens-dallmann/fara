@@ -123,6 +123,9 @@ public class FitRowTableModel extends AbstractProcessableTableModel{
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		if(columnIndex < 2) {
+			return false;
+		}
 		return true;
 	}
 
@@ -140,7 +143,9 @@ public class FitRowTableModel extends AbstractProcessableTableModel{
 	}
 
 	public void setFixtureName(String text) {
-		table.at(0, 0, 0).body = text;
+		if(table != null && table.at(0,0,0) != null) {
+			table.at(0, 0, 0).body = text;
+		}
 	}
 
 	public String getFixtureName() {
@@ -155,9 +160,11 @@ public class FitRowTableModel extends AbstractProcessableTableModel{
 	public void setNewTable(Parse parse) {
 		this.table = parse;
 		calculateColumnCount();
+		initRowStates();
+		fireTableStructureChanged();
 		fireTableDataChanged();
 	}
-	
+
 	@Override
 	public void publishResult(RowState state, String message) {
 		super.publishResult(state, message);

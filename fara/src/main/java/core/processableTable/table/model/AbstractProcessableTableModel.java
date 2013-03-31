@@ -67,7 +67,7 @@ public abstract class AbstractProcessableTableModel extends AbstractTableModel {
 			row.setState(RowState.WAIT);
 		}
 	}
-
+	
 	private boolean hasFirstRow() {
 		return CollectionUtils.isNotEmpty(rowStates);
 	}

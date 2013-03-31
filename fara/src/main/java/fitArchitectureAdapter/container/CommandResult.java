@@ -25,6 +25,9 @@ public class CommandResult {
 	private int wrongParameterNumer;
 	private String failureMessage;
 
+	public CommandResult() {
+		resultState = CommandResultState.IGNORE;
+	}
 	/**
 	 * Set the state after the command has been processed
 	 * 

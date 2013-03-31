@@ -19,7 +19,9 @@ public class PersistenceToolbarUI {
 		save = new JButton("Save");
 		load = new JButton("Load");
 		saveAs = new JButton("Save As");
-		
+		save.setName("persistenceToolbar.save");
+		load.setName("persistenceToolbar.load");
+		saveAs.setName("persistenceToolbar.saveAs");
 		panel.add(save);
 		panel.add(saveAs);
 		panel.add(load);

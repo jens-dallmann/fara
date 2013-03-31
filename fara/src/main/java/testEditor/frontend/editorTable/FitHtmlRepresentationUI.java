@@ -30,4 +30,8 @@ public class FitHtmlRepresentationUI {
 	public FixtureComponent getFixtureComponent() {
 		return fixtureComponent;
 	}
+
+	public void fixtureChanged(String fixtureName) {
+		fixtureComponent.setTextFieldText(fixtureName);
+	}
 }

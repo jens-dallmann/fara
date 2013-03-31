@@ -1,7 +1,5 @@
 package testEditor.frontend;
 
-import java.awt.Window;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,8 +11,8 @@ public class TestEditorUI {
 	private JComponent tablePanel;
 	private JPanel panel;
 	
-	public TestEditorUI() {
-		frame = new JFrame("Fara Test Editor");
+	public TestEditorUI(String title) {
+		frame = new JFrame(title);
 		panel = new JPanel();
 		panel.setLayout(new MigLayout("flowy", "fill,grow"));
 		frame.add(panel);
@@ -40,7 +38,7 @@ public class TestEditorUI {
 		frame.validate();
 	}
 
-	public Window getFrame() {
+	public JFrame getFrame() {
 		return frame;
 	}
 }

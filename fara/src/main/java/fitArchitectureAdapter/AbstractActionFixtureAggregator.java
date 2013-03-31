@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import core.processableTable.ProcessService;
 import fit.ActionFixture;
 import fit.Parse;
 import fitArchitectureAdapter.annotations.FitCommand;
@@ -38,7 +39,7 @@ import fitArchitectureAdapter.interfaces.HasCommands;
  * 
  * @author jens.dallmann
  */
-public abstract class AbstractActionFixtureAggregator extends ActionFixture {
+public abstract class AbstractActionFixtureAggregator extends ActionFixture implements ProcessService{
 
 	private Map<String, InstanceMethodPair> commands;
 
@@ -63,6 +64,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 		} catch (IllegalAccessException e) {
 			handleErrorMessages(cells, "Cannot access method: " + commandName);
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			handleErrorMessages(cells, "To Less or to much arguments");
 		}
 
@@ -77,7 +79,14 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 	}
 	protected CommandResult callMethod(String text) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
-		InstanceMethodPair pair = commands.get(text);
+		InstanceMethodPair pair = null;
+		try {
+			pair = commands.get(text);
+		}
+		catch(NullPointerException e) {
+			System.out.println("You forgot to initialize AggregatorFixture! ");
+			throw e;
+		}
 		if (pair == null) {
 			throw new IllegalArgumentException("Command " + text + "not found");
 		}

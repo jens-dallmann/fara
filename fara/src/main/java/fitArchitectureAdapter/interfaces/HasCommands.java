@@ -10,11 +10,13 @@
  ******************************************************************************/
 package fitArchitectureAdapter.interfaces;
 
+
 /**
  * Marker interface for classes which provides FITCommands.
  * 
  * @author jens.dallmann
  */
 public interface HasCommands {
+
 
 }
