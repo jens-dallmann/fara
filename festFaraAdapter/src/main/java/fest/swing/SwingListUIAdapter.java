@@ -16,6 +16,8 @@ import org.fest.swing.fixture.JListFixture;
 
 import fest.FestResultBuilder;
 import fest.interfaces.ListUIAdapter;
+import fest.swing.operators.RelationalOperatorEvaluator;
+import fest.swing.utils.ParseUtils;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
@@ -56,6 +58,19 @@ public class SwingListUIAdapter implements ListUIAdapter, HasCommands {
 				result.setResultState(CommandResultState.WRONG);
 				result.setWrongParameterNumber(2);
 			}
+		}
+		return result;
+	}
+	@FitCommand({"the name of the list widget", "the text of the item which should be in this list"})
+	@Override
+	public CommandResult checkListItemCount(String listName, String operator, String expected) {
+		CommandResult result = new CommandResult();
+		JListFixture fixture = allocateList(listName, result);
+		if(result.getResultState() != CommandResultState.WRONG) {
+			String[] items = fixture.contents();
+			int actualItemCount = items.length;
+			int expectedItemCount = ParseUtils.readIntegerInput(expected, result);
+			RelationalOperatorEvaluator.evaluateOperation(operator, actualItemCount, expectedItemCount, result);
 		}
 		return result;
 	}

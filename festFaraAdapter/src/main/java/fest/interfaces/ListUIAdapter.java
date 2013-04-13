@@ -39,4 +39,7 @@ public interface ListUIAdapter {
 	CommandResult checkListItemExist(String listName, String itemDescriptor);
 
 	CommandResult checkNoListItemSelected(String listName);
+
+	CommandResult checkListItemCount(String listName, String operator,
+			String count);
 }
