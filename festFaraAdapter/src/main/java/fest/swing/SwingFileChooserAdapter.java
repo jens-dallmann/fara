@@ -23,7 +23,7 @@ public class SwingFileChooserAdapter implements HasCommands,
 		this.frameWrapper = frameWrapper;
 	}
 
-	@FitCommand({})
+	@FitCommand({"The name of the resource file which should be selected"})
 	public CommandResult useFileChooserWithResource(String resource) {
 		CommandResult result = new CommandResult();
 		JFileChooserFixture fileChooser = frameWrapper.getFrameFixture().fileChooser(Timeout.timeout(3000));

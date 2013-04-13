@@ -19,7 +19,7 @@ public class SwingTableUIAdapter implements HasCommands, TableUIAdapter {
 		_frameWrapper = frameWrapper;
 	}
 
-	@FitCommand({})
+	@FitCommand({"The name of the table which rows should be checked", "The operator which is used for check. For valid Operators see Operatorlist", "The number used for comparison"})
 	public CommandResult checkTableRowCount(String tableName, String operator,
 			String expected) {
 		CommandResult result = new CommandResult();

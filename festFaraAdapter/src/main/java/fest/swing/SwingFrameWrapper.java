@@ -30,7 +30,7 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	public void init(GuiQuery<JFrame> frameQuery) {
 		setUpRobot();
 		robot().settings().componentLookupScope(
-				ComponentLookupScope.ALL);
+				ComponentLookupScope.DEFAULT);
 		_frameFixture = new FrameFixture(robot(),
 				startupInGuiThread(frameQuery));
 		
