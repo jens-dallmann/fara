@@ -52,5 +52,6 @@
 			<artifactId>miglayout-swing</artifactId>
 			<version>4.2</version>
 		</dependency>
+		
 	</dependencies>
 </project>

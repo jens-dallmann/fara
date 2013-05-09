@@ -159,4 +159,8 @@ public class FitHtmlRepresentationController implements
 		save();
 		return file;
 	}
+
+	public void setTestFile(File file) {
+		model.setTestFile(file);
+	}
 }

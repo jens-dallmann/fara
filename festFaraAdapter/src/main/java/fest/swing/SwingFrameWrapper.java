@@ -33,8 +33,7 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 				ComponentLookupScope.DEFAULT);
 		_frameFixture = new FrameFixture(robot(),
 				startupInGuiThread(frameQuery));
-		
-
+		_frameFixture.robot.settings().delayBetweenEvents(600);
 	}
 
 	@RunsInEDT
@@ -50,4 +49,5 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	public FrameFixture getFrameFixture() {
 		return _frameFixture;
 	}
+	
 }

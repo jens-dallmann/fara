@@ -20,8 +20,11 @@ public class StartTestEditor {
 		Parse input = readInput(args);
 		if (input != null) {
 			ProcessService service = createService(input);
-			new TestEditorController(service,
+			TestEditorController controller = new TestEditorController(service,
 					input);
+			if(args.length >= 1) {
+				controller.setTestFile(new File(args[0]));
+			}
 		}
 	}
 

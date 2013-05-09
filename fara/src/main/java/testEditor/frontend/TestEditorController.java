@@ -1,5 +1,7 @@
 package testEditor.frontend;
 
+import java.io.File;
+
 import javax.swing.JFrame;
 
 import testEditor.frontend.editorTable.FitHtmlRepresentationController;
@@ -32,5 +34,8 @@ public class TestEditorController{
 	
 	public JFrame getFrame() {
 		return ui.getFrame();
+	}
+	public void setTestFile(File file) {
+		fitTable.setTestFile(file);
 	}
 }
