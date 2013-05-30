@@ -2,6 +2,10 @@ package core.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import core.service.exceptions.FitIOException;
 import fit.Parse;
@@ -61,7 +65,8 @@ public class FitIOService {
 
 	private File createResultFile(File resultDirectory, String name) throws FitIOException {
 		name = name.replace(".html", "");
-		name += System.currentTimeMillis();
+		String date = currentTimeAsString();
+		name += date;
 		name += "_result.html";
 		String resultFile = resultDirectory.getAbsolutePath()+File.separator+name;
 		try {
@@ -70,6 +75,12 @@ public class FitIOService {
 			throw new FitIOException("Error on creating the fit result file", e);
 		}
 		return new File(resultFile);
+	}
+
+	private String currentTimeAsString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy-hhmmss");
+		String format = formatter.format(new Date());
+		return format;
 	}
 
 	private void writeTable(File file, Parse table, String fixture, boolean isResult) throws FitIOException {

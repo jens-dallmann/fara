@@ -25,7 +25,8 @@ public class TestEditorFixture implements HasCommands {
 			@Override
 			protected JFrame executeInEDT() throws Throwable {
 				result.setResultState(CommandResultState.RIGHT);
-				return new TestEditorController(new DummyFixture(), null, "Another Frame").getFrame();
+				JFrame frame = new TestEditorController(new DummyFixture(), null, "Another Frame").getFrame();
+				return frame;
 			}
 		});
 		try {
