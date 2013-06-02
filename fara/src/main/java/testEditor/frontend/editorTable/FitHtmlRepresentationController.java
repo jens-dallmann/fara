@@ -4,8 +4,10 @@ import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import net.miginfocom.swing.MigLayout;
+import testEditor.frontend.editorTable.tableFunctions.TableFunctionShortCutInitializer;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarController;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarDelegate;
 import core.exception.frontend.ApplicationExceptionAreaFiller;
@@ -36,13 +38,17 @@ public class FitHtmlRepresentationController implements
 		fitFileService = new FitIOService();
 		persistenceToolbar = new PersistenceToolbarController();
 		persistenceToolbar.setPersistenceToolbarDelegate(this);
-		
+
 		processableTableComponent = new ProcessableTableComponent<FitRowTableModel>(
-				model, service, this);		
-		
+				model, service, this);
+
 		String fixtureName = extractFixtureName(table);
 		ui = new FitHtmlRepresentationUI(fixtureName);
-		ui.addComponent(processableTableComponent.getTable());
+		JComponent tablePanel = processableTableComponent.getTablePanel();
+		JTable tableOnly = processableTableComponent.getTable();
+		new TableFunctionShortCutInitializer(tableOnly);		
+
+		ui.addComponent(tablePanel);
 
 		ui.getFixtureComponent().setFixtureChangedDelegate(
 				new FixtureChangedDelegate() {
@@ -62,18 +68,21 @@ public class FitHtmlRepresentationController implements
 		}
 	}
 
-
 	private void setNewProcessServiceToTable(String text) {
-		ProcessService newProcessService = reflectionService.loadProcessService(text);
+		ProcessService newProcessService = reflectionService
+				.loadProcessService(text);
 		processableTableComponent.setNewProcessService(newProcessService);
 	}
+
 	private FitRowTableModel createTableModel(Parse table) {
-		if(table == null) {
+		if (table == null) {
 			try {
 				table = new Parse("<table><tr><td></td></tr></table>");
 			} catch (FitParseException e) {
-				new ExceptionWindowController(null, e, ExceptionLevel.ERROR, new ApplicationExceptionAreaFiller());
-			};
+				new ExceptionWindowController(null, e, ExceptionLevel.ERROR,
+						new ApplicationExceptionAreaFiller());
+			}
+			;
 		}
 		FitRowTableModel model = new FitRowTableModel();
 		model.setTable(table);
@@ -102,10 +111,11 @@ public class FitHtmlRepresentationController implements
 	@Override
 	public void save() {
 		try {
-			fitFileService.writeTest(model.getTestFile(), getRows().more, model.getFixtureName());
+			fitFileService.writeTest(model.getTestFile(), getRows().more,
+					model.getFixtureName());
 		} catch (FitIOException e) {
 			throwNewBusinessException(e);
-		}		
+		}
 	}
 
 	@Override
@@ -118,7 +128,7 @@ public class FitHtmlRepresentationController implements
 		model.setTestFile(file);
 		save();
 	}
-	
+
 	@Override
 	public void load(File file) {
 		Parse table = null;
@@ -127,7 +137,7 @@ public class FitHtmlRepresentationController implements
 		} catch (FitIOException e) {
 			throwNewBusinessException(e);
 		}
-		if(table != null) {
+		if (table != null) {
 			model.setTestFile(file);
 			model.setNewTable(table);
 			String fixtureName = extractFixtureName(table);
@@ -139,18 +149,20 @@ public class FitHtmlRepresentationController implements
 	@Override
 	public void lastRowProcessed() {
 		File file = model.getTestFile();
-		if(file == null) {
+		if (file == null) {
 			file = createTempFile();
 		}
 		try {
-			fitFileService.writeTestResult(file, getRows().more, model.getFixtureName());
+			fitFileService.writeTestResult(file, getRows().more,
+					model.getFixtureName());
 		} catch (FitIOException e) {
 			throwNewBusinessException(e);
 		}
 	}
 
 	private void throwNewBusinessException(FitIOException e) {
-		new ExceptionWindowController(null, e, ExceptionLevel.ERROR, new ApplicationExceptionAreaFiller());
+		new ExceptionWindowController(null, e, ExceptionLevel.ERROR,
+				new ApplicationExceptionAreaFiller());
 	}
 
 	private File createTempFile() {

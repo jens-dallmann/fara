@@ -176,4 +176,8 @@ public class ProcessableTableController<Model extends AbstractProcessableTableMo
 		this.service = newProcessService;
 		service.registerResultListener(this);
 	}
+
+	public JTable getTable() {
+		return ui.getTable();
+	}
 }

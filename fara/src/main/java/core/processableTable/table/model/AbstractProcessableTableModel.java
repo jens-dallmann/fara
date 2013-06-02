@@ -177,4 +177,11 @@ public abstract class AbstractProcessableTableModel extends AbstractTableModel {
 	public void setFailureMessageColumn(int failureMessageColumn) {
 		this.failureMessageColumn = failureMessageColumn;
 	}
+	
+	public void addRowState(int index) {
+		rowStates.add(index, new ProcessableRowStates());
+	}
+	public void deleteRowState(int index) {
+		rowStates.remove(index);
+	}
 }

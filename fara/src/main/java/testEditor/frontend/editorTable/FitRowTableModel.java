@@ -5,6 +5,7 @@ import java.io.File;
 import core.processableTable.table.model.AbstractProcessableTableModel;
 import core.processableTable.table.model.RowState;
 import fit.Parse;
+import fit.exception.FitParseException;
 
 public class FitRowTableModel extends AbstractProcessableTableModel {
 
@@ -183,5 +184,55 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	public boolean hasFile() {
 		return testFile != null;
+	}
+
+	public void addLine(int firstSelectedRow, int selectedRowCount)
+			throws FitParseException {
+		for (int i = 0; i < selectedRowCount; i++) {
+			addRowAt(firstSelectedRow+selectedRowCount);
+		}
+	}
+	public void addRowAt(int index) throws FitParseException{
+		Parse lastSelectedRow = table.at(0, index);
+		Parse newRow = createNewEmptyRow();
+		Parse afterLastSelectedRow = lastSelectedRow.more;
+		newRow.more = afterLastSelectedRow;
+		lastSelectedRow.more = newRow;
+		super.addRowState(index);
+		fireTableDataChanged();
+	}
+	public void addFirstLine() throws FitParseException {
+		table.at(0,0).more = createNewEmptyRow();
+		super.addRowState(0);
+		fireTableDataChanged();
+	}
+	private Parse createNewEmptyRow() throws FitParseException {
+		StringBuffer emptyTable = new StringBuffer();
+		emptyTable.append("<tr>");
+		for (int i = 0; i < columnCount; i++) {
+			emptyTable.append("<td> </td>");
+		}
+		emptyTable.append("</tr>");
+		Parse parse = new Parse(emptyTable.toString(), new String[] { "tr",
+				"td" });
+		return parse;
+	}
+
+	public void deleteLine(int[] selectedRows) {
+		for (int i = selectedRows.length - 1; i >= 0; i--) {
+			if (selectedRows[i] - 1 < 0) {
+				table.at(0).parts = table.at(0, selectedRows[i] + 1);
+			} else {
+				Parse previousRow = table.at(0, selectedRows[i]);
+				if (selectedRows[i] < getRowCount()) {
+					Parse nextRow = table.at(0, selectedRows[i]+1).more;
+					previousRow.more = nextRow;
+				} else {
+					previousRow.more = null;
+				}
+				super.deleteRowState(selectedRows[i]);
+			}
+		}
+		fireTableDataChanged();
 	}
 }

@@ -3,9 +3,7 @@ package core.service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import core.service.exceptions.FitIOException;
 import fit.Parse;
@@ -13,6 +11,7 @@ import fit.exception.FitParseException;
 
 public class FitIOService {
 	
+	private static final String LINE_BREAK = "\n";
 	private FileService fileService;
 	public FitIOService() {
 		fileService = new FileService();
@@ -94,14 +93,16 @@ public class FitIOService {
 	
 	public String tableAsHTML(Parse table, String fixture, boolean result) {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"fitnesse.css\">");
-		buffer.append("<table border='1'>");
-		buffer.append("<tr><td>"+fixture+"</tr></td>");
+		buffer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"fitnesse.css\">"+LINE_BREAK);
+		buffer.append("<table border='1'>"+LINE_BREAK);
+		buffer.append("\t<tr>"+LINE_BREAK);
+		buffer.append("\t\t<td>"+fixture+"</td></tr>"+LINE_BREAK);
 		int rowIndex = 0;
 		while (table != null) {
-			buffer.append(table.tag);
+			buffer.append("\t"+table.tag+LINE_BREAK);
 			buffer.append(buildResultCells(table.parts, result, rowIndex));
-			buffer.append(table.end);
+			buffer.append("\t"+table.end);
+			buffer.append(LINE_BREAK);
 			table = table.more;
 			rowIndex++;
 		}
@@ -112,14 +113,14 @@ public class FitIOService {
 		StringBuffer buffer = new StringBuffer();
 		Parse cells = parts;
 		while (cells != null) {
-			buffer.append(cells.tag);
+			buffer.append("\t\t"+cells.tag);
 			if(result) {
 				buffer.append(cells.text());
 			}
 			else {
 				buffer.append(cells.body);
 			}
-			buffer.append(cells.end);
+			buffer.append(cells.end+LINE_BREAK);
 			cells = cells.more;
 		}
 

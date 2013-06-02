@@ -1,6 +1,7 @@
 package core.processableTable;
 
 import javax.swing.JComponent;
+import javax.swing.JTable;
 
 import core.processableTable.table.ProcessableTableController;
 import core.processableTable.table.ProcessableTableDelegate;
@@ -31,7 +32,7 @@ public class ProcessableTableComponent<Model extends AbstractProcessableTableMod
 		}
 	}
 
-	public JComponent getTable() {
+	public JComponent getTablePanel() {
 		return tableController.getComponent();
 	}
 
@@ -41,5 +42,9 @@ public class ProcessableTableComponent<Model extends AbstractProcessableTableMod
 
 	public void setNewProcessService(ProcessService newProcessService) {
 		tableController.setNewProcessService(newProcessService);
+	}
+
+	public JTable getTable() {
+		return tableController.getTable();
 	}
 }

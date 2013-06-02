@@ -11,6 +11,7 @@ public class ResourceLoader {
 	public static final String WARNING_ICON = "warning-icon.png";
 	public static final String INFO_ICON = "info-icon.png";
 	public static final String FILE_BROKEN_ICON = "file-broken-icon.png";
+	public static final String SETTINGS_PROPERTIES = "settings.properties";
 
 	public static ClassLoader cl = ResourceLoader.class.getClassLoader();
 
@@ -30,5 +31,9 @@ public class ResourceLoader {
 		Image scaledImage = image.getScaledInstance(width, height,
 				Image.SCALE_SMOOTH);
 		return new ImageIcon(scaledImage);
+	}
+	
+	public static String retrieveRessourcePath(String ressourceFile) {
+		return cl.getResource(ressourceFile).getPath();
 	}
 }
