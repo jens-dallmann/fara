@@ -1,34 +1,51 @@
 package testEditor.frontend;
 
+import java.awt.GridLayout;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
-import testEditor.frontend.menubar.MenubarController;
 
 public class TestEditorUI {
 	private JFrame frame;
 	private JComponent tablePanel;
 	private JPanel panel;
 	private JComponent tree;
+	private JPanel testPanel;
+	private MigLayout migLayout;
 	
 	public TestEditorUI(String title) {
+		testPanel = createTestPanel();
 		frame = new JFrame(title);
 		panel = new JPanel();
-		panel.setLayout(new MigLayout("", "fill,grow"));
-		frame.add(panel);
+		migLayout = new MigLayout("nogrid", "fill,grow");
+		panel.setLayout(migLayout);
+		
+		frame.setLayout(new MigLayout("","fill, grow","fill,grow,top"));
+		frame.add(panel,"wrap");
+		frame.add(testPanel);
 		frame.setSize(1024,768);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
 	}
+	private JPanel createTestPanel() {
+		testPanel = new JPanel();
+		testPanel.setLayout(new MigLayout("", "[350][fill,grow]"));
+		return testPanel;
+	}
 	public void setMenuBar(JMenuBar menubar) {
 		frame.setJMenuBar(menubar);
 	}
-	public void addPanel(JComponent panel) {
+	public void addPanelAndWrap(JComponent panel) {
 		this.panel.add(panel,"wrap");
+		frame.validate();
+	}
+	public void addPanel(JComponent panel) {
+		this.panel.add(panel);
 		frame.validate();
 	}
 	
@@ -38,9 +55,9 @@ public class TestEditorUI {
 
 	public void addTablePanel(JComponent panel) {
 		if(tablePanel != null) {
-			this.panel.remove(tablePanel);
+			this.testPanel.remove(tablePanel);
 		}
-		this.panel.add(panel,2);
+		this.testPanel.add(panel,1);
 		tablePanel = panel;
 		frame.validate();
 	}
@@ -50,10 +67,10 @@ public class TestEditorUI {
 	}
 
 	public void addTreePanel(JComponent newTree) {
-		if(newTree != null) {
-			this.panel.remove(newTree);
+		if(tree != null) {
+			this.testPanel.remove(tree);
 		}
-		this.panel.add(newTree,1);
+		this.testPanel.add(newTree,0);
 		tree = newTree;
 		frame.validate();
 	}

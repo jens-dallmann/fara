@@ -165,6 +165,7 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		this.table = parse;
 		calculateColumnCount();
 		initRowStates();
+		resetProcessableCounter();
 		fireTableStructureChanged();
 		fireTableDataChanged();
 	}

@@ -184,4 +184,8 @@ public abstract class AbstractProcessableTableModel extends AbstractTableModel {
 	public void deleteRowState(int index) {
 		rowStates.remove(index);
 	}
+
+	public void resetProcessableCounter() {
+		rowPointer = 0;
+	}
 }

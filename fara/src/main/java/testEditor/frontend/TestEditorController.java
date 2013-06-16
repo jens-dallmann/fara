@@ -96,4 +96,8 @@ public class TestEditorController {
 	public void setTestFile(File file) {
 		fitTable.setTestFile(file);
 	}
+
+	public File getLoadedFile() {
+		return fitTable.getLoadedFile();
+	}
 }

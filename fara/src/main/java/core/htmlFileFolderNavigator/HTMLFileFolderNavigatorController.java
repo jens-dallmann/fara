@@ -26,7 +26,7 @@ public class HTMLFileFolderNavigatorController {
 		ui = new HTMLFileFolderNavigatorUI(treeModel);
 		addListeners();
 	}
-	
+
 	public void init(String rootFolder) {
 		File rootFolderFile = new File(rootFolder);
 		DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode();
@@ -35,7 +35,7 @@ public class HTMLFileFolderNavigatorController {
 		treeModel = new DefaultTreeModel(treeNode);
 		ui.getTree().setModel(treeModel);
 	}
-	
+
 	private void addListeners() {
 		ui.getTree().addMouseListener(new MouseAdapter() {
 			@Override
@@ -57,14 +57,16 @@ public class HTMLFileFolderNavigatorController {
 		File[] listFiles = directory.listFiles(new HTMLFileFilter());
 		if (listFiles != null) {
 			for (File file : listFiles) {
-				DefaultMutableTreeNode newNode = new DefaultMutableTreeNode();
-				newNode.setUserObject(new WrappedFile(file));
-				branchNode.add(newNode);
-				if (file.isDirectory()) {
-					newNode.setAllowsChildren(true);
-					fillBranchNode(newNode, file);
-				} else {
-					newNode.setAllowsChildren(false);
+				if (!(file.isDirectory() && file.getName().equals("result"))) {
+					DefaultMutableTreeNode newNode = new DefaultMutableTreeNode();
+					newNode.setUserObject(new WrappedFile(file));
+					branchNode.add(newNode);
+					if (file.isDirectory()) {
+						newNode.setAllowsChildren(true);
+						fillBranchNode(newNode, file);
+					} else {
+						newNode.setAllowsChildren(false);
+					}
 				}
 			}
 		}

@@ -28,6 +28,9 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	}
 
 	public void init(GuiQuery<JFrame> frameQuery) {
+		if(robot() != null) {
+			robot().cleanUp();
+		}
 		setUpRobot();
 		robot().settings().componentLookupScope(
 				ComponentLookupScope.DEFAULT);
@@ -40,7 +43,6 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 	private JFrame startupInGuiThread(GuiQuery<JFrame> frameQuery) {
 		return GuiActionRunner.execute(frameQuery);
 	}
-
 
 	public Robot getRobot() {
 		return robot();

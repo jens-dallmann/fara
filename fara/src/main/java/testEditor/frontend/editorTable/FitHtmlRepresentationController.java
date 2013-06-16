@@ -175,4 +175,8 @@ public class FitHtmlRepresentationController implements
 	public void setTestFile(File file) {
 		model.setTestFile(file);
 	}
+
+	public File getLoadedFile() {
+		return model.getTestFile();
+	}
 }

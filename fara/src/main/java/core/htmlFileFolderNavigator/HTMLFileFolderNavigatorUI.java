@@ -1,5 +1,7 @@
 package core.htmlFileFolderNavigator;
 
+import java.awt.Dimension;
+
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -10,6 +12,8 @@ public class HTMLFileFolderNavigatorUI {
 	
 	public HTMLFileFolderNavigatorUI(DefaultTreeModel treeNode) {
 		tree = new JTree(treeNode);
+		tree.setSize(new Dimension(500,1000));
+		tree.setMaximumSize(new Dimension(500,1000));
 	}
 	
 	public JComponent getScrollableTree() {
