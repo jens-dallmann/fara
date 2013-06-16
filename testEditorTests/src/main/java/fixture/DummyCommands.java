@@ -13,4 +13,20 @@ public class DummyCommands implements HasCommands{
 		result.setResultState(CommandResultState.RIGHT);
 		return result;
 	}
+	
+	@FitCommand({})
+	public CommandResult alwaysSucceed() {
+		CommandResult result = new CommandResult();
+		result.setResultState(CommandResultState.RIGHT);
+		return result;
+	}
+	
+	@FitCommand({})
+	public CommandResult alwaysFail() {
+		CommandResult result = new CommandResult();
+		result.setResultState(CommandResultState.WRONG);
+		result.setWrongParameterNumber(0);
+		result.setFailureMessage("Returned Error Message");
+		return result;
+	}
 }

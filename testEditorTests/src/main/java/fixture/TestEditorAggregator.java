@@ -9,6 +9,7 @@ import fest.swing.SwingTabbedPaneUIAdapter;
 import fest.swing.SwingTableUIAdapter;
 import fest.swing.SwingTextComponentUIAdapter;
 import fitArchitectureAdapter.AbstractProcessableFixtureAggregator;
+import fitArchitectureAdapter.commands.GeneralCommands;
 
 public class TestEditorAggregator extends AbstractProcessableFixtureAggregator{
 private SwingFrameWrapper wrapper;
@@ -28,5 +29,6 @@ private SwingFrameWrapper wrapper;
 		addCommandObject(new SwingLabelUIAdapter(wrapper));
 		addCommandObject(new TestEditorFixture(wrapper));
 		addCommandObject(new SwingTableUIAdapter(wrapper));
+		addCommandObject(new GeneralCommands());
 	}
 }

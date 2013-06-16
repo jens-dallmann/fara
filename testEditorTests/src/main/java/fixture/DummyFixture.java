@@ -8,6 +8,7 @@ public class DummyFixture extends AbstractProcessableFixtureAggregator{
 		super();
 		init();
 	}
+	
 	@Override
 	public void addFixtureObjects() {
 		addCommandObject(new DummyCommands());

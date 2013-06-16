@@ -1,0 +1,172 @@
+<link rel="stylesheet" type="text/css" href="fitnesse.css">
+<table border='1'>
+	<tr>
+		<td>fixture.TestEditorAggregator</td></tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 1</td>
+		<td>start test editor</td>
+		<td>test editor opened</td>
+	</tr>
+	<tr>
+		<td>startEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 2</td>
+		<td>load test file:Testdata_Test_EDI_01_02.html</td>
+		<td>4 Rows exist in table.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>pressButton</td>
+		<td>persistenceToolbar.load</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>useFileChooserWithResource</td>
+		<td>Testdata_Test_EDI_01_02.html</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableRowCount</td>
+		<td>processableTable</td>
+		<td>=</td>
+		<td>4</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 3</td>
+		<td>Press Play</td>
+		<td>first row is in state success, second row is in state failed and error message is "Returned Error Message". Third row is in state WAIT. No result File exist.</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>pressButton</td>
+		<td>play</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>2</td>
+		<td>FAILED</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>8</td>
+		<td>Returned Error Message</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>2</td>
+		<td>WAIT</td>
+	</tr>
+	<tr>
+		<td>checkNoResultFileExist</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 4</td>
+		<td>Press Play again</td>
+		<td>Row: 1 + 3 + 4 is in state success. Second row is still in state FAILED and has the error message from Step 3. Result file now exist</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>pressButton</td>
+		<td>play</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>2</td>
+		<td>FAILED</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>8</td>
+		<td>Returned Error Message</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>4</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkResultFileExist</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 5</td>
+		<td>Clean Up and end editor</td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>deleteResultFolder</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>endEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+</table>
