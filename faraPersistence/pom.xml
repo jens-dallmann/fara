@@ -1,15 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>testEditorTests</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>TestEditorTests</name>
 	<parent>
 		<groupId>jd</groupId>
 		<artifactId>fara-parent</artifactId>
 		<version>1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<groupId>jd</groupId>
+	<artifactId>faraPersistence</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>faraPersistence</name>
+	<description>a module with persistence commands</description>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -26,13 +29,18 @@
 	<dependencies>
 		<dependency>
 			<groupId>jd</groupId>
-			<artifactId>festFara</artifactId>
+			<artifactId>fara</artifactId>
 			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>jd</groupId>
-			<artifactId>faraPersistence</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.fitnesse</groupId>
+			<artifactId>fitlibrary</artifactId>
+			<version>20080812</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
 		</dependency>
 	</dependencies>
 </project>

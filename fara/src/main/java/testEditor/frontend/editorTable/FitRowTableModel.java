@@ -10,32 +10,13 @@ import fit.exception.FitParseException;
 public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private Parse table;
-	private int columnCount;
 	private File testFile;
-
 	public static final int COMMAND_CELL = 2;
-
-	public void calculateColumnCount() {
-		if (table != null) {
-			Parse rowTemp = table.parts;
-			while (rowTemp != null) {
-				int rowColumns = countCells(rowTemp);
-				columnCount = Math.max(columnCount, rowColumns);
-				rowTemp = rowTemp.more;
-			}
-		}
-		setFailureMessageColumn(getColumnCount() - 1);
-	}
-
-	private int countCells(Parse rowTemp) {
-		Parse cells = rowTemp.parts;
-		int counter = 0;
-		while (cells != null) {
-			counter++;
-			cells = cells.more;
-		}
-		return counter;
+	private FitTableModel fitTableModel;
+	
+	public FitRowTableModel(Parse table) {
+		fitTableModel = new FitTableModel(table, this);
+		setNewTable(table);
 	}
 
 	@Override
@@ -64,21 +45,13 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 
 	@Override
 	public int getRowCount() {
-		int counter = 0;
-		if (table != null) {
-			Parse rowsTemp = table.parts;
-			while (rowsTemp != null) {
-				counter++;
-				rowsTemp = rowsTemp.more;
-			}
-			counter -= 1;
-		}
-		return counter; // -1 because the first one is the fixture row and is
-						// not listed in the table
+		return fitTableModel.getRowCountWithoutFixture();
 	}
 
 	@Override
 	public int getColumnCount() {
+		int columnCount = fitTableModel.getColumnCount();
+		setFailureMessageColumn(columnCount - 1);
 		return columnCount + super.getColumnCount();
 	}
 
@@ -120,9 +93,8 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		return columnIndex > 1 && !isErrorCell(columnIndex);
 	}
 
-	public Parse getRow(int row) {
-		return table.at(0, row + 1); // the first row is the fixture name not a
-										// command
+	public Parse getRow(int tableRowIndex) {
+		return fitTableModel.getRowByTableModelIndex(tableRowIndex);
 	}
 
 	@Override
@@ -133,37 +105,25 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		return true;
 	}
 
-	public void setTable(Parse table) {
-		this.table = table;
-		fireTableDataChanged();
-	}
-
 	public void updateRow(int index) {
 		fireTableRowsUpdated(index, index);
 	}
 
-	public Parse getTable() {
-		return table;
-	}
-
 	public void setFixtureName(String text) {
-		if (table != null && table.at(0, 0, 0) != null) {
-			table.at(0, 0, 0).body = text;
-		}
+		fitTableModel.setFixtureName(text);
 	}
 
 	public String getFixtureName() {
-		return table.at(0, 0, 0).text();
+		return fitTableModel.getFixtureName();
 	}
 
 	@Override
 	public Object getRowAtPointer() {
 		return getRow(getPointer());
 	}
-
+	
 	public void setNewTable(Parse parse) {
-		this.table = parse;
-		calculateColumnCount();
+		fitTableModel.setNewTable(parse);
 		initRowStates();
 		resetProcessableCounter();
 		fireTableStructureChanged();
@@ -187,53 +147,69 @@ public class FitRowTableModel extends AbstractProcessableTableModel {
 		return testFile != null;
 	}
 
-	public void addLine(int firstSelectedRow, int selectedRowCount)
+	public void addEmptyRows(int from, int selectedRowCount)
 			throws FitParseException {
-		for (int i = 0; i < selectedRowCount; i++) {
-			addRowAt(firstSelectedRow+selectedRowCount);
+		fitTableModel.addEmptyRows(from, selectedRowCount);
+		for(int i = 0; i < selectedRowCount; i++) {
+			super.addRowState(from+i);
 		}
+		fireTableDataChanged();
 	}
-	public void addRowAt(int index) throws FitParseException{
-		Parse lastSelectedRow = table.at(0, index);
-		Parse newRow = createNewEmptyRow();
-		Parse afterLastSelectedRow = lastSelectedRow.more;
-		newRow.more = afterLastSelectedRow;
-		lastSelectedRow.more = newRow;
+
+	public void addRowAt(int index) throws FitParseException {
+		fitTableModel.addEmptyRow(index);
 		super.addRowState(index);
 		fireTableDataChanged();
 	}
+
 	public void addFirstLine() throws FitParseException {
-		table.at(0,0).more = createNewEmptyRow();
+		fitTableModel.addEmptyFirstLine();
 		super.addRowState(0);
 		fireTableDataChanged();
 	}
-	private Parse createNewEmptyRow() throws FitParseException {
-		StringBuffer emptyTable = new StringBuffer();
-		emptyTable.append("<tr>");
-		for (int i = 0; i < columnCount; i++) {
-			emptyTable.append("<td> </td>");
-		}
-		emptyTable.append("</tr>");
-		Parse parse = new Parse(emptyTable.toString(), new String[] { "tr",
-				"td" });
-		return parse;
-	}
 
-	public void deleteLine(int[] selectedRows) {
-		for (int i = selectedRows.length - 1; i >= 0; i--) {
-			if (selectedRows[i] - 1 < 0) {
-				table.at(0).parts = table.at(0, selectedRows[i] + 1);
-			} else {
-				Parse previousRow = table.at(0, selectedRows[i]);
-				if (selectedRows[i] < getRowCount()) {
-					Parse nextRow = table.at(0, selectedRows[i]+1).more;
-					previousRow.more = nextRow;
-				} else {
-					previousRow.more = null;
-				}
-				super.deleteRowState(selectedRows[i]);
-			}
+	public void deleteRows(int[] selectedRowsInTableModel) {
+		for (int i = selectedRowsInTableModel.length-1; i >= 0; i--) {
+			int selectedRowIndexInTableModel = selectedRowsInTableModel[i];
+			deleteRow(selectedRowIndexInTableModel);
 		}
 		fireTableDataChanged();
+	}
+
+	public void deleteRow(int selectedRowInTableModel) {
+		
+		boolean isFirstRow = selectedRowInTableModel == 0;
+		boolean isLastRow = !(selectedRowInTableModel < getRowCount());
+		
+		if (isFirstRow) {
+			fitTableModel.deleteFirstRow();
+			super.deleteRowState(selectedRowInTableModel);
+		}
+		else if(isLastRow){
+			fitTableModel.deleteLastRow();
+			super.deleteRowState(selectedRowInTableModel);
+		}
+		else {
+			fitTableModel.deleteRowByTableIndex(selectedRowInTableModel);
+			super.deleteRowState(selectedRowInTableModel);
+		}
+	}
+
+	public void deleteRows(int firstSelectedRow, int selectedRowCount) {
+		int[] rowsToDelete = new int[selectedRowCount];
+		for (int i = 0; i < selectedRowCount; i++) {
+			rowsToDelete[i] = firstSelectedRow + i;
+		}
+		deleteRows(rowsToDelete);
+	}
+
+	public void addRowAt(int i, Parse parse) {
+		fitTableModel.addRowAtByTableIndex(i, parse);
+		super.addRowState(i);
+		fireTableDataChanged();
+	}
+
+	public Parse getRows() {
+		return fitTableModel.getRows();
 	}
 }

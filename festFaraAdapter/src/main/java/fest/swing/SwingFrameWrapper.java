@@ -52,4 +52,8 @@ public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 		return _frameFixture;
 	}
 	
+	public void cleanUpRobot() {
+		robot().cleanUp();
+	}
+	
 }

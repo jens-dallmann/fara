@@ -14,10 +14,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.fixture.JListFixture;
 
+import commandUtils.ParseUtils;
+
 import fest.FestResultBuilder;
 import fest.interfaces.ListUIAdapter;
 import fest.swing.operators.RelationalOperatorEvaluator;
-import fest.swing.utils.ParseUtils;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;

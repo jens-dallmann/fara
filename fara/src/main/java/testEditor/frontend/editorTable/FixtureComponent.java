@@ -26,6 +26,7 @@ public class FixtureComponent {
 	public FixtureComponent() {
 		label = new JLabel("Fixture: ");
 		fixture = new JTextField();
+		fixture.setName("fixture");
 		panel = new JPanel();
 		panel.setLayout(new MigLayout("align left", "[][grow, fill]"));
 		panel.add(label);

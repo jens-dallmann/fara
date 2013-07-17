@@ -68,7 +68,9 @@ public class TestEditorController {
 				DefaultMutableTreeNode lastPathComponent = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
 				WrappedFile wrappedFile = (WrappedFile) lastPathComponent.getUserObject();
 				File file = wrappedFile.getFile();
-				fitTable.load(file);
+				if(!file.isDirectory()){
+					fitTable.load(file);
+				}
 			}
 		});
 		ui.addTablePanel(fitTable.getTableUI());

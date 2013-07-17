@@ -1,4 +1,4 @@
-package fest.swing.utils;
+package commandUtils;
 
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.container.CommandResult;

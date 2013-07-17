@@ -1,15 +1,18 @@
 package testEditor.frontend.editorTable;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
-import testEditor.frontend.editorTable.tableFunctions.TableFunctionShortCutInitializer;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarController;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarDelegate;
+import core.command.supports.UIUndoRedoSupport;
+import core.command.supports.UIUndoRedoSupportImpl;
 import core.exception.frontend.ApplicationExceptionAreaFiller;
 import core.exception.frontend.ExceptionLevel;
 import core.exception.frontend.ExceptionWindowController;
@@ -31,6 +34,7 @@ public class FitHtmlRepresentationController implements
 	private ProcessableTableComponent<FitRowTableModel> processableTableComponent;
 	private FitIOService fitFileService;
 	private ReflectionService reflectionService;
+	private UIUndoRedoSupport undoRedoSupport;
 
 	public void init(ProcessService service, Parse table) {
 		reflectionService = new ReflectionService();
@@ -38,15 +42,12 @@ public class FitHtmlRepresentationController implements
 		fitFileService = new FitIOService();
 		persistenceToolbar = new PersistenceToolbarController();
 		persistenceToolbar.setPersistenceToolbarDelegate(this);
-
 		processableTableComponent = new ProcessableTableComponent<FitRowTableModel>(
 				model, service, this);
-
+		undoRedoSupport = new UIUndoRedoSupportImpl();
 		String fixtureName = extractFixtureName(table);
 		ui = new FitHtmlRepresentationUI(fixtureName);
 		JComponent tablePanel = processableTableComponent.getTablePanel();
-		JTable tableOnly = processableTableComponent.getTable();
-		new TableFunctionShortCutInitializer(tableOnly);		
 
 		ui.addComponent(tablePanel);
 
@@ -58,6 +59,17 @@ public class FitHtmlRepresentationController implements
 						model.setFixtureName(text);
 					}
 				});
+		processableTableComponent.getTable().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				TableCellEditor cellEditor = processableTableComponent.getTable().getCellEditor();
+				if(cellEditor != null) {
+					cellEditor.stopCellEditing();
+				}
+				
+				undoRedoSupport.execute(e);
+			}
+		});
 	}
 
 	private String extractFixtureName(Parse table) {
@@ -84,16 +96,13 @@ public class FitHtmlRepresentationController implements
 			}
 			;
 		}
-		FitRowTableModel model = new FitRowTableModel();
-		model.setTable(table);
-		model.initRowStates();
+		FitRowTableModel model = new FitRowTableModel(table);
 		model.prepareFirstRow();
-		model.calculateColumnCount();
 		return model;
 	}
 
 	private Parse getRows() {
-		return model.getTable().parts;
+		return model.getRows();
 	}
 
 	public JComponent getTableUI() {

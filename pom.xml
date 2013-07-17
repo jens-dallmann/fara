@@ -9,6 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <name>Fara Parent Pom</name>
+	<properties>
+		<cobertura.version>1.9.2</cobertura.version>
+	</properties>
 
     <modules>
         <module>fara</module>
@@ -48,9 +51,70 @@
 							<downloadJavadocs>true</downloadJavadocs>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>2.4</version>
+					</plugin>
             </plugins>
         </pluginManagement>
     </build>
+	<profiles>
+    <profile>
+      <id>cobertura-instrument</id>
+      <activation>
+        <property>
+          <name>cobertura-build</name>
+        </property>
+      </activation>
+      <modules>
+        <module>fara</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <configuration>
+            </configuration>
+            <executions>
+              <execution>
+                <id>instrument-code</id>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>instrument</goal>
+                </goals>
+                <configuration>
+                  <attach>true</attach>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+            <inherited>true</inherited>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>net.sourceforge.cobertura</groupId>
+          <artifactId>cobertura-runtime</artifactId>
+          <version>${cobertura.version}</version>
+          <scope>provided</scope>
+          <type>pom</type>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
      <repositories>
     <repository>
       <snapshots>
@@ -61,4 +125,20 @@
       <url>http://repo.maven.apache.org/maven2</url>
     </repository>
   </repositories>
+  <reporting>
+  <plugins>
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+            <check></check>
+            <formats>
+                <format>html</format>
+                <format>xml</format>
+            </formats>
+        </configuration>
+    </plugin>
+	</plugins>
+</reporting>
 </project>

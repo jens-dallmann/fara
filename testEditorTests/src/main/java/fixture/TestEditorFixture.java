@@ -112,7 +112,7 @@ public class TestEditorFixture implements HasCommands {
 	@FitCommand({})
 	public CommandResult endEditor() {
 		CommandResult result = new CommandResult();
-		wrapper.getFrameFixture().target.setVisible(false);
+		wrapper.cleanUpRobot();
 		result.setResultState(CommandResultState.RIGHT);
 		return result;
 	}

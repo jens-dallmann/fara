@@ -7,10 +7,8 @@ import javax.swing.JFrame;
 
 public class EditFolderController {
 	private EditFolderUI ui;
-	private final String oldName;
 	
 	public EditFolderController(JFrame frame, String oldName) {
-		this.oldName = oldName;
 		ui = new EditFolderUI(frame, oldName);
 		addListeners();
 		ui.setVisible();

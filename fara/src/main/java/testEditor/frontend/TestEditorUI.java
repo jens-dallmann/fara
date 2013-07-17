@@ -1,7 +1,5 @@
 package testEditor.frontend;
 
-import java.awt.GridLayout;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;

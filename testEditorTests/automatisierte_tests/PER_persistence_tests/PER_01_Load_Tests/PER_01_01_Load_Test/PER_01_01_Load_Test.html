@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="fitnesse.css">
+<table border='1'>
+	<tr>
+		<td>fixture.TestEditorAggregator</td></tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 1</td>
+		<td>start the test editor</td>
+		<td>test editor is up</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>startEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 2</td>
+		<td>load test data via load button Testdata_PER_01_01.html to any place.</td>
+		<td>2 rows in the table exist. Fixture is set. Row one has Command commandOne, with arguments argumentOne and argumentTwo. Row 2 has command commandTwo with 4 parameters: argumentOne, argumentTwo, argumentThree, argumentFour. Fixture is: LoadTestFixture</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>pressButton</td>
+		<td>persistenceToolbar.load</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>useFileChooserWithResource</td>
+		<td>Testdata_Test_PER_01_01.html</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableRowCount</td>
+		<td>processableTable</td>
+		<td>=</td>
+		<td>2</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>3</td>
+		<td>commandOne</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>4</td>
+		<td>argumentOne</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>5</td>
+		<td>argumentTwo</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>3</td>
+		<td>commandTwo</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>4</td>
+		<td>argumentOne</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>5</td>
+		<td>argumentTwo</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>6</td>
+		<td>argumentThree</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>7</td>
+		<td>argumentFour</td>
+	</tr>
+	<tr>
+		<td>checkText</td>
+		<td>fixture</td>
+		<td>LoadTestFixture</td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 3</td>
+		<td>Beende Testeditor</td>
+		<td></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>endEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+</table>

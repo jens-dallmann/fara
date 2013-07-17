@@ -125,6 +125,9 @@ public class ProcessableTableController<Model extends AbstractProcessableTableMo
 		if (model.hasMoreRows()) {
 			enableNextRow();
 			if (!canProceed(rowState)) {
+				if(model.breakpointAtPointer()) {
+					model.removeBreakpointAtPointer();
+				}
 				play = false;
 			}
 			if (play) {

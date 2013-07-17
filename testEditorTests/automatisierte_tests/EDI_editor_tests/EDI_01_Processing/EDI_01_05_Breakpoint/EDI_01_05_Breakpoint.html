@@ -1,0 +1,214 @@
+<link rel="stylesheet" type="text/css" href="fitnesse.css">
+<table border='1'>
+	<tr>
+		<td>fixture.TestEditorAggregator</td></tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 1</td>
+		<td>start the editor</td>
+		<td>editor has started</td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass" class="pass" class="pass" class="pass" class="pass" class="pass" class="pass">startEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 2</td>
+		<td>load test file:Testdata_Test_EDI_01_05.html</td>
+		<td>test file has been loaded with 4 rows</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass" class="pass">pressButton</td>
+		<td>persistenceToolbar.load</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">useFileChooserWithResource</td>
+		<td>Testdata_Test_EDI_01_05.html</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="fail" class="pass" class="pass" class="pass">checkTableRowCount</td>
+		<td>processableTable</td>
+		<td>=</td>
+		<td>4</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>3</td>
+		<td>alwaysSucceed</td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>3</td>
+		<td>alwaysSucceed</td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>3</td>
+		<td>alwaysSucceed</td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>4</td>
+		<td>3</td>
+		<td>alwaysSucceed</td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 3</td>
+		<td>Set Breakpoint in row 3 by clicking first column in row 3</td>
+		<td>The first cell in column three has the text: 3 (BP)</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass" class="pass" class="pass">pressTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>No</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass">checkTableCell</td>
+		<td class="fail" class="fail">processableTable</td>
+		<td>3</td>
+		<td>1</td>
+		<td>2(BP)</td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 4</td>
+		<td>press play</td>
+		<td>the rows should be proccesed succesfully until row 3. Row 3 is in state WAIT. The Breakpoint is now removed.</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass">pressButton</td>
+		<td>play</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>2</td>
+		<td>WAIT</td>
+	</tr>
+	<tr>
+		<td class="pass">checkTableCell</td>
+		<td>processableTable</td>
+		<td>4</td>
+		<td>2</td>
+		<td>INITIAL</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td class="fail">processableTable</td>
+		<td>3</td>
+		<td>1</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 5</td>
+		<td>press play again</td>
+		<td>all rows should be processed and a result file has been created</td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>pressButton</td>
+		<td>play</td>
+		<td></td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>1</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>2</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>3</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkTableCell</td>
+		<td>processableTable</td>
+		<td>4</td>
+		<td>2</td>
+		<td>SUCCESS</td>
+	</tr>
+	<tr>
+		<td>checkResultFileExist</td>
+		<td> </td>
+		<td> </td>
+		<td></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>comment</td>
+		<td>Step 6</td>
+		<td>delete result folder and end editor</td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>deleteResultFolder</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td>endEditor</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+	</tr>
+</table>

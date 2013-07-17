@@ -1,5 +1,6 @@
 package fixture;
 
+import htmlCommands.HTMLCommands;
 import fest.swing.SwingButtonUIAdapter;
 import fest.swing.SwingComponentUIAdapter;
 import fest.swing.SwingFileChooserAdapter;
@@ -8,6 +9,7 @@ import fest.swing.SwingLabelUIAdapter;
 import fest.swing.SwingTabbedPaneUIAdapter;
 import fest.swing.SwingTableUIAdapter;
 import fest.swing.SwingTextComponentUIAdapter;
+import fileCommands.FileCommands;
 import fitArchitectureAdapter.AbstractProcessableFixtureAggregator;
 import fitArchitectureAdapter.commands.GeneralCommands;
 
@@ -30,5 +32,7 @@ private SwingFrameWrapper wrapper;
 		addCommandObject(new TestEditorFixture(wrapper));
 		addCommandObject(new SwingTableUIAdapter(wrapper));
 		addCommandObject(new GeneralCommands());
+		addCommandObject(new HTMLCommands());
+		addCommandObject(new FileCommands());
 	}
 }
