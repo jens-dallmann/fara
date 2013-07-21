@@ -44,18 +44,7 @@ public class NewLineCommand extends AbstractTableCommand<NewLineCommandModel>{
 		int selectedRowCount = getModel().getSelectedRowCount();
 		FitRowTableModel tableModel = getTableModel();
 		tableModel.deleteRows(firstSelectedRow+selectedRowCount, selectedRowCount);
-//		
-//		if(selectedRowCount == 0 && tableModel.getRowCount() == 1) {
-//			tableModel.deleteRows(new int[] {0});
-//		}
-//		else if(selectedRowCount == 0) {
-//			int rowCount = tableModel.getRowCount();
-//			tableModel.deleteRows(new int[rowCount-1]);
-//		}
-//		else {
-//			int lastSelectedRow = firstSelectedRow + selectedRowCount;
-//			tableModel.deleteRows(lastSelectedRow, selectedRowCount);
-//		}
+
 		return true;
 	}
 
