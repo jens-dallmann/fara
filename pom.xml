@@ -69,40 +69,55 @@
       </activation>
       <modules>
         <module>fara</module>
+        <module>festFaraAdapter</module>
+		<module>FestTests</module>
+		<module>testapp</module>
       </modules>
       <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-            <configuration>
-            </configuration>
-            <executions>
-              <execution>
-                <id>instrument-code</id>
-                <phase>process-classes</phase>
-                <goals>
-                  <goal>instrument</goal>
-                </goals>
-                <configuration>
-                  <attach>true</attach>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-            <inherited>true</inherited>
-          </plugin>
-        </plugins>
+	  <pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<configuration>
+					</configuration>
+					<executions>
+						<execution>
+							<id>instrument-code</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>instrument</goal>
+							</goals>
+							<configuration>
+								<attach>true</attach>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+					<id>attach-sources</id>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+					</execution>
+				</executions>
+				<inherited>true</inherited>
+				</plugin>
+				
+			</plugins>
+		</pluginManagement>
       </build>
       <dependencies>
         <dependency>
