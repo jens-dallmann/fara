@@ -22,20 +22,22 @@ public class ClassFileProcessor implements FileProcessor {
 
 	private ClassLoader classLoader;
 
+	public ClassFileProcessor() {
+	}
 	public ClassFileProcessor(ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
+
 	@Override
 	public List<FitCommandDoc> process(String fileToProcess) {
-		List<FitCommandDoc> result = new ArrayList<FitCommandDoc>();
 		Class<?> loadedClass = loadClass(fileToProcess);
-		if (loadedClass != null) {
-			result = collectFitCommands(loadedClass);
-		}
-		return result;
+		return process(loadedClass);
 	}
 
+	public List<FitCommandDoc> process(Class<?> clazz) {
+		return collectFitCommands(clazz);
+	}
 	private List<FitCommandDoc> collectFitCommands(Class<?> loadedClass) {
 		List<FitCommandDoc> commands = new ArrayList<FitCommandDoc>();
 		Method[] methods = loadedClass.getMethods();
@@ -74,7 +76,7 @@ public class ClassFileProcessor implements FileProcessor {
 	private boolean isFitCommand(Method method) {
 		FitCommand annotation = method.getAnnotation(FitCommand.class);
 		return annotation != null;
-	}
+	} 
 
 	private Class<?> loadClass(String fileToProcess) {
 		Class<?> loadClass = null;
