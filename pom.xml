@@ -18,6 +18,9 @@
         <module>festFaraAdapter</module>
 		<module>FestTests</module>
 		<module>testapp</module>
+		<module>faraPersistence</module>
+		<module>testEditorTests</module>
+		<module>fitCommandDocumentor</module>
     </modules>
 
     <build>
@@ -31,18 +34,6 @@
                         <target>1.6</target>
                     </configuration>
                 </plugin>
-				<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-eclipse-plugin</artifactId>
@@ -51,40 +42,7 @@
 							<downloadJavadocs>true</downloadJavadocs>
 						</configuration>
 					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>cobertura-maven-plugin</artifactId>
-						<version>2.4</version>
-					</plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-	<profiles>
-    <profile>
-      <id>cobertura-instrument</id>
-      <activation>
-        <property>
-          <name>cobertura-build</name>
-        </property>
-      </activation>
-      <modules>
-        <module>fara</module>
-        <module>festFaraAdapter</module>
-		<module>FestTests</module>
-		<module>testapp</module>
-      </modules>
-      <build>
-	  <pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.1</version>
-					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
-					</configuration>
-				</plugin>
+            
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>cobertura-maven-plugin</artifactId>
@@ -104,21 +62,50 @@
 					</executions>
 				</plugin>
 				<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-					</execution>
-				</executions>
-				<inherited>true</inherited>
+					<groupId>jd</groupId>
+					<artifactId>fitCommandDocumentor</artifactId>
+					<configuration>
+						<explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-				
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<executions>
+						<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						</execution>
+					</executions>
+					<inherited>true</inherited>
+				</plugin>
 			</plugins>
-		</pluginManagement>
-      </build>
+        </pluginManagement>
+    </build>
+	<profiles>
+    <profile>
+      <id>cobertura-instrument</id>
+      <activation>
+        <property>
+          <name>cobertura-build</name>
+        </property>
+      </activation>
+      <modules>
+		<module>fitCommandDocumentor</module>
+        <module>fara</module>
+        <module>festFaraAdapter</module>
+		<module>FestTests</module>
+		<module>testapp</module>
+      </modules>
       <dependencies>
         <dependency>
           <groupId>net.sourceforge.cobertura</groupId>

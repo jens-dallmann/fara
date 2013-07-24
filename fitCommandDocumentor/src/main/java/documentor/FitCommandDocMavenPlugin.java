@@ -27,7 +27,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 	 * @readonly
 	 */
 	private String outputDirectory;
-	
+
 	/**
 	 * Target Directory
 	 * 
@@ -36,7 +36,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 	 * @readonly
 	 */
 	private String targetDirectory;
-	
+
 	/**
 	 * Artifact ID of compile project
 	 * 
@@ -46,42 +46,68 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 	 */
 	private String artifactId;
 	
+	/**
+	 * @parameter 
+	 */
+	private String explicitDefinedOutputDirectory;
+	
 	public void execute() throws MojoExecutionException, MojoFailureException {
-
-		List<Class<?>> allClasses = loadCompiledClasses(new File(outputDirectory), new ArrayList<Class<?>>());
-		String directory = targetDirectory;
-		File directoryFile = new File(directory);
 		
+		System.out.println(outputDirectory);
+		System.out.println(explicitDefinedOutputDirectory);
+		File outputDirectoryFile = new File(outputDirectory);
+
+		if (outputDirectoryFile.exists()) {
+			List<Class<?>> allClasses = loadCompiledClasses(new File(
+					outputDirectory), new ArrayList<Class<?>>());
+			DocPathNamePair pair = buildDocGenDescription();
+			DocGeneratorService docGeneratorService = new DocGeneratorService();
+			docGeneratorService.generateDocsByClasses(pair, allClasses);
+		}
+	}
+
+	public DocPathNamePair buildDocGenDescription() {
+		String usedResultDirectory = targetDirectory;
+		if(explicitDefinedOutputDirectory != null) {
+			usedResultDirectory = explicitDefinedOutputDirectory;
+		}
+		File directoryFile = new File(usedResultDirectory);
+		if(!directoryFile.exists()) {
+			directoryFile.mkdir();
+		}
 		String resultFilePath = directoryFile.getAbsolutePath()
-				+ File.separator + artifactId
-				+ "FitCommandDocs";
+				+ File.separator + artifactId + "FitCommandDocs";
+		
 		DocPathNamePair pair = new DocPathNamePair(outputDirectory,
 				resultFilePath);
-		DocGeneratorService docGeneratorService = new DocGeneratorService();
-		docGeneratorService.generateDocsByClasses(pair, allClasses);
+		return pair;
 	}
 
 	private List<Class<?>> loadCompiledClasses(File outputDirectory,
 			List<Class<?>> allClasses) throws MojoExecutionException {
-		ClassLoader classLoader = FitCommandDocMavenPlugin.class.getClassLoader();
+
 		for (File oneFile : outputDirectory.listFiles()) {
 			if (oneFile.isDirectory()) {
 				loadCompiledClasses(oneFile, allClasses);
 			} else {
 				if (oneFile.getAbsolutePath().contains(".class")) {
+					String canonicalPath = null; 
 					try {
-						String canonicalPath = oneFile.getCanonicalPath();
-						int indexOf = canonicalPath.indexOf("\\classes\\");
-						String substring = canonicalPath.substring(indexOf
-								+ "\\classes\\".length());
-						substring = substring.replaceAll("\\\\", ".");
-						substring = substring.replaceAll("\\.class", "");
-						Class<?> loadClass = classLoader.loadClass(substring);
+						canonicalPath = oneFile.getCanonicalPath();
+					} catch (IOException e1) {
+						getLog().warn("Skipped Class "+oneFile.getAbsolutePath() +": Can not read it from file");
+					}
+					int indexOf = canonicalPath.indexOf("\\classes\\");
+					String classPath = canonicalPath.substring(indexOf
+							+ "\\classes\\".length());
+					classPath = classPath.replaceAll("\\\\", ".");
+					classPath = classPath.replaceAll("\\.class", "");
+					try {
+						Class<?> loadClass = this.getClass().getClassLoader().loadClass(classPath);
 						allClasses.add(loadClass);
+						getLog().info("Successfully loaded class: "+loadClass.getName());
 					} catch (ClassNotFoundException e) {
-						throw new MojoExecutionException("Can not load class: "+oneFile.getAbsolutePath());
-					} catch (IOException e) {
-						throw new MojoExecutionException("Can not load class: "+oneFile.getAbsolutePath());
+						getLog().warn("Skipped Class "+oneFile.getAbsolutePath() +": Can not load it from class loader. The class to load by ClassLoader is: "+classPath);
 					}
 				}
 			}
