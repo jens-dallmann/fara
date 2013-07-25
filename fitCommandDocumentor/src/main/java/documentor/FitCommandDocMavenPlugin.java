@@ -2,8 +2,12 @@ package documentor;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -27,6 +31,14 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 	 * @readonly
 	 */
 	private String outputDirectory;
+    /**
+     * Directory where compiled classes will be
+     *
+     * @parameter expression="${project.compileClasspathElements}"
+     * @required
+     * @readonly
+     */
+    private List<String> compileClasspathElements;
 
 	/**
 	 * Target Directory
@@ -50,9 +62,14 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 	 * @parameter 
 	 */
 	private String explicitDefinedOutputDirectory;
-	
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		
+    private URLClassLoader loader;
+
+    public void execute() throws MojoExecutionException, MojoFailureException {
+		try {
+			this.loader = new URLClassLoader(buildUrls(), this.getClass().getClassLoader());
+		} catch (MalformedURLException e) {
+			throw new MojoExecutionException("URL malformed: "+e.getMessage());
+		}
 		System.out.println(outputDirectory);
 		System.out.println(explicitDefinedOutputDirectory);
 		File outputDirectoryFile = new File(outputDirectory);
@@ -65,8 +82,18 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 			docGeneratorService.generateDocsByClasses(pair, allClasses);
 		}
 	}
+	
+    private URL[] buildUrls() throws MalformedURLException {
+    	List<URL> urls = new ArrayList<URL>();
+        for (Object object : compileClasspathElements) {
+          String path = (String) object;
+          urls.add(new File(path).toURI().toURL());
+        }
+        return urls.toArray(new URL[] {});
+        // Thread.currentThread().setContextClassLoader(classLoader); // if needed
+    }
 
-	public DocPathNamePair buildDocGenDescription() {
+    public DocPathNamePair buildDocGenDescription() {
 		String usedResultDirectory = targetDirectory;
 		if(explicitDefinedOutputDirectory != null) {
 			usedResultDirectory = explicitDefinedOutputDirectory;
@@ -91,19 +118,17 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 				loadCompiledClasses(oneFile, allClasses);
 			} else {
 				if (oneFile.getAbsolutePath().contains(".class")) {
-					String canonicalPath = null; 
+					String canonicalPath = null;
 					try {
 						canonicalPath = oneFile.getCanonicalPath();
 					} catch (IOException e1) {
 						getLog().warn("Skipped Class "+oneFile.getAbsolutePath() +": Can not read it from file");
 					}
-					int indexOf = canonicalPath.indexOf("\\classes\\");
-					String classPath = canonicalPath.substring(indexOf
-							+ "\\classes\\".length());
-					classPath = classPath.replaceAll("\\\\", ".");
-					classPath = classPath.replaceAll("\\.class", "");
+					String classPath = buildClassPath(oneFile.getAbsolutePath());
 					try {
-						Class<?> loadClass = this.getClass().getClassLoader().loadClass(classPath);
+						ClassLoader classLoader = this.getClass().getClassLoader();
+						Class<?> loadClass = loader.loadClass(classPath);
+
 						allClasses.add(loadClass);
 						getLog().info("Successfully loaded class: "+loadClass.getName());
 					} catch (ClassNotFoundException e) {
@@ -114,5 +139,34 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 		}
 		return allClasses;
 	}
+
+    private String buildClassPath(String absolutePath) {
+        String pattern = Pattern.quote(System.getProperty("file.separator"));
+        String[] splittedPath = absolutePath.split(pattern);
+        List<String> pathFromClassFolder = new ArrayList<String>();
+        boolean isClassesFolderPassed = false;
+        for(String onePathElement: splittedPath) {
+            if(isClassesFolderPassed) {
+                pathFromClassFolder.add(onePathElement);
+            }
+            if(onePathElement.equals("classes")){
+                isClassesFolderPassed = true;
+            }
+        }
+        String lastElement = pathFromClassFolder.get(pathFromClassFolder.size() - 1);
+        pathFromClassFolder.remove(pathFromClassFolder.size()-1);
+        String newLastElement = lastElement.substring(0,lastElement.lastIndexOf(".class"));
+        pathFromClassFolder.add(newLastElement);
+        StringBuffer classPath = new StringBuffer();
+        for(int i = 0; i < pathFromClassFolder.size(); i++)  {
+            String onePathElement = pathFromClassFolder.get(i);
+            if(i != 0) {
+                classPath.append(".");
+            }
+            classPath.append(onePathElement);
+        }
+        return classPath.toString();
+    }
+
 
 }

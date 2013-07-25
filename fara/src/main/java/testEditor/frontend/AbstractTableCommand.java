@@ -1,8 +1,10 @@
-package core.command;
+package testEditor.frontend;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import core.command.CommandModel;
+import core.command.TableCommand;
 import testEditor.frontend.editorTable.FitRowTableModel;
 
 public abstract class AbstractTableCommand<Model extends CommandModel> implements TableCommand {

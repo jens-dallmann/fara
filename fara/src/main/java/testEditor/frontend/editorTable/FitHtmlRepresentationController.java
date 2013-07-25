@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.table.TableCellEditor;
 
 import net.miginfocom.swing.MigLayout;
+import testEditor.frontend.editorTable.tableFunctions.CommandFactoryImpl;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarController;
 import testEditor.frontend.persistenceToolbar.PersistenceToolbarDelegate;
 import core.command.supports.UIUndoRedoSupport;
@@ -44,7 +45,7 @@ public class FitHtmlRepresentationController implements
 		persistenceToolbar.setPersistenceToolbarDelegate(this);
 		processableTableComponent = new ProcessableTableComponent<FitRowTableModel>(
 				model, service, this);
-		undoRedoSupport = new UIUndoRedoSupportImpl();
+		undoRedoSupport = new UIUndoRedoSupportImpl(new CommandFactoryImpl());
 		String fixtureName = extractFixtureName(table);
 		ui = new FitHtmlRepresentationUI(fixtureName);
 		JComponent tablePanel = processableTableComponent.getTablePanel();

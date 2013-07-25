@@ -2,16 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>fitCommandDocumentor</artifactId>
+    <groupId>jd</groupId>
 	<packaging>maven-plugin</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fitCommandDocumentor Maven Mojo</name>
 	<url>http://maven.apache.org</url>
-	<parent>
-		<groupId>jd</groupId>
-		<artifactId>fara-parent</artifactId>
-		<version>1.0</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
 	<build>
 		<plugins>
 			<plugin>
@@ -48,9 +43,9 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>jd</groupId>
-			<artifactId>fara</artifactId>
-			<version>0.2.0-SNAPSHOT</version>
+			<groupId>jd-core</groupId>
+			<artifactId>backend</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

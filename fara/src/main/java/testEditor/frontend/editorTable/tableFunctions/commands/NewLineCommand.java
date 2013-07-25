@@ -4,7 +4,7 @@ import javax.swing.JTable;
 
 import testEditor.frontend.editorTable.FitRowTableModel;
 import testEditor.frontend.editorTable.tableFunctions.commands.model.NewLineCommandModel;
-import core.command.AbstractTableCommand;
+import testEditor.frontend.AbstractTableCommand;
 import fit.exception.FitParseException;
 
 

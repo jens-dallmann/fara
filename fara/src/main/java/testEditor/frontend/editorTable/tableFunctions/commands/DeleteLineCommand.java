@@ -3,7 +3,7 @@ package testEditor.frontend.editorTable.tableFunctions.commands;
 import javax.swing.JTable;
 
 import testEditor.frontend.editorTable.tableFunctions.commands.model.DeleteLineCommandModel;
-import core.command.AbstractTableCommand;
+import testEditor.frontend.AbstractTableCommand;
 import fit.Parse;
 
 public class DeleteLineCommand extends
