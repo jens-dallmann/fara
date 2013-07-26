@@ -1,4 +1,4 @@
-package core.processableTable;
+package core;
 
 public interface ProcessService {
 	

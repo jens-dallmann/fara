@@ -10,19 +10,18 @@
  ******************************************************************************/
 package fitArchitectureAdapter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import fit.ActionFixture;
 import fit.Parse;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.container.InstanceMethodPair;
 import fitArchitectureAdapter.interfaces.HasCommands;
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The core class of the new fit architecture. It Overrides the action fixture
@@ -106,7 +105,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 		Parse parameter = cells.more;
 		for (int i = 0; i < numberOfParameters && parameter != null; parameter = parameter.more, i++) {
 			actualParameters[i] = StringEscapeUtils.unescapeHtml4(parameter
-					.text());
+                    .text());
 		}
 		return actualParameters;
 	}

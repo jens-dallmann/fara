@@ -1,6 +1,6 @@
 package core.service;
 
-import core.processableTable.ProcessService;
+import core.ProcessService;
 
 public class ReflectionService {
 

@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.processableTable.ProcessResultListener;
-import core.processableTable.ProcessService;
+import core.ProcessResultListener;
+import core.ProcessService;
 import fit.Parse;
 import fitArchitectureAdapter.container.CommandResult;
 
