@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import org.fest.swing.edt.GuiQuery;
 
-import testEditor.frontend.TestEditorController;
+import frontend.TestEditorController;
 import fest.swing.SwingFrameWrapper;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;

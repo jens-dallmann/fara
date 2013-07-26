@@ -61,7 +61,7 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>jd</groupId>
+                    <groupId>jd-tools</groupId>
                     <artifactId>fitCommandDocumentor</artifactId>
                     <configuration>
                         <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>

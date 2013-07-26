@@ -1,4 +1,4 @@
-import testEditor.frontend.StartTestEditor;
+import frontend.StartTestEditor;
 
 
 public class RunTest {
