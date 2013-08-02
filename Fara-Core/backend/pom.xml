@@ -5,7 +5,10 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>core-backend</name>
 	<description>Provides an Adapter for the architecture of fit which has the problem with bad scaling fixtures for action fixtures when using many commands in tests</description>
-	<parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <parent>
 		<groupId>jd-core</groupId>
 		<artifactId>core</artifactId>
 		<version>1.0-SNAPSHOT</version>
@@ -54,6 +57,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.0.5</version>
         </dependency>
     </dependencies>
 </project>

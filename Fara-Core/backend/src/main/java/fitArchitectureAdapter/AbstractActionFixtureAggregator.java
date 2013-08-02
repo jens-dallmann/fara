@@ -10,6 +10,7 @@
  ******************************************************************************/
 package fitArchitectureAdapter;
 
+import core.ProcessResultListener;
 import fit.ActionFixture;
 import fit.Parse;
 import fitArchitectureAdapter.annotations.FitCommand;
@@ -20,7 +21,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +43,11 @@ import java.util.Map;
 public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 
 	private Map<String, InstanceMethodPair> commands;
+    private List<ProcessResultListener> listeners;
 
+    public AbstractActionFixtureAggregator() {
+        listeners = new ArrayList<ProcessResultListener>();
+    }
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
 	 * objects
@@ -124,10 +131,6 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 				commandResult.getFailureMessage());
 	}
 
-	public void publishResult(String state, String failureMessage) {
-		
-	}
-
 	private void processWrong(int parameterNumber, String message) {
 		Parse wrongCell = cells;
 		for (int i = 0; i < parameterNumber; i++) {
@@ -198,4 +201,18 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 	 * initialization
 	 */
 	public abstract void addFixtureObjects();
+
+    public void registerResultListener(ProcessResultListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeResultListener(ProcessResultListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void publishResult(String state, String failureMessage) {
+        for (ProcessResultListener listener : listeners) {
+            listener.publishResult(state, failureMessage);
+        }
+    }
 }

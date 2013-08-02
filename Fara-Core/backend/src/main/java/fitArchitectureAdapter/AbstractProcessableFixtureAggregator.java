@@ -11,11 +11,7 @@ import fitArchitectureAdapter.container.CommandResult;
 
 public abstract class AbstractProcessableFixtureAggregator extends
 		AbstractActionFixtureAggregator implements ProcessService {
-	private List<ProcessResultListener> listeners;
 
-	public AbstractProcessableFixtureAggregator() {
-		listeners = new ArrayList<ProcessResultListener>();
-	}
 
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
@@ -56,21 +52,5 @@ public abstract class AbstractProcessableFixtureAggregator extends
 		}
 	}
 
-	@Override
-	public void registerResultListener(ProcessResultListener listener) {
-		listeners.add(listener);
-	}
 
-	@Override
-	public void removeResultListener(ProcessResultListener listener) {
-		listeners.remove(listener);
-	}
-
-	@Override
-	public void publishResult(String state, String failureMessage) {
-		for (ProcessResultListener listener : listeners) {
-			listener.publishResult(state, failureMessage);
-		}
-		super.publishResult(state, failureMessage);
-	}
 }

@@ -20,6 +20,7 @@
         <module>testapp</module>
         <module>faraPersistence</module>
         <module>testEditorTests</module>
+        <module>faraTestRunner-maven-plugin</module>
     </modules>
 
     <build>
@@ -70,7 +71,23 @@
                         <execution>
                             <phase>process-classes</phase>
                             <goals>
-                                <goal>generate</goal>
+                                <goal>install</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>jd-core</groupId>
+                    <artifactId>faraTestRunner-maven-plugin</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <configuration>
+                        <faraTestsDirectoryPath>automatisierte_tests</faraTestsDirectoryPath>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>test</goal>
                             </goals>
                         </execution>
                     </executions>

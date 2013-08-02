@@ -9,8 +9,7 @@ public class RessourceService {
 		return loadRessourceFile(filename).getAbsolutePath();
 	}
 	public File loadRessourceFile(String filename) throws URISyntaxException{
-		ClassLoader classLoader = RessourceService.class
-				.getClassLoader();
+		ClassLoader classLoader = this.getClass().getClassLoader();
 		URL resourceUrl = classLoader.getResource(filename);
 		File resourceFile = new File(resourceUrl.toURI());
 		return resourceFile;
