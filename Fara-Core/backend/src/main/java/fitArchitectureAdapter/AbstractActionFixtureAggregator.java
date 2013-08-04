@@ -10,7 +10,7 @@
  ******************************************************************************/
 package fitArchitectureAdapter;
 
-import core.ProcessResultListener;
+import core.ProcessListener;
 import fit.ActionFixture;
 import fit.Parse;
 import fitArchitectureAdapter.annotations.FitCommand;
@@ -43,10 +43,10 @@ import java.util.Map;
 public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 
 	private Map<String, InstanceMethodPair> commands;
-    private List<ProcessResultListener> listeners;
+    private List<ProcessListener> listeners;
 
     public AbstractActionFixtureAggregator() {
-        listeners = new ArrayList<ProcessResultListener>();
+        listeners = new ArrayList<ProcessListener>();
     }
 	/**
 	 * Init method which initializes the map and calls the adding of the fixture
@@ -67,7 +67,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 		} catch (IllegalArgumentException e) {
 			handleErrorMessages(cells, "Command not found: " + commandName);
 		} catch (IllegalAccessException e) {
-			handleErrorMessages(cells, "Cannot access method: " + commandName);
+            e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 			handleErrorMessages(cells, "To Less or to much arguments");
@@ -81,20 +81,17 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 
 	protected void handleErrorMessages(Parse cell, String errorMessage) {
 		wrong(cell,errorMessage);
+        publishResult(CommandResultState.WRONG.toString(), errorMessage);
 	}
 	protected CommandResult callMethod(String text) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
 		InstanceMethodPair pair = null;
-		try {
-			pair = commands.get(text);
-		}
-		catch(NullPointerException e) {
-			System.out.println("You forgot to initialize AggregatorFixture! ");
-			throw e;
-		}
+		pair = commands.get(text);
+
 		if (pair == null) {
 			throw new IllegalArgumentException("Command " + text + "not found");
 		}
+
 		Method command = pair.getMethod();
 		Object fixtureObject = pair.getFixtureInstance();
 		Class<?>[] parameterTypes = command.getParameterTypes();
@@ -155,13 +152,6 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 	 *            instance of the class which provides methods.
 	 */
 	public void addCommandObject(HasCommands commandObject) {
-		boolean isCommandClass = isCommandClass(commandObject);
-		if (isCommandClass) {
-			addCommandsToMap(commandObject);
-		}
-	}
-
-	private void addCommandsToMap(HasCommands commandObject) {
 		Method[] methods = extractMethods(commandObject);
 		for (Method oneClassMethod : methods) {
 			boolean isFitCommand = isFITCommand(oneClassMethod);
@@ -171,10 +161,17 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 					InstanceMethodPair pair = new InstanceMethodPair(
 							commandObject, oneClassMethod);
 					commands.put(methodName, pair);
-				}
+				    fireAddedCommandToMap(pair, methodName);
+                }
 			}
 		}
 	}
+
+    private void fireAddedCommandToMap(InstanceMethodPair pair, String methodname) {
+        for(ProcessListener listener: listeners) {
+            listener.addedCommandToMap(pair, methodname);
+        }
+    }
 
 	private Method[] extractMethods(Object commandObject) {
 		Class<?> commandClass = commandObject.getClass();
@@ -191,10 +188,6 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 		return annotation != null;
 	}
 
-	private boolean isCommandClass(Object commandObject) {
-		return commandObject instanceof HasCommands;
-	}
-
 	/**
 	 * Method to implement to add new Fixture Objects it will be triggered the
 	 * init method. This method has to be called after constructor
@@ -202,16 +195,16 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture{
 	 */
 	public abstract void addFixtureObjects();
 
-    public void registerResultListener(ProcessResultListener listener) {
+    public void registerProcessListener(ProcessListener listener) {
         listeners.add(listener);
     }
 
-    public void removeResultListener(ProcessResultListener listener) {
+    public void removeProcessListener(ProcessListener listener) {
         listeners.remove(listener);
     }
 
     public void publishResult(String state, String failureMessage) {
-        for (ProcessResultListener listener : listeners) {
+        for (ProcessListener listener : listeners) {
             listener.publishResult(state, failureMessage);
         }
     }

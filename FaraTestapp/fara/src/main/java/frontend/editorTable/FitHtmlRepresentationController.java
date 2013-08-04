@@ -1,8 +1,8 @@
 package frontend.editorTable;
 
 import core.ProcessService;
-import core.command.supports.UIUndoRedoSupport;
-import core.command.supports.UIUndoRedoSupportImpl;
+import core.command.supports.KeyEventExecutor;
+import core.command.supports.KeyEventExecutorImpl;
 import core.exception.frontend.ApplicationExceptionAreaFiller;
 import core.exception.frontend.ExceptionLevel;
 import core.exception.frontend.ExceptionWindowController;
@@ -33,7 +33,7 @@ public class FitHtmlRepresentationController implements
 	private ProcessableTableComponent<FitRowTableModel> processableTableComponent;
 	private FitIOService fitFileService;
 	private ReflectionService reflectionService;
-	private UIUndoRedoSupport undoRedoSupport;
+	private KeyEventExecutor undoRedoSupport;
 
 	public void init(ProcessService service, Parse table) {
 		reflectionService = new ReflectionService();
@@ -43,7 +43,7 @@ public class FitHtmlRepresentationController implements
 		persistenceToolbar.setPersistenceToolbarDelegate(this);
 		processableTableComponent = new ProcessableTableComponent<FitRowTableModel>(
 				model, service, this);
-		undoRedoSupport = new UIUndoRedoSupportImpl(new CommandFactoryImpl());
+		undoRedoSupport = new KeyEventExecutorImpl(new CommandFactoryImpl());
 		String fixtureName = extractFixtureName(table);
 		ui = new FitHtmlRepresentationUI(fixtureName);
 		JComponent tablePanel = processableTableComponent.getTablePanel();

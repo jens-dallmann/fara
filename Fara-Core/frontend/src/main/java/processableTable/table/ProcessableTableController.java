@@ -10,8 +10,9 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import core.ProcessResultListener;
+import core.ProcessListener;
 import core.ProcessService;
+import fitArchitectureAdapter.container.InstanceMethodPair;
 import org.apache.commons.lang3.StringUtils;
 import processableTable.ProcessTableObservable;
 import processableTable.ProcessTableStateCalculator;
@@ -23,7 +24,7 @@ import core.service.ReflectionService;
 import state.StateListener;
 
 
-public class ProcessableTableController<Model extends AbstractProcessableTableModel> extends ProcessTableObservable implements ProcessToolbarDelegate, ProcessResultListener{
+public class ProcessableTableController<Model extends AbstractProcessableTableModel> extends ProcessTableObservable implements ProcessToolbarDelegate, ProcessListener {
 
 	private Model model;
 	private ProcessableTableUI ui;
@@ -41,7 +42,7 @@ public class ProcessableTableController<Model extends AbstractProcessableTableMo
 		stateCalculator = new ProcessTableStateCalculator(model);
 		stateCalculator.registerListener(stateListener);
 		model.initRowStates();
-		service.registerResultListener(this);
+		service.registerProcessListener(this);
 		ui = new ProcessableTableUI(model);
 		ui.getTable().addMouseListener(new MouseAdapter() {
 			@Override
@@ -167,16 +168,20 @@ public class ProcessableTableController<Model extends AbstractProcessableTableMo
 		prepareAndProceedIfPossible(rowState);
 	}
 
-	public void loadNewProcessService(String text) {
+    @Override
+    public void addedCommandToMap(InstanceMethodPair pair, String commandName) {
+    }
+
+    public void loadNewProcessService(String text) {
 		if(StringUtils.isNotEmpty(text)) {
 			this.service = reflectionService.loadProcessService(text);
 		}
-		this.service.registerResultListener(this);
+		this.service.registerProcessListener(this);
 	}
 
 	public void setNewProcessService(ProcessService newProcessService) {
 		this.service = newProcessService;
-		service.registerResultListener(this);
+		service.registerProcessListener(this);
 	}
 
 	public JTable getTable() {

@@ -10,11 +10,15 @@ public class UndoRedoSupportImpl implements UndoRedoSupport{
 	private CommandStack undone;
 	
 	public UndoRedoSupportImpl() {
-		executed = new CommandStack();
-		undone = new CommandStack();
+        this(new CommandStack(), new CommandStack());
 	}
-	
-	@Override
+
+    public UndoRedoSupportImpl(CommandStack executedStack, CommandStack undoneStack) {
+        this.executed = executedStack;
+        this.undone = undoneStack;
+    }
+
+    @Override
 	public boolean execute(Command command) {
 		boolean isExecuted = command.execute();
 		if(isExecuted) {

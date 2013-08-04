@@ -1,26 +1,20 @@
 import core.ClassLoaderUtils;
-import core.ProcessResultListener;
+import core.ProcessListener;
 import fit.Parse;
 import fit.exception.FitParseException;
 import fitArchitectureAdapter.AbstractActionFixtureAggregator;
-import org.apache.commons.collections.CollectionUtils;
+import fitArchitectureAdapter.container.InstanceMethodPair;
 import org.apache.commons.io.FileUtils;
-import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.mockito.cglib.core.Predicate;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static org.mockito.cglib.core.CollectionUtils.filter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +25,8 @@ import static org.mockito.cglib.core.CollectionUtils.filter;
  *
  * @goal test
  * @phase integration-test
- * @requiresDependencyResolution compile+runtime
+ * @requiresDependencyResolution test
+ * @requiresDependencyCollection test
  */
 public class FaraTestRunner extends AbstractMojo {
     /**
@@ -67,9 +62,6 @@ public class FaraTestRunner extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        List<Resource> resources = project.getResources();
-        ClassLoader classLoader = ClassLoaderUtils.addResourceFilesToClasspath(resources, Thread.currentThread().getContextClassLoader());
-
         List<File> allTestFiles = collectTestFiles();
         List<AbstractActionFixtureAggregator> testProcessors = scanForAbstractFixtureAggregator();
         getLog().info("Found "+testProcessors.size()+" possible test processors");
@@ -99,10 +91,14 @@ public class FaraTestRunner extends AbstractMojo {
 
     private AbstractActionFixtureAggregator configureFixtureAggregator(Pair onePair) {
         AbstractActionFixtureAggregator testProcessor = onePair.getFixtureAggregator();
-        testProcessor.registerResultListener(new ProcessResultListener() {
+        testProcessor.registerProcessListener(new ProcessListener() {
             @Override
             public void publishResult(String state, String message) {
                 getLog().info(state);
+            }
+
+            @Override
+            public void addedCommandToMap(InstanceMethodPair pair, String commandName) {
             }
         });
         return testProcessor;

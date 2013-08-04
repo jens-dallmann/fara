@@ -1,10 +1,7 @@
 package fitArchitectureAdapter;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
-import core.ProcessResultListener;
 import core.ProcessService;
 import fit.Parse;
 import fitArchitectureAdapter.container.CommandResult;

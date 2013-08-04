@@ -19,8 +19,11 @@ public class SwingTableUIAdapter implements HasCommands, TableUIAdapter {
 
 	private SwingFrameWrapper _frameWrapper;
 
+    private ParseUtils parseUtils;
+
 	public SwingTableUIAdapter(SwingFrameWrapper frameWrapper) {
 		_frameWrapper = frameWrapper;
+        parseUtils = new ParseUtils();
 	}
 
 	@FitCommand({
@@ -32,7 +35,7 @@ public class SwingTableUIAdapter implements HasCommands, TableUIAdapter {
 		CommandResult result = new CommandResult();
 		JTableFixture table = findTable(tableName, result);
 		if (result.getResultState() != CommandResultState.WRONG) {
-			int rowCountInput = ParseUtils.readIntegerInput(expected, result);
+			int rowCountInput = parseUtils.readIntegerInput(expected, result, 3);
 			int rowCount = table.rowCount();
 			if (result.getResultState() != CommandResultState.WRONG) {
 				RelationalOperatorEvaluator.evaluateOperation(operator,
@@ -95,7 +98,7 @@ public class SwingTableUIAdapter implements HasCommands, TableUIAdapter {
 			"The row number", "The column number", "The text to be set in table cell"})
 	public CommandResult setTableCell(String tableName, String row, String columnName, String text){
 		CommandResult result = new CommandResult();
-		final int rowNumber = ParseUtils.readIntegerInput(row, result);
+		final int rowNumber = parseUtils.readIntegerInput(row, result,2);
 		JTableFixture table = findTable(tableName, result);
 		if(result.getResultState() != CommandResultState.WRONG) {
 			JTableCellFixture cell = table.cell(row(rowNumber-1).columnId(columnName));

@@ -27,9 +27,11 @@ import fitArchitectureAdapter.interfaces.HasCommands;
 public class SwingListUIAdapter implements ListUIAdapter, HasCommands {
 
 	private SwingFrameWrapper frameWrapper;
+    private ParseUtils parseUtils;
 
 	public SwingListUIAdapter(SwingFrameWrapper wrapper) {
 		frameWrapper = wrapper;
+        parseUtils = new ParseUtils();
 	}
 
 	@FitCommand({"the name of the list widget","the name of the item in the list"})
@@ -70,7 +72,7 @@ public class SwingListUIAdapter implements ListUIAdapter, HasCommands {
 		if(result.getResultState() != CommandResultState.WRONG) {
 			String[] items = fixture.contents();
 			int actualItemCount = items.length;
-			int expectedItemCount = ParseUtils.readIntegerInput(expected, result);
+			int expectedItemCount = parseUtils.readIntegerInput(expected, result,3);
 			RelationalOperatorEvaluator.evaluateOperation(operator, actualItemCount, expectedItemCount, result);
 		}
 		return result;

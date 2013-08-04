@@ -1,9 +1,8 @@
 package frontend.persistenceToolbar;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import javax.swing.*;
 
+import core.ResourceLoader;
 import net.miginfocom.swing.MigLayout;
 
 public class PersistenceToolbarUI {
@@ -17,7 +16,7 @@ public class PersistenceToolbarUI {
 		panel.setLayout(new MigLayout());
 		
 		save = new JButton("Save");
-		load = new JButton("Load");
+        load = new JButton("Load");
 		saveAs = new JButton("Save As");
 		save.setName("persistenceToolbar.save");
 		load.setName("persistenceToolbar.load");

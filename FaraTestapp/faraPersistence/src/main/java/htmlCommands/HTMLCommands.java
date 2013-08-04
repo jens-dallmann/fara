@@ -14,13 +14,19 @@ import fitArchitectureAdapter.interfaces.HasCommands;
 
 public class HTMLCommands implements HasCommands {
 
+    private ParseUtils parseUtils;
+
+    public HTMLCommands() {
+        parseUtils = new ParseUtils();
+    }
+
 	@FitCommand({ "HTML file in which the table is", "the row in the table",
 			"the column in the table", "the expected string" })
 	public CommandResult checkTableCellInRessourceFile(String fileName,
 			String tableRow, String tableColumn, String expected) {
 		CommandResult result = new CommandResult();
-		int row = ParseUtils.readIntegerInput(tableRow, result);
-		int column = ParseUtils.readIntegerInput(tableColumn, result);
+		int row = parseUtils.readIntegerInput(tableRow, result, 2);
+		int column = parseUtils.readIntegerInput(tableColumn, result, 3);
 		File file = new File(fileName);
 
 		if (file.exists()) {
