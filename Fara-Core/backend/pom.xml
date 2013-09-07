@@ -22,14 +22,15 @@
                 <version>2.5.1</version>
                 <configuration>
                     <check>
-                        <branchRate>85</branchRate>
-                        <lineRate>85</lineRate>
-                        <haltOnFailure>false</haltOnFailure>
-                        <totalBranchRate>85</totalBranchRate>
-                        <totalLineRate>85</totalLineRate>
-                        <packageLineRate>85</packageLineRate>
-                        <packageBranchRate>85</packageBranchRate>
+                        <branchRate>0</branchRate>
+                        <lineRate>0</lineRate>
+                        <haltOnFailure>0</haltOnFailure>
+                        <totalBranchRate>0</totalBranchRate>
+                        <totalLineRate>0</totalLineRate>
+                        <packageLineRate>0</packageLineRate>
+                        <packageBranchRate>0</packageBranchRate>
                     </check>
+                    <format>xml</format>
                 </configuration>
                 <executions>
                     <execution>
