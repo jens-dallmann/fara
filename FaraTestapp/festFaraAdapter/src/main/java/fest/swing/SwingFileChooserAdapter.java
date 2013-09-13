@@ -13,6 +13,9 @@ import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
+import service.PropertyService;
+
+import javax.xml.bind.PropertyException;
 
 public class SwingFileChooserAdapter implements HasCommands,
 		FileChooserUIAdapter {
@@ -31,18 +34,27 @@ public class SwingFileChooserAdapter implements HasCommands,
 		JFileChooserFixture fileChooser = frameWrapper.getFrameFixture()
 				.fileChooser(Timeout.timeout(3000));
 		if (fileChooser != null) {
-			String resourcePath = null;
-			try {
-				resourcePath = ressourceService.loadRessourceFilePath(resource);
-			} catch (URISyntaxException e) {
-				result.setFailureMessage("No valid Resource");
-				result.setResultState(CommandResultState.WRONG);
-				result.setWrongParameterNumber(2);
-				return result;
-			}
+            String testdataDirectory = null;
+            try {
+                PropertyService propertyService = new PropertyService();
+                testdataDirectory = propertyService.getProperty(PropertyService.FILE_DIRECTORY);
+
+            } catch (PropertyException e) {
+                result.setFailureMessage("Property filedirectory not set in propertyfile");
+                result.setResultState(CommandResultState.WRONG);
+                result.setWrongParameterNumber(2);
+
+            }
+            String resourcePath = "/home/deception/fara/FaraTestapp/testEditorTests/src/main/resources" + File.separator + resource;
+
 			fileChooser.fileNameTextBox().setText(resourcePath);
 			fileChooser.approve();
-			result.setResultState(CommandResultState.RIGHT);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            result.setResultState(CommandResultState.RIGHT);
 		} else {
 			result = FestResultBuilder.buildWrongResultComponentFailure(result,
 					"File chooser");

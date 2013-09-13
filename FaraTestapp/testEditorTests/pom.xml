@@ -11,23 +11,35 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <build>
-        <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.1</version>
+                    <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <archive>
+                            <manifest>
+                                <mainClass>frontend.StartTestEditor</mainClass>
+                            </manifest>
+                        </archive>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                            <phase>package</phase> <!-- bind to the packaging phase -->
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
-                    <groupId>jd-core</groupId>
+                    <groupId>jd</groupId>
                     <artifactId>faraTestRunner-maven-plugin</artifactId>
                     <version>1.0-SNAPSHOT</version>
                     <configuration>
-                        <faraTestsDirectoryPath>automatisierte_tests</faraTestsDirectoryPath>
+                        <faraTestsDirectoryPath>testEditorTests/automatisierte_tests</faraTestsDirectoryPath>
                     </configuration>
                     <executions>
                         <execution>
@@ -39,7 +51,6 @@
                     </executions>
                 </plugin>
             </plugins>
-        </pluginManagement>
     </build>
     <dependencies>
         <dependency>

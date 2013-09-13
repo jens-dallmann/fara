@@ -20,7 +20,6 @@
         <module>testapp</module>
         <module>faraPersistence</module>
         <module>testEditorTests</module>
-        <module>faraTestRunner-maven-plugin</module>
     </modules>
 
     <build>
