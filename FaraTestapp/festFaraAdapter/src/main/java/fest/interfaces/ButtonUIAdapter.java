@@ -23,15 +23,14 @@ import fitArchitectureAdapter.container.CommandResult;
  * Provides methods for buttons. In some ui test frameworks this interface could
  * be merged with AbstractButtonUIAdapter but not in every test framework.
  * Cause this interface design is for fest the interfaces are separated.
- * 
+ *
  * @author jens.dallmann
  */
 public interface ButtonUIAdapter {
-	/**
-	 * Presses a button with the passed button name.
-	 * 
-	 * @param buttonName
-	 *            the name of the button which should be pressed.
-	 */
-	CommandResult pressButton(String buttonName);
+  /**
+   * Presses a button with the passed button name.
+   *
+   * @param buttonName the name of the button which should be pressed.
+   */
+  CommandResult pressButton(String buttonName);
 }

@@ -1,53 +1,53 @@
 package fitArchitectureAdapter;
 
-import java.lang.reflect.InvocationTargetException;
-
 import core.ProcessService;
 import fit.Parse;
 import fitArchitectureAdapter.container.CommandResult;
 
+import java.lang.reflect.InvocationTargetException;
+
 public abstract class AbstractProcessableFixtureAggregator extends
-		AbstractActionFixtureAggregator implements ProcessService {
+        AbstractActionFixtureAggregator implements ProcessService {
 
 
-	/**
-	 * Init method which initializes the map and calls the adding of the fixture
-	 * objects also it inits the test editor.
-	 */
-	public void init() {
-		super.init();
-	}
+  /**
+   * Init method which initializes the map and calls the adding of the fixture
+   * objects also it inits the test editor.
+   */
+  public void init() {
+    super.init();
+  }
 
-	@Override
-	public void doTable(Parse table) {
-		super.doTable(table);
-	}
+  @Override
+  public void doTable(Parse table) {
+    super.doTable(table);
+  }
 
-	@Override
-	public void doRows(Parse rows) {
-		super.doRows(rows);
-	}
+  @Override
+  public void doRows(Parse rows) {
+    super.doRows(rows);
+  }
 
-	@Override
-	protected void handleErrorMessages(Parse cell, String errorMessage) {
-		publishResult(CommandResultState.WRONG.toString(), errorMessage);
-	}
+  @Override
+  protected void handleErrorMessages(Parse cell, String errorMessage) {
+    publishResult(CommandResultState.WRONG.toString(), errorMessage);
+  }
 
-	@Override
-	protected CommandResult callMethod(String text)
-			throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException {
-		CommandResult result = super.callMethod(text);
+  @Override
+  protected CommandResult callMethod(String text)
+          throws IllegalArgumentException, IllegalAccessException,
+          InvocationTargetException {
+    CommandResult result = super.callMethod(text);
 
-		return result;
-	}
+    return result;
+  }
 
-	public void doNextStep(Object row) {
-		if (row instanceof Parse) {
-			Parse parse = (Parse) row;
-			doRow(parse);
-		}
-	}
+  public void doNextStep(Object row) {
+    if (row instanceof Parse) {
+      Parse parse = (Parse) row;
+      doRow(parse);
+    }
+  }
 
 
 }

@@ -10,13 +10,13 @@
  ******************************************************************************/
 package docGenerator.processors.impl;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
 import docGenerator.model.FitCommandDoc;
 import docGenerator.processors.FileProcessor;
 import fitArchitectureAdapter.annotations.FitCommand;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassFileProcessor implements FileProcessor {
 

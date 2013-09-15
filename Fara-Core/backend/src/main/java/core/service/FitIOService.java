@@ -1,14 +1,14 @@
 package core.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import core.service.exceptions.CreateDirectoryException;
 import core.service.exceptions.FitIOException;
 import fit.Parse;
 import fit.exception.FitParseException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FitIOService {
 
@@ -62,7 +62,7 @@ public class FitIOService {
     File directory = new File(resultDirectoryPath);
     if (!directory.exists()) {
       boolean directoryIsCreated = directory.mkdir();
-      if(!directoryIsCreated) {
+      if (!directoryIsCreated) {
         throw new CreateDirectoryException(resultDirectoryPath);
       }
     }

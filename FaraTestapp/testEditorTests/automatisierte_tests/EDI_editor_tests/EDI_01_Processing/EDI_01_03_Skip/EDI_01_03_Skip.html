@@ -1,382 +1,386 @@
 <link rel="stylesheet" type="text/css" href="fitnesse.css">
 <table border='1'>
-	<tr>
-		<td>fixture.TestEditorAggregator</td></tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 1</td>
-		<td>start the test editor</td>
-		<td>test editor is started</td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass">startEditor</td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 2</td>
-		<td>load test file:Testdata_Test_EDI_01_03.html</td>
-		<td>a file has been loaded: 4 Rows exist. 3 with command alwaysSucceed and one with command alwaysFail. The alwaysFail command is the second</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass" class="pass">pressButton</td>
-		<td>persistenceToolbar.load</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass">useFileChooserWithResource</td>
-		<td>Testdata_Test_EDI_01_03.html</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass">checkTableRowCount</td>
-		<td>processableTable</td>
-		<td>=</td>
-		<td>4</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td class="fail" class="fail">processableTable</td>
-		<td>1</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>3</td>
-		<td>alwaysFail</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 3</td>
-		<td>Select 4th row and press Skip</td>
-		<td>the first 3 rows are in state skipped and the last one in state wait</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>selectTableRow</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>Command</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>skip</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 4</td>
-		<td>Select row one and press Skip</td>
-		<td>the first row is in state Wait and the others in state SKIPPED</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>selectTableRow</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>Command</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>skip</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 5</td>
-		<td>Press Play</td>
-		<td>Processing stops after second row. Third row is in state wait.</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>play</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>FAILED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>comment </td>
-		<td>Step 6</td>
-		<td>select row 1 and press skip</td>
-		<td>the first row is in state Wait and the others in state SKIPPED</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>selectTableRow</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>Command</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>skip</td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 7</td>
-		<td>select row three and press Skip</td>
-		<td>the first two rows are in state Skipped, the third is in state wait.</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>selectTableRow</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>Command</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>skip</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 8</td>
-		<td>press play</td>
-		<td>the first two rows are in state skipped. The third and fourth row are in state Success. A result file exist.</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>play</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SKIPPED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkResultFileExist</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 9</td>
-		<td>delete result files and close editor</td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>deleteResultFolder</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>endEditor</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
+<tr>
+    <td>fixture.TestEditorAggregator</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 1</td>
+    <td>start the test editor</td>
+    <td>test editor is started</td>
+</tr>
+<tr>
+    <td class="pass" class="pass">startEditor</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 2</td>
+    <td>load test file:Testdata_Test_EDI_01_03.html</td>
+    <td>a file has been loaded: 4 Rows exist. 3 with command alwaysSucceed and one with command alwaysFail. The
+        alwaysFail command is the second
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td class="pass" class="pass" class="pass">pressButton</td>
+    <td>persistenceToolbar.load</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="pass" class="pass">useFileChooserWithResource</td>
+    <td>Testdata_Test_EDI_01_03.html</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="pass" class="pass">checkTableRowCount</td>
+    <td>processableTable</td>
+    <td>=</td>
+    <td>4</td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td class="fail" class="fail">processableTable</td>
+    <td>1</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>3</td>
+    <td>alwaysFail</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 3</td>
+    <td>Select 4th row and press Skip</td>
+    <td>the first 3 rows are in state skipped and the last one in state wait</td>
+    <td></td>
+</tr>
+<tr>
+    <td>selectTableRow</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>Command</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>skip</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 4</td>
+    <td>Select row one and press Skip</td>
+    <td>the first row is in state Wait and the others in state SKIPPED</td>
+    <td></td>
+</tr>
+<tr>
+    <td>selectTableRow</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>Command</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>skip</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 5</td>
+    <td>Press Play</td>
+    <td>Processing stops after second row. Third row is in state wait.</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>play</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>FAILED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 6</td>
+    <td>select row 1 and press skip</td>
+    <td>the first row is in state Wait and the others in state SKIPPED</td>
+    <td></td>
+</tr>
+<tr>
+    <td>selectTableRow</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>Command</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>skip</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 7</td>
+    <td>select row three and press Skip</td>
+    <td>the first two rows are in state Skipped, the third is in state wait.</td>
+    <td></td>
+</tr>
+<tr>
+    <td>selectTableRow</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>Command</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>skip</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 8</td>
+    <td>press play</td>
+    <td>the first two rows are in state skipped. The third and fourth row are in state Success. A result file exist.
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>play</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>SKIPPED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkResultFileExist</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 9</td>
+    <td>delete result files and close editor</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>deleteResultFolder</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>endEditor</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
 </table>

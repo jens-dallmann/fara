@@ -1,24 +1,24 @@
 package textComponentTab;
 
-import javax.swing.JPanel;
-
 import interfaces.TabController;
 
-public class TextComponentTabController implements TabController{
+import javax.swing.JPanel;
 
-	private TextComponentTabUI ui;
+public class TextComponentTabController implements TabController {
 
-	public TextComponentTabController() {
-		ui = new TextComponentTabUI();
-	}
+  private TextComponentTabUI ui;
 
-	@Override
-	public JPanel getTabPanel() {
-		return ui.getTabPanel();
-	}
+  public TextComponentTabController() {
+    ui = new TextComponentTabUI();
+  }
 
-	@Override
-	public String getTabName() {
-		return "Text Component";
-	}
+  @Override
+  public JPanel getTabPanel() {
+    return ui.getTabPanel();
+  }
+
+  @Override
+  public String getTabName() {
+    return "Text Component";
+  }
 }

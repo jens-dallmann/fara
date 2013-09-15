@@ -42,15 +42,13 @@ public class FitCommandDoc implements Comparable<FitCommandDoc> {
 
   @Override
   public int compareTo(FitCommandDoc o) {
-    if(equals(o)) {
+    if (equals(o)) {
       return 0;
-    }
-    else {
+    } else {
       int compareToOfClassName = o.getClassName().compareTo(className);
-      if(compareToOfClassName != 0) {
+      if (compareToOfClassName != 0) {
         return compareToOfClassName;
-      }
-      else {
+      } else {
         return o.getCommandName().compareTo(commandName);
       }
     }

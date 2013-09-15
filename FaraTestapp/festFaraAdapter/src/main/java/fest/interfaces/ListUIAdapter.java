@@ -21,25 +21,25 @@ import fitArchitectureAdapter.container.CommandResult;
 
 /**
  * Provides methods for testing a list component.
- * 
+ *
  * @author jens.dallmann
  */
 public interface ListUIAdapter {
 
-	/**
-	 * Select a list item in the given list.
-	 * The list item which should be selected will be allocated by name.
-	 * 
-	 * @param listName the name of the list in which a item should be selected
-	 * @param itemName the name of the item which should be selected in the given list.
-	 * @return CommandResult
-	 */
-	CommandResult selectListItem(String listName, String itemName);
+  /**
+   * Select a list item in the given list.
+   * The list item which should be selected will be allocated by name.
+   *
+   * @param listName the name of the list in which a item should be selected
+   * @param itemName the name of the item which should be selected in the given list.
+   * @return CommandResult
+   */
+  CommandResult selectListItem(String listName, String itemName);
 
-	CommandResult checkListItemExist(String listName, String itemDescriptor);
+  CommandResult checkListItemExist(String listName, String itemDescriptor);
 
-	CommandResult checkNoListItemSelected(String listName);
+  CommandResult checkNoListItemSelected(String listName);
 
-	CommandResult checkListItemCount(String listName, String operator,
-			String count);
+  CommandResult checkListItemCount(String listName, String operator,
+                                   String count);
 }

@@ -1,22 +1,15 @@
 package documentor;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import core.ClassLoaderUtils;
+import docGenerator.model.DocPathNamePair;
+import docGenerator.services.DocGeneratorService;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import docGenerator.model.DocPathNamePair;
-import docGenerator.services.DocGeneratorService;
-import org.apache.maven.plugin.logging.Log;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @goal install
@@ -25,78 +18,78 @@ import org.apache.maven.plugin.logging.Log;
  */
 public class FitCommandDocMavenPlugin extends AbstractMojo {
 
-    /**
-     * Directory where compiled classes will be
-     *
-     * @parameter expression="${project.build.outputDirectory}"
-     * @required
-     * @readonly
-     */
-    private String outputDirectory;
-    /**
-     * Directory where compiled classes will be
-     *
-     * @parameter expression="${project.compileClasspathElements}"
-     * @required
-     * @readonly
-     */
-    private List<String> compileClasspathElements;
+  /**
+   * Directory where compiled classes will be
+   *
+   * @parameter expression="${project.build.outputDirectory}"
+   * @required
+   * @readonly
+   */
+  private String outputDirectory;
+  /**
+   * Directory where compiled classes will be
+   *
+   * @parameter expression="${project.compileClasspathElements}"
+   * @required
+   * @readonly
+   */
+  private List<String> compileClasspathElements;
 
-    /**
-     * Target Directory
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     * @readonly
-     */
-    private String targetDirectory;
+  /**
+   * Target Directory
+   *
+   * @parameter expression="${project.build.directory}"
+   * @required
+   * @readonly
+   */
+  private String targetDirectory;
 
-    /**
-     * Artifact ID of compile project
-     *
-     * @parameter expression="${project.artifactId}"
-     * @required
-     * @readonly
-     */
-    private String artifactId;
+  /**
+   * Artifact ID of compile project
+   *
+   * @parameter expression="${project.artifactId}"
+   * @required
+   * @readonly
+   */
+  private String artifactId;
 
-    /**
-     * @parameter
-     */
-    private String explicitDefinedOutputDirectory;
+  /**
+   * @parameter
+   */
+  private String explicitDefinedOutputDirectory;
 
-    private ClassLoader loader;
+  private ClassLoader loader;
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        this.loader = ClassLoaderUtils.buildClassLoader(getLog(), this.getClass().getClassLoader(), compileClasspathElements);
+  public void execute() throws MojoExecutionException, MojoFailureException {
+    this.loader = ClassLoaderUtils.buildClassLoader(getLog(), this.getClass().getClassLoader(), compileClasspathElements);
 
-        getLog().info("Loading classes from directory: " + outputDirectory);
-        File outputDirectoryFile = new File(outputDirectory);
+    getLog().info("Loading classes from directory: " + outputDirectory);
+    File outputDirectoryFile = new File(outputDirectory);
 
-        if (outputDirectoryFile.exists()) {
-            List<Class<?>> allClasses = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(loader, getLog(), outputDirectoryFile, new ArrayList<Class<?>>());
-            DocPathNamePair pair = buildDocGenDescription();
-            DocGeneratorService docGeneratorService = new DocGeneratorService();
-            docGeneratorService.generateDocsByClasses(pair, allClasses);
-        }
+    if (outputDirectoryFile.exists()) {
+      List<Class<?>> allClasses = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(loader, getLog(), outputDirectoryFile, new ArrayList<Class<?>>());
+      DocPathNamePair pair = buildDocGenDescription();
+      DocGeneratorService docGeneratorService = new DocGeneratorService();
+      docGeneratorService.generateDocsByClasses(pair, allClasses);
     }
+  }
 
 
-    private DocPathNamePair buildDocGenDescription() {
-        String usedResultDirectory = targetDirectory;
-        if (explicitDefinedOutputDirectory != null) {
-            usedResultDirectory = explicitDefinedOutputDirectory;
-        }
-        getLog().info("Using " + usedResultDirectory + " as ouput directory for documentation");
-        File directoryFile = new File(usedResultDirectory);
-        if (!directoryFile.exists()) {
-            directoryFile.mkdir();
-        }
-        String resultFilePath = directoryFile.getAbsolutePath()
-                + File.separator + artifactId + "FitCommandDocs";
-
-        DocPathNamePair pair = new DocPathNamePair(outputDirectory,
-                resultFilePath);
-        return pair;
+  private DocPathNamePair buildDocGenDescription() {
+    String usedResultDirectory = targetDirectory;
+    if (explicitDefinedOutputDirectory != null) {
+      usedResultDirectory = explicitDefinedOutputDirectory;
     }
+    getLog().info("Using " + usedResultDirectory + " as ouput directory for documentation");
+    File directoryFile = new File(usedResultDirectory);
+    if (!directoryFile.exists()) {
+      directoryFile.mkdir();
+    }
+    String resultFilePath = directoryFile.getAbsolutePath()
+            + File.separator + artifactId + "FitCommandDocs";
+
+    DocPathNamePair pair = new DocPathNamePair(outputDirectory,
+            resultFilePath);
+    return pair;
+  }
 }

@@ -7,39 +7,39 @@ import core.command.Command;
  */
 public interface UndoRedoSupport {
 
-    /**
-     * executes the given command
-     *
-     * @param command the command to execute
-     * @return true if the command can be exectued, false else
-     */
-	public boolean execute(Command command);
+  /**
+   * executes the given command
+   *
+   * @param command the command to execute
+   * @return true if the command can be exectued, false else
+   */
+  public boolean execute(Command command);
 
-    /**
-     * undo the last command
-     *
-     * @return true if the last command has been undone, false else
-     */
-	public boolean undo();
+  /**
+   * undo the last command
+   *
+   * @return true if the last command has been undone, false else
+   */
+  public boolean undo();
 
-    /**
-     * redo the last undone command
-     *
-     * @return true if the last command has been redone, false else
-     */
-	public boolean redo();
+  /**
+   * redo the last undone command
+   *
+   * @return true if the last command has been redone, false else
+   */
+  public boolean redo();
 
-    /**
-     * Ask the support if undo can be done.
-     *
-     * @return true if undo can be done, false else
-     */
-	public boolean canUndo();
+  /**
+   * Ask the support if undo can be done.
+   *
+   * @return true if undo can be done, false else
+   */
+  public boolean canUndo();
 
-    /**
-     * Ask the support if redo can be done.
-     *
-     * @return true if redo can be done, false else
-     */
-	public boolean canRedo();
+  /**
+   * Ask the support if redo can be done.
+   *
+   * @return true if redo can be done, false else
+   */
+  public boolean canRedo();
 }

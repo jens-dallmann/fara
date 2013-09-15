@@ -8,6 +8,6 @@ public class CreateFileException extends Exception {
   }
 
   public CreateFileException(String filename) {
-    super("Error on creating File: "+filename);
+    super("Error on creating File: " + filename);
   }
 }

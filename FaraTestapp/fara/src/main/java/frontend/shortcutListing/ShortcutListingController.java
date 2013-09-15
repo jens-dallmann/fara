@@ -1,13 +1,12 @@
 package frontend.shortcutListing;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import frontend.editorTable.ShortcutActionKeys;
 import frontend.shortcutListing.category.ShortcutCategoryController;
 import frontend.shortcutListing.category.ShortcutEntry;
+
+import javax.swing.JPanel;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShortcutListingController {
 

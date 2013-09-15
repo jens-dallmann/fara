@@ -1,5 +1,5 @@
 package processableTable;
 
 public enum ProcessTableStates {
-	EMPTY_TABLE, RUNNING, IDLE;
+  EMPTY_TABLE, RUNNING, IDLE;
 }

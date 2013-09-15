@@ -17,28 +17,27 @@
  */
 package fest.matcher;
 
-import java.awt.Component;
-
-import javax.swing.JButton;
-
 import org.fest.swing.core.ComponentMatcher;
 
-public class ButtonTextMatcher implements ComponentMatcher{
+import javax.swing.JButton;
+import java.awt.Component;
 
-	private String _text;
-	
-	public ButtonTextMatcher(String text) {
-		_text = text;
-	}
-	
-	@Override
-	public boolean matches(Component c) {
-		if(c instanceof JButton) {
-			JButton button = (JButton) c;
-			if(button.getText().equals(_text)) {
-				return true;
-			}
-		}
-		return false;
-	}
+public class ButtonTextMatcher implements ComponentMatcher {
+
+  private String _text;
+
+  public ButtonTextMatcher(String text) {
+    _text = text;
+  }
+
+  @Override
+  public boolean matches(Component c) {
+    if (c instanceof JButton) {
+      JButton button = (JButton) c;
+      if (button.getText().equals(_text)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

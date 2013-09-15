@@ -22,25 +22,25 @@ import fitArchitectureAdapter.container.CommandResult;
 /**
  * Provides methods for abstract button.
  * AbstractButton is a base class of swing but the concept can be transfered to other ui concepts.
- * 
+ *
  * @author jens.dallmann
  */
 public interface AbstractButtonUIAdapter {
-	/**
-	 * Returns if the button with the name is selected.
-	 * 
-	 * @param componentName name of the button
-	 * @return true if the button is selected, else false.
-	 */
-	CommandResult checkSelected(String componentName);
-	
-	/**
-	 * Returns if the button with the name is not selected.
-	 * 
-	 * @param componentName name of the button
-	 * @return true if the button is not selected, else false.
-	 */
-	CommandResult checkNotSelected(String componentName);
+  /**
+   * Returns if the button with the name is selected.
+   *
+   * @param componentName name of the button
+   * @return true if the button is selected, else false.
+   */
+  CommandResult checkSelected(String componentName);
+
+  /**
+   * Returns if the button with the name is not selected.
+   *
+   * @param componentName name of the button
+   * @return true if the button is not selected, else false.
+   */
+  CommandResult checkNotSelected(String componentName);
 
 
 }

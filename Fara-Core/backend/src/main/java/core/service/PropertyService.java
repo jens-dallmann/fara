@@ -1,13 +1,12 @@
 package core.service;
 
+import javax.xml.bind.PropertyException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
-
-import javax.xml.bind.PropertyException;
 
 public class PropertyService {
   public static final String FILENAME = "settings.properties";
@@ -63,8 +62,7 @@ public class PropertyService {
         }
       } catch (IOException e1) {
         throw new PropertyException("Properties file can not be loaded");
-      }
-      finally {
+      } finally {
         if (propertyFileStream != null) {
           try {
             propertyFileStream.close();

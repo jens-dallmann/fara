@@ -1,5 +1,10 @@
 package core.service;
 
+import core.service.exceptions.CopyException;
+import core.service.exceptions.CreateFileException;
+import core.service.exceptions.WriteFileException;
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,12 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
-
-import org.apache.commons.io.IOUtils;
-
-import core.service.exceptions.CopyException;
-import core.service.exceptions.CreateFileException;
-import core.service.exceptions.WriteFileException;
 
 
 public class FileService {
@@ -27,7 +26,7 @@ public class FileService {
     } catch (IOException e) {
       throw new CreateFileException(file.getAbsolutePath(), e);
     }
-    if(!isCreated) {
+    if (!isCreated) {
       throw new CreateFileException(file.getAbsolutePath());
     }
     return file;
@@ -47,13 +46,12 @@ public class FileService {
       return result;
     } catch (IOException e) {
       throw new WriteFileException(file.getAbsolutePath(), e);
-    }
-    finally {
-      if(fileWriter != null) {
+    } finally {
+      if (fileWriter != null) {
         try {
           fileWriter.close();
         } catch (IOException e) {
-          throw new WriteFileException(file.getAbsolutePath(),e);
+          throw new WriteFileException(file.getAbsolutePath(), e);
         }
       }
     }

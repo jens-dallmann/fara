@@ -1,6 +1,6 @@
 package processableTable;
 
 public interface ProcessTableListener {
-	
-	void doNextStep();
+
+  void doNextStep();
 }

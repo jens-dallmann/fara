@@ -20,11 +20,11 @@ package fest.interfaces;
 import fitArchitectureAdapter.container.CommandResult;
 
 public interface TextComponentUIAdapter {
-	CommandResult setText(String fieldName, String text);
+  CommandResult setText(String fieldName, String text);
 
-	CommandResult checkNotEditable(String textfield);
+  CommandResult checkNotEditable(String textfield);
 
-	CommandResult checkEditable(String textfield);
+  CommandResult checkEditable(String textfield);
 
-	CommandResult checkText(String textField, String text);
+  CommandResult checkText(String textField, String text);
 }

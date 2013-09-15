@@ -1,4 +1,3 @@
-import fit.Parse;
 import fitArchitectureAdapter.AbstractActionFixtureAggregator;
 
 import java.io.File;
@@ -13,19 +12,19 @@ import java.util.List;
  */
 public class Pair {
 
-    private List<File> testFiles;
-    private AbstractActionFixtureAggregator fixtureAggregator;
+  private List<File> testFiles;
+  private AbstractActionFixtureAggregator fixtureAggregator;
 
-    public Pair(List<File> testFiles, AbstractActionFixtureAggregator fixtureAggregator) {
-        this.testFiles = testFiles;
-        this.fixtureAggregator = fixtureAggregator;
-    }
+  public Pair(List<File> testFiles, AbstractActionFixtureAggregator fixtureAggregator) {
+    this.testFiles = testFiles;
+    this.fixtureAggregator = fixtureAggregator;
+  }
 
-    public AbstractActionFixtureAggregator getFixtureAggregator() {
-        return fixtureAggregator;
-    }
+  public AbstractActionFixtureAggregator getFixtureAggregator() {
+    return fixtureAggregator;
+  }
 
-    public List<File> getTestFiles() {
-        return testFiles;
-    }
+  public List<File> getTestFiles() {
+    return testFiles;
+  }
 }

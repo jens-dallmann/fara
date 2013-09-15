@@ -17,32 +17,32 @@
  */
 package fest.driver;
 
-import static org.fest.swing.edt.GuiActionRunner.execute;
-
-import javax.swing.AbstractButton;
-
 import org.fest.swing.annotation.RunsInEDT;
 import org.fest.swing.edt.GuiQuery;
 
+import javax.swing.AbstractButton;
+
+import static org.fest.swing.edt.GuiActionRunner.execute;
+
 /**
  * Query to get the selection state of the abstract button.
- * 
+ *
  * @author jens.dallmann
  */
 public class AbstractButtonSelectedQuery {
 
-	/**
-	 * Returns if the button is selected 
-	 * 
-	 * @param button the button which should be checked
-	 * @return true if the button is selected else false.
-	 */
-	@RunsInEDT
-	public static boolean isSelected(final AbstractButton button) {
-		return execute(new GuiQuery<Boolean>() {
-			protected Boolean executeInEDT() {
-				return button.isSelected();
-			}
-		});
-	}
+  /**
+   * Returns if the button is selected
+   *
+   * @param button the button which should be checked
+   * @return true if the button is selected else false.
+   */
+  @RunsInEDT
+  public static boolean isSelected(final AbstractButton button) {
+    return execute(new GuiQuery<Boolean>() {
+      protected Boolean executeInEDT() {
+        return button.isSelected();
+      }
+    });
+  }
 }
