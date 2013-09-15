@@ -111,7 +111,7 @@ public class SwingTableUIAdapter implements HasCommands, TableUIAdapter {
 		try {
 			return _frameWrapper.getFrameFixture().table(tableName);
 		} catch (Exception e) {
-			result = FestResultBuilder.buildWrongResultComponentFailure(result,
+			FestResultBuilder.buildWrongResultComponentFailure(result,
 					tableName);
 			return null;
 		}
