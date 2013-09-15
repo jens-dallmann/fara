@@ -12,6 +12,7 @@ import javax.xml.bind.PropertyException;
 public class PropertyService {
   public static final String FILENAME = "settings.properties";
   public static final String ROOT_FOLDER_PATH = "rootFolderPath";
+  public static final String FILE_DIRECTORY = "filedirectory";
   private static Properties properties;
 
   public PropertyService() throws PropertyException {
@@ -25,14 +26,22 @@ public class PropertyService {
   }
 
   private void savePropertyFile() throws PropertyException {
+    FileWriter out = null;
     try {
-      FileWriter out = new FileWriter(new File(FILENAME));
+      out = new FileWriter(new File(FILENAME));
       properties.store(out, "Stored Properties");
-      out.close();
     } catch (FileNotFoundException e) {
       throw new PropertyException("Storing Properties failed");
     } catch (IOException e) {
       throw new PropertyException("Storing Properties failed");
+    } finally {
+      if (out != null) {
+        try {
+          out.close();
+        } catch (IOException e) {
+          throw new PropertyException("Closing Property file " + FILENAME + " after saving the property file went wrong.");
+        }
+      }
     }
   }
 
@@ -44,17 +53,36 @@ public class PropertyService {
       properties.load(propertyFileStream);
       propertyFileStream.close();
     } catch (FileNotFoundException e) {
-      File file = new File(FILENAME);
       try {
-        file.createNewFile();
-        properties.load(propertyFileStream);
-        propertyFileStream.close();
+        File file = new File(FILENAME);
+        boolean isCreated = file.createNewFile();
+        if (isCreated) {
+          propertyFileStream = new FileInputStream(FILENAME);
+          properties.load(propertyFileStream);
+          propertyFileStream.close();
+        }
       } catch (IOException e1) {
         throw new PropertyException("Properties file can not be loaded");
       }
-
+      finally {
+        if (propertyFileStream != null) {
+          try {
+            propertyFileStream.close();
+          } catch (IOException e1) {
+            throw new PropertyException("Properties file can not be loaded");
+          }
+        }
+      }
     } catch (IOException e) {
       throw new PropertyException("Properties file can not be loaded");
+    } finally {
+      if (propertyFileStream != null) {
+        try {
+          propertyFileStream.close();
+        } catch (IOException e) {
+          throw new PropertyException("Properties file can not be loaded");
+        }
+      }
     }
 
   }

@@ -1,8 +1,8 @@
 package fest.swing;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
+import core.service.PropertyService;
 import org.fest.swing.fixture.JFileChooserFixture;
 import org.fest.swing.timing.Timeout;
 
@@ -13,7 +13,6 @@ import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
-import service.PropertyService;
 
 import javax.xml.bind.PropertyException;
 
@@ -45,7 +44,7 @@ public class SwingFileChooserAdapter implements HasCommands,
                 result.setWrongParameterNumber(2);
 
             }
-            String resourcePath = "/home/deception/fara/FaraTestapp/testEditorTests/src/main/resources" + File.separator + resource;
+            String resourcePath = testdataDirectory;
 
 			fileChooser.fileNameTextBox().setText(resourcePath);
 			fileChooser.approve();

@@ -39,13 +39,23 @@ public class FileService {
   }
 
   public boolean writeToFile(File file, String content) throws WriteFileException {
+    FileWriter fileWriter = null;
     try {
-      FileWriter fileWriter = new FileWriter(file, false);
+      fileWriter = new FileWriter(file, false);
       boolean result = writeToFile(fileWriter, content);
       fileWriter.close();
       return result;
     } catch (IOException e) {
       throw new WriteFileException(file.getAbsolutePath(), e);
+    }
+    finally {
+      if(fileWriter != null) {
+        try {
+          fileWriter.close();
+        } catch (IOException e) {
+          throw new WriteFileException(file.getAbsolutePath(),e);
+        }
+      }
     }
   }
 
