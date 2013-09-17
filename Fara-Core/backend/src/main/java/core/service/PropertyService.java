@@ -1,17 +1,14 @@
 package core.service;
 
 import javax.xml.bind.PropertyException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class PropertyService {
   public static final String FILENAME = "settings.properties";
   public static final String ROOT_FOLDER_PATH = "rootFolderPath";
   public static final String FILE_DIRECTORY = "filedirectory";
+  private static final String ENCODING = "UTF-8";
   private static Properties properties;
 
   public PropertyService() throws PropertyException {
@@ -25,9 +22,10 @@ public class PropertyService {
   }
 
   private void savePropertyFile() throws PropertyException {
-    FileWriter out = null;
+    Writer out = null;
     try {
-      out = new FileWriter(new File(FILENAME));
+      out = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(FILENAME), ENCODING));
       properties.store(out, "Stored Properties");
     } catch (FileNotFoundException e) {
       throw new PropertyException("Storing Properties failed");

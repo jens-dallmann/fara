@@ -5,17 +5,14 @@ import core.service.exceptions.CreateFileException;
 import core.service.exceptions.WriteFileException;
 import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Scanner;
 
 
 public class FileService {
+
+  public static final String ENCODING = "UTF-8";
+
   public File createFileIfNotExist(File file) throws CreateFileException {
     boolean isCreated = false;
     try {
@@ -38,18 +35,19 @@ public class FileService {
   }
 
   public boolean writeToFile(File file, String content) throws WriteFileException {
-    FileWriter fileWriter = null;
+    Writer out = null;
     try {
-      fileWriter = new FileWriter(file, false);
-      boolean result = writeToFile(fileWriter, content);
-      fileWriter.close();
+      out = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(file), ENCODING));
+      boolean result = writeToFile(out, content);
+      out.close();
       return result;
     } catch (IOException e) {
       throw new WriteFileException(file.getAbsolutePath(), e);
     } finally {
-      if (fileWriter != null) {
+      if (out != null) {
         try {
-          fileWriter.close();
+          out.close();
         } catch (IOException e) {
           throw new WriteFileException(file.getAbsolutePath(), e);
         }
@@ -57,8 +55,8 @@ public class FileService {
     }
   }
 
-  private boolean writeToFile(FileWriter fileWriter, String content)
-          throws IOException {
+  private boolean writeToFile(Writer fileWriter, String content)
+      throws IOException {
     try {
       fileWriter.write(content);
     } catch (IOException ioex) {
@@ -82,14 +80,14 @@ public class FileService {
   }
 
   public boolean writeToFileCreateIfNotExist(String filepath, String content)
-          throws CreateFileException, WriteFileException {
+      throws CreateFileException, WriteFileException {
     createFileIfNotExist(filepath);
     return writeToFile(filepath, content);
   }
 
   public String readFile(File file) throws FileNotFoundException {
     String content = "";
-    content = new Scanner(file).useDelimiter("\\Z").next();
+    content = new Scanner(file, ENCODING).useDelimiter("\\Z").next();
     return content;
   }
 
