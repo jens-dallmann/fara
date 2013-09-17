@@ -2,6 +2,6 @@ package processableTable.table;
 
 public interface ProcessableTableDelegate {
 
-	void lastRowProcessed();
+  void lastRowProcessed();
 
 }

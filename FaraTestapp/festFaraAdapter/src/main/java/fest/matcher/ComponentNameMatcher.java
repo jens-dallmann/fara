@@ -17,24 +17,24 @@
  */
 package fest.matcher;
 
-import java.awt.Component;
-
 import org.fest.swing.core.ComponentMatcher;
+
+import java.awt.Component;
 
 public class ComponentNameMatcher implements ComponentMatcher {
 
-	private String _name;
+  private String _name;
 
-	public ComponentNameMatcher(String name) {
-		_name = name;
-	}
+  public ComponentNameMatcher(String name) {
+    _name = name;
+  }
 
-	@Override
-	public boolean matches(Component arg0) {
-		if (_name.equals(arg0.getName())) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+  @Override
+  public boolean matches(Component arg0) {
+    if (_name.equals(arg0.getName())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

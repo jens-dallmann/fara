@@ -10,8 +10,8 @@ import fitArchitectureAdapter.AbstractProcessableFixtureAggregator;
  * To change this template use File | Settings | File Templates.
  */
 public class DefaultFixtureAggregator extends AbstractProcessableFixtureAggregator {
-    @Override
-    public void addFixtureObjects() {
+  @Override
+  public void addFixtureObjects() {
 
-    }
+  }
 }
