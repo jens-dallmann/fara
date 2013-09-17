@@ -4,43 +4,31 @@
   <artifactId>faraTestRunner-maven-plugin</artifactId>
   <groupId>jd</groupId>
   <version>1.0-SNAPSHOT</version>
-
+  <parent>
+    <groupId>jd</groupId>
+    <artifactId>fara-parent</artifactId>
+    <version>1.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
   <name>faraTestRunner-maven-plugin</name>
   <packaging>maven-plugin</packaging>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+
   <dependencies>
     <dependency>
       <groupId>jd-core</groupId>
       <artifactId>backend</artifactId>
-      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
     </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>

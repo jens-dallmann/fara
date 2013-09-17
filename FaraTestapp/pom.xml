@@ -16,6 +16,7 @@
   <name>Fara Parent Pom</name>
 
   <modules>
+    <module>faraTestRunner-maven-plugin</module>
     <module>fara</module>
     <module>festFaraAdapter</module>
     <module>FestTests</module>
