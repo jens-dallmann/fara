@@ -3,7 +3,7 @@ package interfaces;
 import javax.swing.JPanel;
 
 public interface TabController {
-	JPanel getTabPanel();
+  JPanel getTabPanel();
 
-	String getTabName();
+  String getTabName();
 }

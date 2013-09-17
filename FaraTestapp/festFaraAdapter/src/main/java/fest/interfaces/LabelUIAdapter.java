@@ -4,5 +4,5 @@ import fitArchitectureAdapter.container.CommandResult;
 
 public interface LabelUIAdapter {
 
-	public CommandResult checkLabelText(String labelname, String text);
+  public CommandResult checkLabelText(String labelname, String text);
 }

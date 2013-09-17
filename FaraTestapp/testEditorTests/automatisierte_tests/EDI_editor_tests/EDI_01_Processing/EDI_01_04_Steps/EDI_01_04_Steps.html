@@ -1,319 +1,326 @@
 <link rel="stylesheet" type="text/css" href="fitnesse.css">
 <table border='1'>
-	<tr>
-		<td>fixture.TestEditorAggregator</td></tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 1</td>
-		<td>start the editor</td>
-		<td>editor has started</td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass" class="pass" class="pass" class="pass">startEditor</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 2</td>
-		<td>load test file:Testdata_Test_EDI_01_04.html</td>
-		<td>A file with 4 rows has been loaded. The second one is alwaysFail, the others are alywaysSucceed</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass" class="pass" class="pass" class="pass">pressButton</td>
-		<td>persistenceToolbar.load</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass" class="pass" class="pass" class="pass" class="pass">useFileChooserWithResource</td>
-		<td>Testdata_Test_EDI_01_04.html</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="fail">checkTableRowCount</td>
-		<td class="fail" class="fail" class="fail" class="fail">processableTable</td>
-		<td>=</td>
-		<td>4</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>3</td>
-		<td>alwaysFail</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>3</td>
-		<td>alwaysSucceed</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 3</td>
-		<td>press step</td>
-		<td>first row has been processed successfully. The first row is in state "Success", second row is in state "Wait", the others still in Initial</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>step</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>INITIAL</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>INITIAL</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 4</td>
-		<td>press step</td>
-		<td>the first two rows has been processed. The first one with state success, the second one with state failed. third row is in state Wait. 4th row is in state Initial</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>step</td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>FAILED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>INITIAL</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 5</td>
-		<td>press step</td>
-		<td>Rows are in state: 1 -> SUCCESS, 2 -> FAILED, 3 SUCCESS, 4->WAIT</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>step</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>FAILED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>WAIT</td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 6</td>
-		<td>press step</td>
-		<td>all rows has been processed. only the second one is in state FAILED, all others are in state success. A result file exist.</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>step</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>FAILED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkResultFileExist</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 7</td>
-		<td>press step</td>
-		<td>same state like in the step before</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>pressButton</td>
-		<td>step</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>FAILED</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td>checkResultFileExist</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 8</td>
-		<td>delete result files and close editor</td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>deleteResultFolder</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>endEditor</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
+<tr>
+    <td>fixture.TestEditorAggregator</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 1</td>
+    <td>start the editor</td>
+    <td>editor has started</td>
+</tr>
+<tr>
+    <td class="pass" class="pass" class="pass" class="pass" class="pass">startEditor</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 2</td>
+    <td>load test file:Testdata_Test_EDI_01_04.html</td>
+    <td>A file with 4 rows has been loaded. The second one is alwaysFail, the others are alywaysSucceed</td>
+    <td></td>
+</tr>
+<tr>
+    <td class="pass" class="pass" class="pass" class="pass" class="pass">pressButton</td>
+    <td>persistenceToolbar.load</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="pass" class="pass" class="pass" class="pass" class="pass">useFileChooserWithResource</td>
+    <td>Testdata_Test_EDI_01_04.html</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="fail">checkTableRowCount</td>
+    <td class="fail" class="fail" class="fail" class="fail">processableTable</td>
+    <td>=</td>
+    <td>4</td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>3</td>
+    <td>alwaysFail</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>3</td>
+    <td>alwaysSucceed</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 3</td>
+    <td>press step</td>
+    <td>first row has been processed successfully. The first row is in state "Success", second row is in state "Wait",
+        the others still in Initial
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>step</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>INITIAL</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>INITIAL</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 4</td>
+    <td>press step</td>
+    <td>the first two rows has been processed. The first one with state success, the second one with state failed. third
+        row is in state Wait. 4th row is in state Initial
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>step</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>FAILED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>INITIAL</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 5</td>
+    <td>press step</td>
+    <td>Rows are in state: 1 -> SUCCESS, 2 -> FAILED, 3 SUCCESS, 4->WAIT</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>step</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>FAILED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>WAIT</td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 6</td>
+    <td>press step</td>
+    <td>all rows has been processed. only the second one is in state FAILED, all others are in state success. A result
+        file exist.
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>step</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>FAILED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkResultFileExist</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 7</td>
+    <td>press step</td>
+    <td>same state like in the step before</td>
+    <td></td>
+</tr>
+<tr>
+    <td>pressButton</td>
+    <td>step</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>1</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>2</td>
+    <td>2</td>
+    <td>FAILED</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>3</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkTableCell</td>
+    <td>processableTable</td>
+    <td>4</td>
+    <td>2</td>
+    <td>SUCCESS</td>
+</tr>
+<tr>
+    <td>checkResultFileExist</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>comment</td>
+    <td>Step 8</td>
+    <td>delete result files and close editor</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>deleteResultFolder</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>endEditor</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
 </table>

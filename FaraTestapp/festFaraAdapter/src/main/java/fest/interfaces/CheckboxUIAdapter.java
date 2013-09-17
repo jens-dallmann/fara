@@ -21,15 +21,15 @@ import fitArchitectureAdapter.container.CommandResult;
 
 /**
  * A Adapter for a checkbox which provides methods for using a checkbox on ui tests.
- * 
+ *
  * @author jens.dallmann
  */
 public interface CheckboxUIAdapter {
 
-	/**
-	 * Checks a checkbox in the ui. The state of the checkbox will be true after using this method.
-	 * 
-	 * @param checkboxName name of the component
-	 */
-	CommandResult selectCheckbox(String checkboxName);
+  /**
+   * Checks a checkbox in the ui. The state of the checkbox will be true after using this method.
+   *
+   * @param checkboxName name of the component
+   */
+  CommandResult selectCheckbox(String checkboxName);
 }

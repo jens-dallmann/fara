@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Jens Dallmann - initial API and implementation
  ******************************************************************************/
@@ -37,175 +37,174 @@ import java.util.Map;
  * has are tried to read out of the html table. After this the java-method will
  * be called and a result will be expected. If no error occurs the result will
  * be processed.
- * 
+ *
  * @author jens.dallmann
  */
-public abstract class AbstractActionFixtureAggregator extends ActionFixture{
+public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 
-	private Map<String, InstanceMethodPair> commands;
-    private List<ProcessListener> listeners;
+  private Map<String, InstanceMethodPair> commands;
+  private List<ProcessListener> listeners;
 
-    public AbstractActionFixtureAggregator() {
-        listeners = new ArrayList<ProcessListener>();
+  public AbstractActionFixtureAggregator() {
+    listeners = new ArrayList<ProcessListener>();
+  }
+
+  /**
+   * Init method which initializes the map and calls the adding of the fixture
+   * objects
+   */
+  public void init() {
+    commands = new HashMap<String, InstanceMethodPair>();
+    addFixtureObjects();
+  }
+
+  @Override
+  public void doCells(Parse cells) {
+    this.cells = cells;
+    CommandResult result = null;
+    String commandName = cells.text();
+    try {
+      result = callMethod(commandName);
+    } catch (IllegalArgumentException e) {
+      handleErrorMessages(cells, "Command not found: " + commandName);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+      handleErrorMessages(cells, "To Less or to much arguments");
     }
-	/**
-	 * Init method which initializes the map and calls the adding of the fixture
-	 * objects
-	 */
-	public void init() {
-		commands = new HashMap<String, InstanceMethodPair>();
-		addFixtureObjects();
-	}
 
-	@Override
-	public void doCells(Parse cells) {
-		this.cells = cells;
-		Object result = null;
-		String commandName = cells.text();
-		try {
-			result = callMethod(commandName);
-		} catch (IllegalArgumentException e) {
-			handleErrorMessages(cells, "Command not found: " + commandName);
-		} catch (IllegalAccessException e) {
-            e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			handleErrorMessages(cells, "To Less or to much arguments");
-		}
+    if (result != null) {
+      processResult(result);
+    }
+  }
 
-		if (result instanceof CommandResult) {
-			CommandResult commandResult = (CommandResult) result;
-			processResult(commandResult);
-		}
-	}
+  protected void handleErrorMessages(Parse cell, String errorMessage) {
+    wrong(cell, errorMessage);
+    publishResult(CommandResultState.WRONG.toString(), errorMessage);
+  }
 
-	protected void handleErrorMessages(Parse cell, String errorMessage) {
-		wrong(cell,errorMessage);
-        publishResult(CommandResultState.WRONG.toString(), errorMessage);
-	}
-	protected CommandResult callMethod(String text) throws IllegalArgumentException,
-			IllegalAccessException, InvocationTargetException {
-		InstanceMethodPair pair = null;
-		pair = commands.get(text);
+  protected CommandResult callMethod(String text) throws IllegalArgumentException,
+          IllegalAccessException, InvocationTargetException {
+    InstanceMethodPair pair = null;
+    pair = commands.get(text);
 
-		if (pair == null) {
-			throw new IllegalArgumentException("Command " + text + "not found");
-		}
+    if (pair == null) {
+      throw new IllegalArgumentException("Command " + text + "not found");
+    }
 
-		Method command = pair.getMethod();
-		Object fixtureObject = pair.getFixtureInstance();
-		Class<?>[] parameterTypes = command.getParameterTypes();
-		int numberOfParameters = parameterTypes.length;
-		Object[] actualParameters = buildActualParameters(numberOfParameters);
-		Object result = command.invoke(fixtureObject, actualParameters);
-		if(result instanceof CommandResult) {
-			return (CommandResult)result;
-		}
-		return null;
-	}
+    Method command = pair.getMethod();
+    Object fixtureObject = pair.getFixtureInstance();
+    Class<?>[] parameterTypes = command.getParameterTypes();
+    int numberOfParameters = parameterTypes.length;
+    Object[] actualParameters = buildActualParameters(numberOfParameters);
+    Object result = command.invoke(fixtureObject, actualParameters);
+    if (result instanceof CommandResult) {
+      return (CommandResult) result;
+    }
+    return null;
+  }
 
-	private Object[] buildActualParameters(int numberOfParameters) {
-		Object[] actualParameters = new Object[numberOfParameters];
-		Parse parameter = cells.more;
-		for (int i = 0; i < numberOfParameters && parameter != null; parameter = parameter.more, i++) {
-			actualParameters[i] = StringEscapeUtils.unescapeHtml4(parameter
-                    .text());
-		}
-		return actualParameters;
-	}
+  private Object[] buildActualParameters(int numberOfParameters) {
+    Object[] actualParameters = new Object[numberOfParameters];
+    Parse parameter = cells.more;
+    for (int i = 0; i < numberOfParameters && parameter != null; parameter = parameter.more, i++) {
+      actualParameters[i] = StringEscapeUtils.unescapeHtml4(parameter
+              .text());
+    }
+    return actualParameters;
+  }
 
-	private void processResult(CommandResult commandResult) {
-		CommandResultState resultState = commandResult.getResultState();
+  private void processResult(CommandResult commandResult) {
+    CommandResultState resultState = commandResult.getResultState();
 
-		if (CommandResultState.RIGHT == resultState) {
-			processRight();
-		} else if (CommandResultState.WRONG == resultState) {
-			int parameterNumer = commandResult.getWrongParameterNumber();
-			String message = commandResult.getFailureMessage();
-			processWrong(parameterNumer, message);
-		}
-		publishResult(commandResult.getResultState().toString(),
-				commandResult.getFailureMessage());
-	}
+    if (CommandResultState.RIGHT == resultState) {
+      processRight();
+    } else if (CommandResultState.WRONG == resultState) {
+      int parameterNumer = commandResult.getWrongParameterNumber();
+      String message = commandResult.getFailureMessage();
+      processWrong(parameterNumer, message);
+    }
+    publishResult(commandResult.getResultState().toString(),
+            commandResult.getFailureMessage());
+  }
 
-	private void processWrong(int parameterNumber, String message) {
-		Parse wrongCell = cells;
-		for (int i = 0; i < parameterNumber; i++) {
-			wrongCell = cells.more;
-		}
-		wrong(wrongCell, message);
-	}
+  private void processWrong(int parameterNumber, String message) {
+    Parse wrongCell = cells;
+    for (int i = 0; i < parameterNumber; i++) {
+      wrongCell = cells.more;
+    }
+    wrong(wrongCell, message);
+  }
 
-	private void processRight() {
-		right(cells);
-	}
+  private void processRight() {
+    right(cells);
+  }
 
-	/**
-	 * Adds an object to the map ob objects with fit commands. In this process
-	 * the class will be searched for methods annotated with
-	 * 
-	 * @FITCommand. If one hass been found it will be wrapped with the passed
-	 *              class instance in the map. The name of the method is the
-	 *              commands name.
-	 * 
-	 * @param commandObject
-	 *            instance of the class which provides methods.
-	 */
-	public void addCommandObject(HasCommands commandObject) {
-		Method[] methods = extractMethods(commandObject);
-		for (Method oneClassMethod : methods) {
-			boolean isFitCommand = isFITCommand(oneClassMethod);
-			if (isFitCommand) {
-				String methodName = oneClassMethod.getName();
-				if (isNotInMap(methodName)) {
-					InstanceMethodPair pair = new InstanceMethodPair(
-							commandObject, oneClassMethod);
-					commands.put(methodName, pair);
-				    fireAddedCommandToMap(pair, methodName);
-                }
-			}
-		}
-	}
-
-    private void fireAddedCommandToMap(InstanceMethodPair pair, String methodname) {
-        for(ProcessListener listener: listeners) {
-            listener.addedCommandToMap(pair, methodname);
+  /**
+   * Adds an object to the map ob objects with fit commands. In this process
+   * the class will be searched for methods annotated with
+   *
+   * @param commandObject instance of the class which provides methods.
+   * @FITCommand. If one hass been found it will be wrapped with the passed
+   * class instance in the map. The name of the method is the
+   * commands name.
+   */
+  public void addCommandObject(HasCommands commandObject) {
+    Method[] methods = extractMethods(commandObject);
+    for (Method oneClassMethod : methods) {
+      boolean isFitCommand = isFITCommand(oneClassMethod);
+      if (isFitCommand) {
+        String methodName = oneClassMethod.getName();
+        if (isNotInMap(methodName)) {
+          InstanceMethodPair pair = new InstanceMethodPair(
+                  commandObject, oneClassMethod);
+          commands.put(methodName, pair);
+          fireAddedCommandToMap(pair, methodName);
         }
+      }
     }
+  }
 
-	private Method[] extractMethods(Object commandObject) {
-		Class<?> commandClass = commandObject.getClass();
-		Method[] methods = commandClass.getMethods();
-		return methods;
-	}
-
-	private boolean isNotInMap(String methodName) {
-		return !commands.containsKey(methodName);
-	}
-
-	private boolean isFITCommand(Method oneClassMethod) {
-		FitCommand annotation = oneClassMethod.getAnnotation(FitCommand.class);
-		return annotation != null;
-	}
-
-	/**
-	 * Method to implement to add new Fixture Objects it will be triggered the
-	 * init method. This method has to be called after constructor
-	 * initialization
-	 */
-	public abstract void addFixtureObjects();
-
-    public void registerProcessListener(ProcessListener listener) {
-        listeners.add(listener);
+  private void fireAddedCommandToMap(InstanceMethodPair pair, String methodname) {
+    for (ProcessListener listener : listeners) {
+      listener.addedCommandToMap(pair, methodname);
     }
+  }
 
-    public void removeProcessListener(ProcessListener listener) {
-        listeners.remove(listener);
-    }
+  private Method[] extractMethods(Object commandObject) {
+    Class<?> commandClass = commandObject.getClass();
+    Method[] methods = commandClass.getMethods();
+    return methods;
+  }
 
-    public void publishResult(String state, String failureMessage) {
-        for (ProcessListener listener : listeners) {
-            listener.publishResult(state, failureMessage);
-        }
+  private boolean isNotInMap(String methodName) {
+    return !commands.containsKey(methodName);
+  }
+
+  private boolean isFITCommand(Method oneClassMethod) {
+    FitCommand annotation = oneClassMethod.getAnnotation(FitCommand.class);
+    return annotation != null;
+  }
+
+  /**
+   * Method to implement to add new Fixture Objects it will be triggered the
+   * init method. This method has to be called after constructor
+   * initialization
+   */
+  public abstract void addFixtureObjects();
+
+  public void registerProcessListener(ProcessListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeProcessListener(ProcessListener listener) {
+    listeners.remove(listener);
+  }
+
+  public void publishResult(String state, String failureMessage) {
+    for (ProcessListener listener : listeners) {
+      listener.publishResult(state, failureMessage);
     }
+  }
 }

@@ -21,33 +21,33 @@ import fitArchitectureAdapter.container.CommandResult;
 
 /**
  * Provides methods for the base class components.
- * 
+ *
  * @author jens.dallmann
  */
 public interface ComponentUIAdapter {
 
-	/**
-	 * Return if the component with the name is enabled.
-	 * 
-	 * @param componentName name of the component.
-	 * @return CommandResult
-	 */
-    CommandResult checkEnabled(String componentName);
+  /**
+   * Return if the component with the name is enabled.
+   *
+   * @param componentName name of the component.
+   * @return CommandResult
+   */
+  CommandResult checkEnabled(String componentName);
 
-    /**
-     * Return if the component with the name is disabled.
-     * Should be the negotiation of isEnabled.
-     * 
-     * @param componentName name of the component
-     * @return CommandResult
-     */
-	CommandResult checkDisabled(String componentName);
+  /**
+   * Return if the component with the name is disabled.
+   * Should be the negotiation of isEnabled.
+   *
+   * @param componentName name of the component
+   * @return CommandResult
+   */
+  CommandResult checkDisabled(String componentName);
 
-	/**
-	 * Return if the component with the name is visible.
-	 * 
-	 * @param componentName name of the component.
-	 * @return CommandResult
-	 */
-	CommandResult checkVisible(String componentName);
+  /**
+   * Return if the component with the name is visible.
+   *
+   * @param componentName name of the component.
+   * @return CommandResult
+   */
+  CommandResult checkVisible(String componentName);
 }

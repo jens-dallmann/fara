@@ -21,18 +21,18 @@ import fitArchitectureAdapter.container.CommandResult;
 
 /**
  * Provides methods for tabbed pane tests.
- * 
+ *
  * @author jens.dallmann
  */
 public interface TabbedPaneUIAdapter {
 
-	/**
-	 * changes the current tab to the tab with the passed title of the tabbed
-	 * pane with the passed name
-	 * 
-	 * @param componentName name of the tabbed pane.
-	 * @param tabTitle title of the tab which should be shown
-	 * @return CommandResult
-	 */
-	CommandResult changeTab(String componentName, String tabTitle);
+  /**
+   * changes the current tab to the tab with the passed title of the tabbed
+   * pane with the passed name
+   *
+   * @param componentName name of the tabbed pane.
+   * @param tabTitle      title of the tab which should be shown
+   * @return CommandResult
+   */
+  CommandResult changeTab(String componentName, String tabTitle);
 }

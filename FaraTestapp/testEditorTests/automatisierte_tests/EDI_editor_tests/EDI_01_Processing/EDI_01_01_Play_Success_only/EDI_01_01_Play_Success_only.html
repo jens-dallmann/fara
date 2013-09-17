@@ -1,117 +1,118 @@
 <link rel="stylesheet" type="text/css" href="fitnesse.css">
 <table border='1'>
-	<tr>
-		<td>fixture.TestEditorAggregator</td></tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 1</td>
-		<td>start the test editor</td>
-		<td>test editor is up</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">startEditor</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 2</td>
-		<td>load test: Testdata_Test_EDI_01_01.html</td>
-		<td>table is loaded with four lines and the loaded fixture is:</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">pressButton</td>
-		<td>persistenceToolbar.load</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">useFileChooserWithResource</td>
-		<td>Testdata_Test_EDI_01_01.html</td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">checkTableRowCount</td>
-		<td>processableTable</td>
-		<td>=</td>
-		<td>4</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 3</td>
-		<td>press play button</td>
-		<td>all lines has been processed successfully and a result file exist in result/</td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">pressButton</td>
-		<td>play</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td class="pass">checkTableCell</td>
-		<td>processableTable</td>
-		<td>1</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td class="pass">checkTableCell</td>
-		<td>processableTable</td>
-		<td>2</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td class="pass">checkTableCell</td>
-		<td>processableTable</td>
-		<td>3</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td class="pass">checkTableCell</td>
-		<td>processableTable</td>
-		<td>4</td>
-		<td>2</td>
-		<td>SUCCESS</td>
-	</tr>
-	<tr>
-		<td class="pass">checkResultFileExist</td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>comment</td>
-		<td>Step 4</td>
-		<td>delete result file</td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>deleteResultFolder</td>
-		<td>result</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td>endEditor</td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-	</tr>
+    <tr>
+        <td>fixture.TestEditorAggregator</td>
+    </tr>
+    <tr>
+        <td>comment</td>
+        <td>Step 1</td>
+        <td>start the test editor</td>
+        <td>test editor is up</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">startEditor</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>comment</td>
+        <td>Step 2</td>
+        <td>load test: Testdata_Test_EDI_01_01.html</td>
+        <td>table is loaded with four lines and the loaded fixture is:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">pressButton</td>
+        <td>persistenceToolbar.load</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">useFileChooserWithResource</td>
+        <td>Testdata_Test_EDI_01_01.html</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">checkTableRowCount</td>
+        <td>processableTable</td>
+        <td>=</td>
+        <td>4</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>comment</td>
+        <td>Step 3</td>
+        <td>press play button</td>
+        <td>all lines has been processed successfully and a result file exist in result/</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">pressButton</td>
+        <td>play</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="pass">checkTableCell</td>
+        <td>processableTable</td>
+        <td>1</td>
+        <td>2</td>
+        <td>SUCCESS</td>
+    </tr>
+    <tr>
+        <td class="pass">checkTableCell</td>
+        <td>processableTable</td>
+        <td>2</td>
+        <td>2</td>
+        <td>SUCCESS</td>
+    </tr>
+    <tr>
+        <td class="pass">checkTableCell</td>
+        <td>processableTable</td>
+        <td>3</td>
+        <td>2</td>
+        <td>SUCCESS</td>
+    </tr>
+    <tr>
+        <td class="pass">checkTableCell</td>
+        <td>processableTable</td>
+        <td>4</td>
+        <td>2</td>
+        <td>SUCCESS</td>
+    </tr>
+    <tr>
+        <td class="pass">checkResultFileExist</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>comment</td>
+        <td>Step 4</td>
+        <td>delete result file</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>deleteResultFolder</td>
+        <td>result</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>endEditor</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
 </table>
