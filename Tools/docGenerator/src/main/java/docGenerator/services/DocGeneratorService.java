@@ -1,5 +1,8 @@
 package docGenerator.services;
 
+import core.service.FileService;
+import core.service.exceptions.CreateFileException;
+import core.service.exceptions.WriteFileException;
 import docGenerator.FileClassLoader;
 import docGenerator.HTMLBuilder;
 import docGenerator.model.DocPathNamePair;
@@ -7,12 +10,22 @@ import docGenerator.model.FitCommandDoc;
 import docGenerator.processors.impl.ClassFileProcessor;
 import docGenerator.processors.impl.FolderFileProcessor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class DocGeneratorService {
+
+  private FileService fileService;
+
+  public DocGeneratorService() {
+
+  }
+
+  public DocGeneratorService(FileService service) {
+    this.fileService = service;
+  }
+
   public void generateDocs(List<DocPathNamePair> pairs) {
     for (DocPathNamePair pair : pairs) {
       generateDocs(pair.getPath(), pair.getHtmlFileName());
@@ -37,9 +50,11 @@ public class DocGeneratorService {
     Collections.sort(process);
     String buildHtml = new HTMLBuilder().build(process);
     try {
-      new FileService().writeToFileCreateIfNotExist(htmlFileName + ".html",
-              buildHtml);
-    } catch (IOException e) {
+      fileService.writeToFileCreateIfNotExist(htmlFileName + ".html",
+          buildHtml);
+    }  catch (WriteFileException e) {
+      e.printStackTrace();
+    } catch (CreateFileException e) {
       e.printStackTrace();
     }
   }
@@ -48,7 +63,7 @@ public class DocGeneratorService {
     FileClassLoader classLoader = new FileClassLoader(path);
     FolderFileProcessor processor = new FolderFileProcessor(
             new ClassFileProcessor(classLoader), path);
-    List<FitCommandDoc> process = processor.process("");
+    List<FitCommandDoc> process = processor.process(path);
     return process;
   }
 }
