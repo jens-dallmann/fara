@@ -13,6 +13,7 @@ import org.fest.swing.timing.Timeout;
 
 import javax.xml.bind.PropertyException;
 import java.io.File;
+import java.net.URISyntaxException;
 
 public class SwingFileChooserAdapter implements HasCommands,
         FileChooserUIAdapter {
@@ -33,18 +34,13 @@ public class SwingFileChooserAdapter implements HasCommands,
     if (fileChooser != null) {
       String testdataDirectory = null;
       try {
-        PropertyService propertyService = new PropertyService();
-        testdataDirectory = propertyService.getProperty(PropertyService.FILE_DIRECTORY);
-
-      } catch (PropertyException e) {
-        result.setFailureMessage("Property filedirectory not set in propertyfile");
-        result.setResultState(CommandResultState.WRONG);
-        result.setWrongParameterNumber(2);
-
-      }
-      String resourcePath = testdataDirectory;
-
+      String resourcePath = ressourceService.loadRessourceFilePath(this.getClass(), resource);
       fileChooser.fileNameTextBox().setText(resourcePath);
+
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+
       fileChooser.approve();
       try {
         Thread.sleep(1000);

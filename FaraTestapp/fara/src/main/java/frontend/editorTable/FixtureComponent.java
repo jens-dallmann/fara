@@ -49,14 +49,14 @@ public class FixtureComponent {
   }
 
   private void validateFixtureTextField(String text) {
-    if (StringUtils.isNotBlank(text)) {
       Class<?> fixtureClass = null;
+    if (StringUtils.isNotBlank(text)) {
       fixtureClass = tryToFindOnClassPath(text, fixtureClass);
       if (fixtureClass != null) {
         if (isFixture(fixtureClass)) {
           if (!isAbstract(fixtureClass)) {
             markFixtureTextFieldCorrect();
-            triggerFixtureChanged();
+            triggerFixtureChanged(fixtureClass);
           } else {
             markFixtureTextFieldWrong("Fixture Class is abstract and can not be instantiated from fit");
           }
@@ -66,7 +66,7 @@ public class FixtureComponent {
       }
     } else {
       resetFixtureTextField();
-      triggerFixtureChanged();
+      triggerFixtureChanged(fixtureClass);
     }
   }
 
@@ -74,9 +74,9 @@ public class FixtureComponent {
     return Modifier.isAbstract(fixtureClass.getModifiers());
   }
 
-  private void triggerFixtureChanged() {
+  private void triggerFixtureChanged(Class<?> newFixture) {
     if (delegate != null) {
-      delegate.fixtureChanged(fixture.getText());
+      delegate.fixtureChanged(newFixture, fixture.getText());
     }
   }
 

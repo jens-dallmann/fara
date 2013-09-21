@@ -4,16 +4,11 @@ import core.ProcessService;
 
 public class ReflectionService {
 
-  public ProcessService loadProcessService(String clazz) {
-    Class<?> forName = null;
-    try {
-      forName = Class.forName(clazz);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (ProcessService.class.isAssignableFrom(forName)) {
+  public ProcessService loadProcessService(Class<?> newFixture, String clazz) {
+
+    if (ProcessService.class.isAssignableFrom(newFixture)) {
       try {
-        Object newInstance = forName.newInstance();
+        Object newInstance = newFixture.newInstance();
         return (ProcessService) newInstance;
       } catch (InstantiationException e) {
         e.printStackTrace();

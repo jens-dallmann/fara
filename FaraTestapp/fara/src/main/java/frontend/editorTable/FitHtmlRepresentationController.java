@@ -55,8 +55,8 @@ public class FitHtmlRepresentationController implements
     ui.getFixtureComponent().setFixtureChangedDelegate(
             new FixtureChangedDelegate() {
               @Override
-              public void fixtureChanged(String text) {
-                setNewProcessServiceToTable(text);
+              public void fixtureChanged(Class<?> newFixture, String text) {
+                setNewProcessServiceToTable(newFixture, text);
                 model.setFixtureName(text);
               }
             });
@@ -81,9 +81,9 @@ public class FitHtmlRepresentationController implements
     }
   }
 
-  private void setNewProcessServiceToTable(String text) {
+  private void setNewProcessServiceToTable(Class<?> newFixture, String text) {
     ProcessService newProcessService = reflectionService
-            .loadProcessService(text);
+            .loadProcessService(newFixture, text);
     processableTableComponent.setNewProcessService(newProcessService);
   }
 

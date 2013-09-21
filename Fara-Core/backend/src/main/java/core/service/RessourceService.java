@@ -2,15 +2,21 @@ package core.service;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class RessourceService {
-  public String loadRessourceFilePath(String filename) throws URISyntaxException {
-    return loadRessourceFile(filename).getAbsolutePath();
+  public String loadRessourceFilePath(Class<?> clazz, String filename) throws URISyntaxException {
+    return loadRessourceFile(clazz, filename).getAbsolutePath();
   }
 
-  public File loadRessourceFile(String filename) throws URISyntaxException {
-    ClassLoader classLoader = this.getClass().getClassLoader();
-    String resourcePath = classLoader.getResource(filename).getPath();
+  public File loadRessourceFile(Class<?> clazz, String filename) throws URISyntaxException {
+    ClassLoader loader = clazz.getClassLoader();
+    URL url = loader.getResource(filename);
+    if (url == null) {
+      url = RessourceService.class.getResource("/" + filename);
+    }
+
+    String resourcePath = url.getPath();
 
     File resourceFile = new File(resourcePath);
     return resourceFile;

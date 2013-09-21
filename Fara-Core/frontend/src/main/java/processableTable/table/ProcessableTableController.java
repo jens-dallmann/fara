@@ -171,9 +171,9 @@ public class ProcessableTableController<Model extends AbstractProcessableTableMo
   public void addedCommandToMap(InstanceMethodPair pair, String commandName) {
   }
 
-  public void loadNewProcessService(String text) {
+  public void loadNewProcessService(Class<?> newFixture, String text) {
     if (StringUtils.isNotEmpty(text)) {
-      this.service = reflectionService.loadProcessService(text);
+      this.service = reflectionService.loadProcessService(newFixture, text);
     }
     this.service.registerProcessListener(this);
   }
