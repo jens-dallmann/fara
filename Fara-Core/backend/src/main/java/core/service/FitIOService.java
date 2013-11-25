@@ -4,9 +4,11 @@ import core.service.exceptions.CreateDirectoryException;
 import core.service.exceptions.FitIOException;
 import fit.Parse;
 import fit.exception.FitParseException;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -54,15 +56,16 @@ public class FitIOService {
     copyCss(resultDirectory);
   }
 
-  private File createResultDirectory(File file) throws CreateDirectoryException {
+  public File createResultDirectory(File file) throws CreateDirectoryException {
     String filepath = file.getAbsolutePath();
     int lastIndexOf = filepath.lastIndexOf(File.separator);
     String directoryPath = filepath.substring(0, lastIndexOf);
     String resultDirectoryPath = directoryPath + File.separator + "result";
     File directory = new File(resultDirectoryPath);
     if (!directory.exists()) {
-      boolean directoryIsCreated = directory.mkdir();
-      if (!directoryIsCreated) {
+      try {
+        FileUtils.forceMkdir(directory);
+      } catch (IOException e) {
         throw new CreateDirectoryException(resultDirectoryPath);
       }
     }
@@ -74,13 +77,13 @@ public class FitIOService {
     String date = currentTimeAsString();
     name += date;
     name += "_result.html";
+    System.out.println(resultDirectory.canWrite());
     String resultFile = resultDirectory.getAbsolutePath() + File.separator + name;
     try {
-      fileService.createFileIfNotExist(resultFile);
+      return fileService.createFileIfNotExist(resultFile);
     } catch (Exception e) {
       throw new FitIOException("Error on creating the fit result file", e);
     }
-    return new File(resultFile);
   }
 
   private String currentTimeAsString() {

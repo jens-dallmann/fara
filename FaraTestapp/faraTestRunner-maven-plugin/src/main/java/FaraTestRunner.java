@@ -1,5 +1,7 @@
 import core.ClassLoaderUtils;
 import core.ProcessListener;
+import core.service.FitIOService;
+import core.service.exceptions.CreateDirectoryException;
 import fit.Parse;
 import fit.exception.FitParseException;
 import fitArchitectureAdapter.AbstractActionFixtureAggregator;
@@ -71,6 +73,8 @@ public class FaraTestRunner extends AbstractMojo {
       List<File> testFiles = onePair.getTestFiles();
       for (File testFile : testFiles) {
         try {
+          FitIOService service = new FitIOService();
+          service.createResultDirectory(testFile);
           String testFileContent = FileUtils.readFileToString(testFile);
           Parse htmlTable = new Parse(testFileContent);
           Parse firstProcessableRow = htmlTable.at(0, 0).more;
@@ -83,6 +87,8 @@ public class FaraTestRunner extends AbstractMojo {
           getLog().warn("Can not load testfile " + testFile.getAbsolutePath() + " while try to process it");
         } catch (FitParseException e) {
           getLog().warn("Can not parse testfile " + testFile.getAbsolutePath() + " while try to process it");
+        } catch (CreateDirectoryException e) {
+          getLog().warn("Can not create result directory for file: "+testFile.getAbsolutePath());
         }
       }
     }

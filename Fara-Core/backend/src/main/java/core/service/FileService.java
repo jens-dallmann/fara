@@ -3,6 +3,7 @@ package core.service;
 import core.service.exceptions.CopyException;
 import core.service.exceptions.CreateFileException;
 import core.service.exceptions.WriteFileException;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -18,12 +19,16 @@ public class FileService {
     try {
       if (!file.exists()) {
         isCreated = file.createNewFile();
-
+      }
+      else {
+        isCreated = true;
       }
     } catch (IOException e) {
+      e.printStackTrace();
       throw new CreateFileException(file.getAbsolutePath(), e);
     }
     if (!isCreated) {
+      System.out.println("is not created");
       throw new CreateFileException(file.getAbsolutePath());
     }
     return file;
