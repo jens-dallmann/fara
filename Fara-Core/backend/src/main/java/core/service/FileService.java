@@ -28,7 +28,6 @@ public class FileService {
       throw new CreateFileException(file.getAbsolutePath(), e);
     }
     if (!isCreated) {
-      System.out.println("is not created");
       throw new CreateFileException(file.getAbsolutePath());
     }
     return file;

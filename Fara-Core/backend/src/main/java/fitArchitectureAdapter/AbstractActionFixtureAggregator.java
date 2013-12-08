@@ -86,7 +86,7 @@ public abstract class AbstractActionFixtureAggregator extends ActionFixture {
 
   protected CommandResult callMethod(String text) throws IllegalArgumentException,
           IllegalAccessException, InvocationTargetException {
-    InstanceMethodPair pair = null;
+    InstanceMethodPair pair;
     pair = commands.get(text);
 
     if (pair == null) {

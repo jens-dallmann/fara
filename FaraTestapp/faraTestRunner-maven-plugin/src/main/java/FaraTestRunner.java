@@ -2,6 +2,9 @@ import core.ClassLoaderUtils;
 import core.ProcessListener;
 import core.service.FitIOService;
 import core.service.exceptions.CreateDirectoryException;
+import directoryCrawler.CrawlerAction;
+import directoryCrawler.DirectoryCrawler;
+import directoryCrawler.NoActionsToExecuteException;
 import fit.Parse;
 import fit.exception.FitParseException;
 import fitArchitectureAdapter.AbstractActionFixtureAggregator;
@@ -74,6 +77,7 @@ public class FaraTestRunner extends AbstractMojo {
       for (File testFile : testFiles) {
         try {
           FitIOService service = new FitIOService();
+          System.out.println(testFile.getAbsolutePath());
           service.createResultDirectory(testFile);
           String testFileContent = FileUtils.readFileToString(testFile);
           Parse htmlTable = new Parse(testFileContent);
@@ -92,9 +96,19 @@ public class FaraTestRunner extends AbstractMojo {
         }
       }
     }
-
+    try {
+      consolidateResultFiles();
+    } catch (NoActionsToExecuteException e) {
+      e.printStackTrace();
+    }
   }
 
+  private void consolidateResultFiles() throws NoActionsToExecuteException {
+    DirectoryCrawler crawler = new DirectoryCrawler();
+    File testdirectoryFolder = new File(faraTestsDirectoryPath);
+    CopyResultFileCrawlerAction action = new CopyResultFileCrawlerAction(new File("/home/deception/result"));
+    crawler.crawlDirectory(testdirectoryFolder, null, action, true);
+  }
   private AbstractActionFixtureAggregator configureFixtureAggregator(Pair onePair) {
     AbstractActionFixtureAggregator testProcessor = onePair.getFixtureAggregator();
     testProcessor.registerProcessListener(new ProcessListener() {

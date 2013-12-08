@@ -36,7 +36,7 @@ public class FitIOService {
   }
 
   private Parse parse(String input) throws FitIOException {
-    Parse parse = null;
+    Parse parse;
     try {
       parse = new Parse(input);
     } catch (FitParseException e) {
@@ -77,7 +77,6 @@ public class FitIOService {
     String date = currentTimeAsString();
     name += date;
     name += "_result.html";
-    System.out.println(resultDirectory.canWrite());
     String resultFile = resultDirectory.getAbsolutePath() + File.separator + name;
     try {
       return fileService.createFileIfNotExist(resultFile);

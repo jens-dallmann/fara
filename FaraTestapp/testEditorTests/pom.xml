@@ -10,9 +10,6 @@
     <version>1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <!--<properties>-->
-    <!--<ui-test-directory>testEditorTests/automatisierte_tests</ui-test-directory>-->
-  <!--</properties>-->
   <build>
     <plugins>
       <plugin>

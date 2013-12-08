@@ -99,7 +99,6 @@ public class ClassLoaderUtils {
       }
       classPath.append(onePathElement);
     }
-    System.out.println(File.pathSeparator);
     return classPath.toString();
   }
 }
