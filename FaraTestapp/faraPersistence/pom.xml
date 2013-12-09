@@ -14,12 +14,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>jd</groupId>
-      <artifactId>fara</artifactId>
+      <groupId>jd-core</groupId>
+      <artifactId>backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.fitnesse</groupId>
-      <artifactId>fitlibrary</artifactId>
+      <artifactId>fitnesse</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
