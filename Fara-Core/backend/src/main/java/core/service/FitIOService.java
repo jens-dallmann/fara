@@ -16,6 +16,7 @@ public class FitIOService {
 
   private static final String LINE_BREAK = "\n";
   private FileService fileService;
+  public static final String DATE_IN_RESULT_FILE = "ddMMyyyy-hhmmss";
 
   public FitIOService() {
     fileService = new FileService();
@@ -86,7 +87,7 @@ public class FitIOService {
   }
 
   private String currentTimeAsString() {
-    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy-hhmmss");
+    SimpleDateFormat formatter = new SimpleDateFormat(DATE_IN_RESULT_FILE);
     String format = formatter.format(new Date());
     return format;
   }
