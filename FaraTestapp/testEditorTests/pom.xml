@@ -40,9 +40,6 @@
         <groupId>jd</groupId>
         <artifactId>faraTestRunner-maven-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <configuration>
-          <faraTestsDirectoryPath>${ui-test-directory}</faraTestsDirectoryPath>
-        </configuration>
         <executions>
           <execution>
             <phase>integration-test</phase>
