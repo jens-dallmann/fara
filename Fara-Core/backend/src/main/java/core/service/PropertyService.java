@@ -5,16 +5,20 @@ import java.io.*;
 import java.util.Properties;
 
 public class PropertyService {
-  public static final String FILENAME = "settings.properties";
+  public static final String DEFAULT_FILENAME = "settings.properties";
   public static final String ROOT_FOLDER_PATH = "rootFolderPath";
-  public static final String FILE_DIRECTORY = "filedirectory";
   private static final String ENCODING = "UTF-8";
   private static Properties properties;
+  private String propertyFilePath;
 
   public PropertyService() throws PropertyException {
-    loadProperties();
+    this(DEFAULT_FILENAME);
   }
 
+  public PropertyService(String propertyFilePath) throws PropertyException {
+    this.propertyFilePath = propertyFilePath;
+    loadProperties();
+  }
   public void saveInProperty(String propertyName, String rootFolderPath)
           throws PropertyException {
     properties.setProperty(propertyName, rootFolderPath);
@@ -25,7 +29,7 @@ public class PropertyService {
     Writer out = null;
     try {
       out = new BufferedWriter(new OutputStreamWriter(
-          new FileOutputStream(FILENAME), ENCODING));
+          new FileOutputStream(propertyFilePath), ENCODING));
       properties.store(out, "Stored Properties");
     } catch (FileNotFoundException e) {
       throw new PropertyException("Storing Properties failed");
@@ -36,7 +40,7 @@ public class PropertyService {
         try {
           out.close();
         } catch (IOException e) {
-          throw new PropertyException("Closing Property file " + FILENAME + " after saving the property file went wrong.");
+          throw new PropertyException("Closing Property file " + propertyFilePath + " after saving the property file went wrong.");
         }
       }
     }
@@ -46,15 +50,15 @@ public class PropertyService {
     properties = new Properties();
     FileInputStream propertyFileStream = null;
     try {
-      propertyFileStream = new FileInputStream(FILENAME);
+      propertyFileStream = new FileInputStream(propertyFilePath);
       properties.load(propertyFileStream);
       propertyFileStream.close();
     } catch (FileNotFoundException e) {
       try {
-        File file = new File(FILENAME);
+        File file = new File(propertyFilePath);
         boolean isCreated = file.createNewFile();
         if (isCreated) {
-          propertyFileStream = new FileInputStream(FILENAME);
+          propertyFileStream = new FileInputStream(propertyFilePath);
           properties.load(propertyFileStream);
           propertyFileStream.close();
         }
