@@ -40,6 +40,6 @@ public class CopyResultFileCrawlerAction implements CrawlerAction {
 
   @Override
   public boolean isExecutable(File file) {
-    return file != null && !file.isDirectory() && file.getAbsolutePath().endsWith("_result.html");
+    return file != null && !file.isDirectory() && (file.getAbsolutePath().endsWith("_result.html") || file.getAbsolutePath().contains("fitnesse.css")) ;
   }
 }
