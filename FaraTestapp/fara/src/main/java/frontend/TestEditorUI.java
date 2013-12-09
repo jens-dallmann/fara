@@ -20,6 +20,7 @@ public class TestEditorUI {
     frame = new JFrame(title);
     panel = new JPanel();
     migLayout = new MigLayout("nogrid", "fill,grow");
+    testPanel.setLayout(new MigLayout("nogrid", "fill,grow"));
     panel.setLayout(migLayout);
 
     frame.setLayout(new MigLayout("", "fill, grow", "fill,grow,top"));
