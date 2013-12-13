@@ -65,7 +65,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     File outputDirectoryFile = new File(outputDirectory);
 
     if (outputDirectoryFile.exists()) {
-      List<Class<?>> allClasses = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(loader, getLog(), outputDirectoryFile, new ArrayList<Class<?>>());
+      List<Class<?>> allClasses = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(loader, outputDirectoryFile);
       DocPathNamePair pair = buildDocGenDescription();
       DocGeneratorService docGeneratorService = new DocGeneratorService();
       docGeneratorService.generateDocsByClasses(pair, allClasses);
