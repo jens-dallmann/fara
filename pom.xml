@@ -55,21 +55,6 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>jd-tools</groupId>
-          <artifactId>fitCommandDocumentor</artifactId>
-          <configuration>
-            <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
-          </configuration>
-          <executions>
-            <execution>
-              <phase>process-classes</phase>
-              <goals>
-                <goal>install</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>1.3.1</version>
