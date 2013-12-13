@@ -1,9 +1,6 @@
 package documentor;
 
 import core.ClassLoaderUtils;
-import core.service.FileService;
-import docGenerator.model.DocPathNamePair;
-import docGenerator.services.DocGeneratorService;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -70,7 +67,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     if (outputDirectoryFile.exists()) {
       List<Class<?>> allClasses = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(loader, getLog(), outputDirectoryFile, new ArrayList<Class<?>>());
       DocPathNamePair pair = buildDocGenDescription();
-      DocGeneratorService docGeneratorService = new DocGeneratorService(new FileService());
+      DocGeneratorService docGeneratorService = new DocGeneratorService();
       docGeneratorService.generateDocsByClasses(pair, allClasses);
     }
   }
@@ -89,8 +86,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     String resultFilePath = directoryFile.getAbsolutePath()
             + File.separator + artifactId + "FitCommandDocs";
 
-    DocPathNamePair pair = new DocPathNamePair(outputDirectory,
-            resultFilePath);
+    DocPathNamePair pair = new DocPathNamePair(resultFilePath);
     return pair;
   }
 }
