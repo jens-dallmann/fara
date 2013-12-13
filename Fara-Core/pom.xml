@@ -16,5 +16,6 @@
   <modules>
     <module>backend</module>
     <module>frontend</module>
+    <module>directoryCrawler</module>
   </modules>
 </project>
