@@ -36,21 +36,30 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>jd</groupId>
-        <artifactId>faraTestRunner-maven-plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>runFaraTests</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>jd</groupId>
+            <artifactId>faraTestRunner-maven-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <executions>
+              <execution>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>jd</groupId>
