@@ -7,7 +7,7 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install", "Fara-Core/backend/pom.xml")
+        maven("clean install -f Fara-Core/pom.xml", "Fara-Core/pom.xml")
     }
     publishers {
         chucknorris()
