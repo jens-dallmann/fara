@@ -226,7 +226,7 @@ public class FaraTestRunner extends AbstractMojo {
     private List<AbstractActionFixtureAggregator> scanForAbstractFixtureAggregator() throws MojoExecutionException {
         List<AbstractActionFixtureAggregator> testProcessors = new ArrayList<AbstractActionFixtureAggregator>();
         ClassLoader classLoader = ClassLoaderUtils.buildClassLoader(getLog(), this.getClass().getClassLoader(), compileClasspathElements);
-        List<Class<?>> classes = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(classLoader, new File(outputDirectory));
+        List<Class<?>> classes = ClassLoaderUtils.loadClassesRecursivelyFromDirectory(new DirectoryCrawler(), classLoader, new File(outputDirectory));
         for (Class<?> possibleFixtureAggregator : classes) {
             if (AbstractActionFixtureAggregator.class.isAssignableFrom(possibleFixtureAggregator)) {
                 try {

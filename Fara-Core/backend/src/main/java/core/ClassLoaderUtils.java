@@ -30,11 +30,10 @@ public class ClassLoaderUtils {
         return urls.toArray(new URL[]{});
     }
 
-    public static List<Class<?>> loadClassesRecursivelyFromDirectory(ClassLoader classLoader, File file) {
-        DirectoryCrawler crawler = new DirectoryCrawler();
+    public static List<Class<?>> loadClassesRecursivelyFromDirectory(DirectoryCrawler directoryCrawler, ClassLoader classLoader, File file) {
         LoadClassCrawlerAction loadClassAction = new LoadClassCrawlerAction(classLoader);
         try {
-            crawler.crawlDirectory(file, null, loadClassAction, true);
+            directoryCrawler.crawlDirectory(file, null, loadClassAction, true);
         } catch (NoActionsToExecuteException e) {
             e.printStackTrace();
         }

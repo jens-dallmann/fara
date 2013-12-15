@@ -24,7 +24,6 @@ public class DirectoryCrawlerTest {
     MockitoAnnotations.initMocks(this);
     Mockito.when(testDirectory.isDirectory()).thenReturn(true);
     crawler = new DirectoryCrawler();
-
   }
 
   @Test
