@@ -1,6 +1,5 @@
 job {
     name 'Fara'
-    label 'Fara'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
