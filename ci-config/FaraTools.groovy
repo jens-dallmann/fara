@@ -1,5 +1,5 @@
 job {
-    name 'Fara-Core'
+    name 'Tools'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -7,7 +7,7 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install -f Fara-Core/pom.xml", "Fara-Core/pom.xml")
+        maven("clean install", "Tools/pom.xml")
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
@@ -15,7 +15,7 @@ job {
 }
 
 job {
-    name 'Fara-Core QA'
+    name 'Tools QA'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -23,7 +23,7 @@ job {
         githubPush()
     }
     steps {
-        maven("site -Pqa", "Fara-Core/pom.xml")
+        maven("site -Pqa", "Tools/pom.xml")
     }
     publishers {
         cobertura("**/target/site/cobertura/coverage.xml") {
