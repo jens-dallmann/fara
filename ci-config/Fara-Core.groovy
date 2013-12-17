@@ -23,10 +23,10 @@ job {
         githubPush()
     }
     steps {
-        maven("cobertura:cobertura -Pcobertura", "Fara-Core/pom.xml")
+        maven("site -Pqa", "Fara-Core/pom.xml")
     }
     publishers {
-        cobertura("**/cobertura.xml") {
+        cobertura("**/target/site/cobertura/cobertura.xml") {
             onlyStable(false)    // Include only stable builds, i.e. exclude unstable and failed ones.
             failUnhealthy(false) // Unhealthy projects will be failed.
             failUnstable(false)  // Unstable projects will be failed.
