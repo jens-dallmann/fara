@@ -20,7 +20,7 @@ job {
         githubPush()
     }
     steps {
-        maven("cobertura:cobertura -Dcobertura", "Fara-Core/pom.xml")
+        maven("cobertura:cobertura -Pcobertura", "Fara-Core/pom.xml")
     }
     publishers {
         cobertura("**/cobertura.xml") {
