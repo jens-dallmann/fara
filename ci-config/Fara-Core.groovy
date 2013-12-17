@@ -41,10 +41,6 @@ job {
             conditionalTarget(0, 0, 0)
         }
         chucknorris()
-        findbugs('**/findbugsXml.xml', true) {
-            thresholds(
-                    unstableTotal: 1
-            )
-        }
+        findbugs('**/findbugsXml.xml', false)
     }
 }
