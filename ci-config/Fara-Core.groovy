@@ -12,7 +12,7 @@ job {
 }
 
 job {
-    name 'Fara-Core'
+    name 'Fara-Core cobertura'
     scm {
         git('git://github.com/Dace/fara.git')
     }
