@@ -26,7 +26,7 @@ job {
         maven("site -Pqa", "Fara-Core/pom.xml")
     }
     publishers {
-        cobertura("**/target/site/cobertura/cobertura.xml") {
+        cobertura("**/target/site/cobertura/coverage.xml") {
             onlyStable(false)    // Include only stable builds, i.e. exclude unstable and failed ones.
             failUnhealthy(false) // Unhealthy projects will be failed.
             failUnstable(false)  // Unstable projects will be failed.
@@ -41,5 +41,10 @@ job {
             conditionalTarget(0, 0, 0)
         }
         chucknorris()
+        findbugs('**/findbugsXml.xml', true) {
+            thresholds(
+                    unstableTotal: 1
+            )
+        }
     }
 }
