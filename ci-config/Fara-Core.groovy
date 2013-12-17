@@ -1,6 +1,5 @@
 job {
     name 'Fara-Core'
-    label 'Fara-Core'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -17,7 +16,6 @@ job {
 
 job {
     name 'Fara-Core cobertura'
-    label 'Fara-Core'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -28,7 +26,7 @@ job {
         maven("site -Pqa", "Fara-Core/pom.xml")
     }
     publishers {
-        cobertura("**/target/site/cobertura/cobertura.xml") {
+        cobertura("**/target/site/cobertura/coverage.xml") {
             onlyStable(false)    // Include only stable builds, i.e. exclude unstable and failed ones.
             failUnhealthy(false) // Unhealthy projects will be failed.
             failUnstable(false)  // Unstable projects will be failed.
@@ -43,5 +41,10 @@ job {
             conditionalTarget(0, 0, 0)
         }
         chucknorris()
+        findbugs('**/findbugsXml.xml', true) {
+            thresholds(
+                    unstableTotal: 1
+            )
+        }
     }
 }
