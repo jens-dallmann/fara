@@ -1,7 +1,7 @@
 job {
     name 'Fara-Core'
     scm {
-        git('git://github.com/Dace/fara.git')
+        git('git://github.com/Dace/fara.git', 'master')
     }
     triggers {
         githubPush()
@@ -14,7 +14,7 @@ job {
 job {
     name 'Fara-Core cobertura'
     scm {
-        git('git://github.com/Dace/fara.git')
+        git('git://github.com/Dace/fara.git', 'master')
     }
     triggers {
         githubPush()
