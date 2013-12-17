@@ -9,6 +9,9 @@ job {
     steps {
         maven("clean install -f Fara-Core/pom.xml", "Fara-Core/pom.xml")
     }
+    publishers {
+        archiveJunit('**/target/surefire-reports/*.xml')
+    }
 }
 
 job {
