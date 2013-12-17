@@ -1,5 +1,6 @@
 job {
     name 'Fara-Core'
+    label 'Fara-Core'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -16,6 +17,7 @@ job {
 
 job {
     name 'Fara-Core cobertura'
+    label 'Fara-Core'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
