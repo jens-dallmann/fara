@@ -46,7 +46,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     /**
      * The projects target directory
      *
-     * @parameter expression="${project.directory}"
+     * @parameter expression="${project.build.directory}"
      * @required
      * @readonly
      */
