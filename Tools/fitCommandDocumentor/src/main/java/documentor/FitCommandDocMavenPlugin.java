@@ -72,9 +72,9 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
         }
         getLog().info("Using " + usedResultDirectory + " as ouput directory for documentation");
         File directoryFile = new File(usedResultDirectory + File.separator + "FitCommands");
+        getLog().info("create result directory: " + directoryFile.getPath());
         if (!directoryFile.exists()) {
             directoryFile.mkdir();
-            getLog().info("created result directory: " + directoryFile.getPath());
         }
         String resultFilePath = directoryFile.getAbsolutePath()
                 + File.separator + artifactId + "FitCommandDocs";
