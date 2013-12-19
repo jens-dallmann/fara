@@ -44,6 +44,15 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     private String artifactId;
 
     /**
+     * The projects target directory
+     *
+     * @parameter expression="${project.directory}"
+     * @required
+     * @readonly
+     */
+    private String targetDirectory;
+
+    /**
      * @parameter
      */
     private String explicitDefinedOutputDirectory;
@@ -66,7 +75,7 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 
 
     private DocPathNamePair buildDocGenDescription() {
-        String usedResultDirectory = outputDirectory;
+        String usedResultDirectory = targetDirectory;
         if (explicitDefinedOutputDirectory != null) {
             usedResultDirectory = explicitDefinedOutputDirectory;
         }
