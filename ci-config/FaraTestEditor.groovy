@@ -15,23 +15,6 @@ job {
 }
 
 job {
-    name 'Persistence Dokumentation'
-    scm {
-        git('git://github.com/Dace/fara.git', 'master')
-    }
-    triggers {
-        githubPush()
-    }
-    steps {
-        maven("clean install", "FaraTestapp/faraPersistence/pom.xml")
-    }
-    publishers {
-        archiveJunit('**/target/surefire-reports/*.xml')
-        archiveArtifacts('**/FitCommands/*.html')
-    }
-}
-
-job {
     name 'Fara Test Editor QA'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
