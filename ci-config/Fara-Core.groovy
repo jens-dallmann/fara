@@ -11,6 +11,8 @@ job {
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
+        downstream('Fara-Core QA')
+        downstream('Tools')
     }
 }
 

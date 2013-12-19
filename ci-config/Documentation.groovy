@@ -1,4 +1,10 @@
-
+job {
+    name 'documentation build trigger'
+    publishers {
+        downstream('fara persistence docs')
+        downstream('fara fest docs')
+    }
+}
 job {
     name 'fara persistence docs'
     scm {
