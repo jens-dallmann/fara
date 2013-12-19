@@ -41,7 +41,6 @@ job {
             lineTarget(0, 0, 0)
             conditionalTarget(0, 0, 0)
         }
-        chucknorris()
         findbugs('**/findbugsXml.xml', false)
     }
 }
