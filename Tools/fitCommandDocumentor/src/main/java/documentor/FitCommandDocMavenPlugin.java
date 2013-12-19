@@ -7,6 +7,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,8 +75,10 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
     if (!directoryFile.exists()) {
       directoryFile.mkdir();
     }
-    String resultFilePath = directoryFile.getAbsolutePath();
-
-    return new DocPathNamePair(resultFilePath);
+    String resultFilePath = directoryFile.getAbsolutePath()
+            + File.separator + artifactId + "FitCommandDocs";
+    getLog().info("result file path is: " + resultFilePath);
+    DocPathNamePair pair = new DocPathNamePair(resultFilePath);
+    return pair;
   }
 }
