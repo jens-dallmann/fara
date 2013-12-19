@@ -24,9 +24,6 @@
           <plugin>
             <groupId>jd-tools</groupId>
             <artifactId>fitCommandDocumentor</artifactId>
-            <configuration>
-              <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
-            </configuration>
             <executions>
               <execution>
                 <phase>process-classes</phase>

@@ -7,7 +7,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,15 +32,6 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
    * @readonly
    */
   private List<String> compileClasspathElements;
-
-  /**
-   * Target Directory
-   *
-   * @parameter expression="${project.build.directory}"
-   * @required
-   * @readonly
-   */
-  private String targetDirectory;
 
   /**
    * Artifact ID of compile project
@@ -75,19 +65,17 @@ public class FitCommandDocMavenPlugin extends AbstractMojo {
 
 
   private DocPathNamePair buildDocGenDescription() {
-    String usedResultDirectory = targetDirectory;
+    String usedResultDirectory = outputDirectory;
     if (explicitDefinedOutputDirectory != null) {
       usedResultDirectory = explicitDefinedOutputDirectory;
     }
     getLog().info("Using " + usedResultDirectory + " as ouput directory for documentation");
-    File directoryFile = new File(usedResultDirectory);
+    File directoryFile = new File(usedResultDirectory+File.separator+"FitCommands");
     if (!directoryFile.exists()) {
       directoryFile.mkdir();
     }
-    String resultFilePath = directoryFile.getAbsolutePath()
-            + File.separator + artifactId + "FitCommandDocs";
+    String resultFilePath = directoryFile.getAbsolutePath();
 
-    DocPathNamePair pair = new DocPathNamePair(resultFilePath);
-    return pair;
+    return new DocPathNamePair(resultFilePath);
   }
 }
