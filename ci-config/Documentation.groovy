@@ -1,6 +1,6 @@
 
 job {
-    name 'Persistence Dokumentation'
+    name 'faraPersistence Docs'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
