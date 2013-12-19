@@ -11,15 +11,15 @@
 package documentor;
 
 import fitArchitectureAdapter.annotations.FitCommand;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassFileProcessor implements FileProcessor {
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-  public ClassFileProcessor() {
-  }
+public class ClassFileProcessor implements FileProcessor {
 
   @Override
   public List<FitCommandDoc> process(Class<?> clazz) {
@@ -54,7 +54,9 @@ public class ClassFileProcessor implements FileProcessor {
     FitCommand parameters = method.getAnnotation(FitCommand.class);
     if (parameters != null) {
       for (String parameter : parameters.value()) {
-        commandParams.add(parameter);
+        if (isNotBlank(parameter)) {
+          commandParams.add(parameter);
+        }
       }
     }
     return commandParams;
