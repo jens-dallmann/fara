@@ -85,7 +85,7 @@ public class FaraTestRunner extends AbstractMojo {
   public void execute() throws MojoExecutionException, MojoFailureException {
     String userHome = System.getProperties().getProperty("user.home");
     propertyFile = userHome + File.separator + ".fara-test-configuration.properties";
-
+    getLog().info("Searching for Property file at: "+propertyFile);
     List<File> allTestFiles = null;
     try {
       allTestFiles = collectTestFiles();
