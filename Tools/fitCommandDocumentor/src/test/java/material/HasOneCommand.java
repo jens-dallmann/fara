@@ -6,8 +6,8 @@ import fitArchitectureAdapter.interfaces.HasCommands;
 
 public class HasOneCommand implements HasCommands {
 
-    @FitCommand("Parameter 1")
-    public CommandResult oneMethod(String parameterOne)  {
-        return null;
-    }
+  @FitCommand("Parameter 1")
+  public CommandResult oneMethod(String parameterOne) {
+    return null;
+  }
 }

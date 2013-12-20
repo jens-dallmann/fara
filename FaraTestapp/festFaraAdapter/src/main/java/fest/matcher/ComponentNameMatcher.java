@@ -19,7 +19,7 @@ package fest.matcher;
 
 import org.fest.swing.core.ComponentMatcher;
 
-import java.awt.Component;
+import java.awt.*;
 
 public class ComponentNameMatcher implements ComponentMatcher {
 

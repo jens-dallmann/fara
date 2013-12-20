@@ -55,7 +55,7 @@ public class HTMLBuilder {
     buffer.append("<tr>");
     buffer.append("<td> <b>ClassName.CommandName</b></td>");
     for (int i = 0; i < highestCountOfParams; i++) {
-      buffer.append("<td><b> Parameter ").append((i+1)).append("</b></td>");
+      buffer.append("<td><b> Parameter ").append((i + 1)).append("</b></td>");
     }
     buffer.append("</tr>");
   }

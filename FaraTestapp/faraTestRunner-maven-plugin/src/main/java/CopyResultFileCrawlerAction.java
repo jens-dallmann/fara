@@ -9,7 +9,7 @@ public class CopyResultFileCrawlerAction implements CrawlerAction {
 
   private File folderToCopyTo;
 
-  public CopyResultFileCrawlerAction(File folderToCopyTo ) {
+  public CopyResultFileCrawlerAction(File folderToCopyTo) {
     try {
       FileUtils.forceMkdir(folderToCopyTo);
     } catch (IOException e) {
@@ -20,9 +20,9 @@ public class CopyResultFileCrawlerAction implements CrawlerAction {
 
   @Override
   public void execute(File input) {
-    File file = new File(folderToCopyTo.getAbsolutePath()+File.separator+input.getName());
+    File file = new File(folderToCopyTo.getAbsolutePath() + File.separator + input.getName());
     try {
-      FileUtils.copyFile(input,file,"UTF-8", null);
+      FileUtils.copyFile(input, file, "UTF-8", null);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -40,6 +40,6 @@ public class CopyResultFileCrawlerAction implements CrawlerAction {
 
   @Override
   public boolean isExecutable(File file) {
-    return file != null && !file.isDirectory() && (file.getAbsolutePath().endsWith("_result.html") || file.getAbsolutePath().contains("fitnesse.css")) ;
+    return file != null && !file.isDirectory() && (file.getAbsolutePath().endsWith("_result.html") || file.getAbsolutePath().contains("fitnesse.css"));
   }
 }

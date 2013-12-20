@@ -3,7 +3,6 @@ package core.service;
 import core.service.exceptions.CopyException;
 import core.service.exceptions.CreateFileException;
 import core.service.exceptions.WriteFileException;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -19,8 +18,7 @@ public class FileService {
     try {
       if (!file.exists()) {
         isCreated = file.createNewFile();
-      }
-      else {
+      } else {
         isCreated = true;
       }
     } catch (IOException e) {
@@ -42,7 +40,7 @@ public class FileService {
     Writer out = null;
     try {
       out = new BufferedWriter(new OutputStreamWriter(
-          new FileOutputStream(file), ENCODING));
+              new FileOutputStream(file), ENCODING));
       boolean result = writeToFile(out, content);
       out.close();
       return result;
@@ -60,7 +58,7 @@ public class FileService {
   }
 
   private boolean writeToFile(Writer fileWriter, String content)
-      throws IOException {
+          throws IOException {
     try {
       fileWriter.write(content);
     } catch (IOException ioex) {
@@ -84,7 +82,7 @@ public class FileService {
   }
 
   public boolean writeToFileCreateIfNotExist(String filepath, String content)
-      throws CreateFileException, WriteFileException {
+          throws CreateFileException, WriteFileException {
     createFileIfNotExist(filepath);
     return writeToFile(filepath, content);
   }

@@ -2,9 +2,7 @@ package frontend.persistenceToolbar;
 
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class PersistenceToolbarUI {
   private JButton save;

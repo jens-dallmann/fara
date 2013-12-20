@@ -1,6 +1,5 @@
 package fest.swing;
 
-import core.service.PropertyService;
 import core.service.RessourceService;
 import fest.FestResultBuilder;
 import fest.interfaces.FileChooserUIAdapter;
@@ -11,12 +10,11 @@ import fitArchitectureAdapter.interfaces.HasCommands;
 import org.fest.swing.fixture.JFileChooserFixture;
 import org.fest.swing.timing.Timeout;
 
-import javax.xml.bind.PropertyException;
 import java.io.File;
 import java.net.URISyntaxException;
 
 public class SwingFileChooserAdapter implements HasCommands,
-    FileChooserUIAdapter {
+        FileChooserUIAdapter {
 
   private final SwingFrameWrapper frameWrapper;
   private final RessourceService ressourceService;
@@ -46,7 +44,7 @@ public class SwingFileChooserAdapter implements HasCommands,
 
   private CommandResult setFileChooserContent(CommandResult result, String resourcePath) {
     JFileChooserFixture fileChooser = frameWrapper.getFrameFixture()
-        .fileChooser(Timeout.timeout(3000));
+            .fileChooser(Timeout.timeout(3000));
     if (fileChooser != null) {
       String testdataDirectory = null;
       fileChooser.fileNameTextBox().setText(resourcePath);
@@ -60,7 +58,7 @@ public class SwingFileChooserAdapter implements HasCommands,
       result.setResultState(CommandResultState.RIGHT);
     } else {
       result = FestResultBuilder.buildWrongResultComponentFailure(result,
-          "File chooser");
+              "File chooser");
     }
     return result;
   }
@@ -69,16 +67,16 @@ public class SwingFileChooserAdapter implements HasCommands,
   public CommandResult useFileChooserFromHomeDirectory(String filepath) {
     CommandResult result = new CommandResult();
     JFileChooserFixture fileChooser = frameWrapper.getFrameFixture()
-        .fileChooser(Timeout.timeout(3000));
+            .fileChooser(Timeout.timeout(3000));
     if (fileChooser != null) {
       String ressourcePath = System.getProperty("user.home")
-          + File.separator + filepath;
+              + File.separator + filepath;
       fileChooser.fileNameTextBox().setText(ressourcePath);
       fileChooser.approve();
       result.setResultState(CommandResultState.RIGHT);
     } else {
       result = FestResultBuilder.buildWrongResultComponentFailure(result,
-          "File chooser");
+              "File chooser");
     }
     return result;
   }

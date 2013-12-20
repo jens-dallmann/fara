@@ -1,12 +1,6 @@
 package fixtures;
 
-import fest.swing.SwingButtonUIAdapter;
-import fest.swing.SwingComponentUIAdapter;
-import fest.swing.SwingFileChooserAdapter;
-import fest.swing.SwingFrameWrapper;
-import fest.swing.SwingLabelUIAdapter;
-import fest.swing.SwingTabbedPaneUIAdapter;
-import fest.swing.SwingTextComponentUIAdapter;
+import fest.swing.*;
 import fitArchitectureAdapter.AbstractProcessableFixtureAggregator;
 
 

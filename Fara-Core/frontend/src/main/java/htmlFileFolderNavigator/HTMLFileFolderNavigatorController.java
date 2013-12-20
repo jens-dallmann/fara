@@ -4,13 +4,11 @@ import htmlFileFolderNavigator.treeFunctions.TreePopupMenuController;
 import htmlFileFolderNavigator.utils.RootWrappedFile;
 import htmlFileFolderNavigator.utils.WrappedFile;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;

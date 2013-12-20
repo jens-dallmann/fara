@@ -20,7 +20,7 @@ package fest.driver;
 import org.fest.swing.annotation.RunsInEDT;
 import org.fest.swing.edt.GuiQuery;
 
-import javax.swing.AbstractButton;
+import javax.swing.*;
 
 import static org.fest.swing.edt.GuiActionRunner.execute;
 

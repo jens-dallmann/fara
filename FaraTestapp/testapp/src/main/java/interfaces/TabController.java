@@ -1,6 +1,6 @@
 package interfaces;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public interface TabController {
   JPanel getTabPanel();

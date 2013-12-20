@@ -2,10 +2,7 @@ package frontend;
 
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class TestEditorUI {
   private JFrame frame;

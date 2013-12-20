@@ -1,6 +1,6 @@
 package core.exception.frontend;
 
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 public interface ExceptionAreaFiller {
   public void fillArea(Throwable throwable, JTextArea area);

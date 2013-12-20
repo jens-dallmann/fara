@@ -3,8 +3,7 @@ package filechooserTab;
 import interfaces.TabUI;
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class FilechooserTabUI implements TabUI {
 

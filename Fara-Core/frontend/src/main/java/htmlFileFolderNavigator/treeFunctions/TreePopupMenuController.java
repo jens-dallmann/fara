@@ -2,12 +2,11 @@ package htmlFileFolderNavigator.treeFunctions;
 
 import htmlFileFolderNavigator.utils.WrappedFile;
 
-import javax.swing.JFrame;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

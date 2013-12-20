@@ -7,8 +7,7 @@ import processableTable.table.model.AbstractProcessableTableModel;
 import processableTable.toolbar.ProcessToolbarController;
 import state.StateListener;
 
-import javax.swing.JComponent;
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class ProcessableTableComponent<Model extends AbstractProcessableTableModel> implements StateListener<ProcessTableStates> {
   private ProcessableTableController<Model> tableController;

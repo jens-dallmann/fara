@@ -2,7 +2,7 @@ package componentTab;
 
 import interfaces.TabController;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ComponentTabController implements TabController {
 

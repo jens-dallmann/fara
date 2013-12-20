@@ -4,7 +4,7 @@ import core.command.CommandModel;
 import core.command.TableCommand;
 import frontend.editorTable.FitRowTableModel;
 
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableModel;
 
 public abstract class AbstractTableCommand<Model extends CommandModel> implements TableCommand {

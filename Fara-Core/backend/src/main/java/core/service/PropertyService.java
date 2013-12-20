@@ -19,6 +19,7 @@ public class PropertyService {
     this.propertyFilePath = propertyFilePath;
     loadProperties();
   }
+
   public void saveInProperty(String propertyName, String rootFolderPath)
           throws PropertyException {
     properties.setProperty(propertyName, rootFolderPath);
@@ -29,7 +30,7 @@ public class PropertyService {
     Writer out = null;
     try {
       out = new BufferedWriter(new OutputStreamWriter(
-          new FileOutputStream(propertyFilePath), ENCODING));
+              new FileOutputStream(propertyFilePath), ENCODING));
       properties.store(out, "Stored Properties");
     } catch (FileNotFoundException e) {
       throw new PropertyException("Storing Properties failed");

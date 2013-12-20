@@ -2,7 +2,7 @@ package textComponentTab;
 
 import interfaces.TabController;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class TextComponentTabController implements TabController {
 

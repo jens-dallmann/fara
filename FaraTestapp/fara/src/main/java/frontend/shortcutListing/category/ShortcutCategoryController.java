@@ -2,7 +2,7 @@ package frontend.shortcutListing.category;
 
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.util.List;
 
 public class ShortcutCategoryController {

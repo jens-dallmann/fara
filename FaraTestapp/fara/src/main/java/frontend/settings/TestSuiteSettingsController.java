@@ -5,8 +5,7 @@ import core.exception.frontend.ExceptionLevel;
 import core.exception.frontend.ExceptionWindowController;
 import core.service.PropertyService;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.xml.bind.PropertyException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

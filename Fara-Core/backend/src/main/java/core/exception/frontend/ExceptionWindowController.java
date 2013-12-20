@@ -2,8 +2,8 @@ package core.exception.frontend;
 
 import core.ResourceLoader;
 
-import javax.swing.ImageIcon;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 
 public class ExceptionWindowController {
   private ExceptionWindowUI ui;

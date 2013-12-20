@@ -6,7 +6,7 @@ import interfaces.TabController;
 import labelTab.LabelTabController;
 import textComponentTab.TextComponentTabController;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class MainFrameController {
 

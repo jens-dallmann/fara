@@ -1,6 +1,6 @@
 package core.command;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 public interface TableCommand extends Command {
 

@@ -1,7 +1,6 @@
 package processableTable.toolbar;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ProcessToolbarUI {
   private JPanel panel;

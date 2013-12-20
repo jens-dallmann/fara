@@ -18,9 +18,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FitTableModelTest {
 
@@ -84,7 +82,7 @@ public class FitTableModelTest {
 
   @Test
   public void deleteRowsWithRealTestFile() throws URISyntaxException, IOException, FitParseException {
-    File testFile = new RessourceService().loadRessourceFile(FitTableModel.class,"test.html");
+    File testFile = new RessourceService().loadRessourceFile(FitTableModel.class, "test.html");
     String content = FileUtils.readFileToString(testFile);
     Parse table = new Parse(content);
 

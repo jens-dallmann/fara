@@ -19,13 +19,13 @@ public class DirectoryCrawler {
 
   public void crawlDirectory(File directoryPath, CrawlerAction directoryAction, CrawlerAction fileAction, boolean recursively) throws NoActionsToExecuteException {
     ArrayList<CrawlerAction> fileActions = null;
-    if(fileAction != null) {
+    if (fileAction != null) {
       fileActions = new ArrayList<CrawlerAction>();
       fileActions.add(fileAction);
     }
 
     ArrayList<CrawlerAction> directoryActions = null;
-    if(directoryAction != null) {
+    if (directoryAction != null) {
       directoryActions = new ArrayList<CrawlerAction>();
       directoryActions.add(directoryAction);
     }
@@ -40,6 +40,7 @@ public class DirectoryCrawler {
     directoryActions.add(directoryAction);
     crawlDirectory(directoryPath, crawledFilesFilter, directoryActions, fileActions, recursively);
   }
+
   /**
    * Crawles over a directory and executes the given actions on the files.
    * If you want to crawl the directory with subdirectories you have to set the flag recursively to true

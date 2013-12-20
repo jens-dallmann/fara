@@ -4,12 +4,9 @@ import fit.Fixture;
 import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.lang.reflect.Modifier;
@@ -49,7 +46,7 @@ public class FixtureComponent {
   }
 
   private void validateFixtureTextField(String text) {
-      Class<?> fixtureClass = null;
+    Class<?> fixtureClass = null;
     if (StringUtils.isNotBlank(text)) {
       fixtureClass = tryToFindOnClassPath(text, fixtureClass);
       if (fixtureClass != null) {

@@ -20,7 +20,7 @@ import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.query.ComponentEnabledQuery;
 import org.fest.swing.query.ComponentVisibleQuery;
 
-import java.awt.Component;
+import java.awt.*;
 
 public class SwingComponentUIAdapter implements ComponentUIAdapter, HasCommands {
 

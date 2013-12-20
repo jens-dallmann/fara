@@ -1,8 +1,7 @@
 package frontend.shortcutListing;
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class ShortcutListingUI {

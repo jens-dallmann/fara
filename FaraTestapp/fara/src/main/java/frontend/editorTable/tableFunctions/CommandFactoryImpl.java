@@ -9,7 +9,7 @@ import frontend.editorTable.tableFunctions.commands.NewLineCommand;
 import frontend.editorTable.tableFunctions.commands.model.DeleteLineCommandModel;
 import frontend.editorTable.tableFunctions.commands.model.NewLineCommandModel;
 
-import javax.swing.JTable;
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 

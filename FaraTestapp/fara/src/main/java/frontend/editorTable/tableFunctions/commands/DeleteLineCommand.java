@@ -4,7 +4,7 @@ import fit.Parse;
 import frontend.AbstractTableCommand;
 import frontend.editorTable.tableFunctions.commands.model.DeleteLineCommandModel;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class DeleteLineCommand extends
         AbstractTableCommand<DeleteLineCommandModel> {

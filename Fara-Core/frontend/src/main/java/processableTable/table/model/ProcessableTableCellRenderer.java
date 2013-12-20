@@ -1,10 +1,9 @@
 package processableTable.table.model;
 
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 
 
 public class ProcessableTableCellRenderer extends DefaultTableCellRenderer {

@@ -1,7 +1,7 @@
 package core.exception.frontend;
 
-import javax.swing.JTextArea;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
 public class ApplicationExceptionAreaFiller implements ExceptionAreaFiller {
   @Override

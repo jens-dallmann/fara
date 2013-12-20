@@ -1,6 +1,6 @@
 package frontend.editorTable;
 
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 

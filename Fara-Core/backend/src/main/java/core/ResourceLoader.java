@@ -1,7 +1,7 @@
 package core;
 
-import javax.swing.ImageIcon;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
 
 public class ResourceLoader {

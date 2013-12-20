@@ -1,6 +1,6 @@
 package core.exception.frontend;
 
-import java.awt.Window;
+import java.awt.*;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 

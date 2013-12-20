@@ -3,9 +3,7 @@ package componentTab;
 import interfaces.TabUI;
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ComponentTabUI implements TabUI {
 

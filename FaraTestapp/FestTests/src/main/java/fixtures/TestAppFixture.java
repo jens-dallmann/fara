@@ -8,7 +8,7 @@ import fitArchitectureAdapter.interfaces.HasCommands;
 import main.MainFrameController;
 import org.fest.swing.edt.GuiQuery;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class TestAppFixture implements HasCommands {
 

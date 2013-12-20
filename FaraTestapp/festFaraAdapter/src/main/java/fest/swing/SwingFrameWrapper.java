@@ -18,7 +18,7 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.testing.FestSwingTestCaseTemplate;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class SwingFrameWrapper extends FestSwingTestCaseTemplate {
 

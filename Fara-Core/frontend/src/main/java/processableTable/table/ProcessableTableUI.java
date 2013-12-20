@@ -3,9 +3,7 @@ package processableTable.table;
 import processableTable.table.model.AbstractProcessableTableModel;
 import processableTable.table.model.ProcessableTableCellRenderer;
 
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class ProcessableTableUI {
 

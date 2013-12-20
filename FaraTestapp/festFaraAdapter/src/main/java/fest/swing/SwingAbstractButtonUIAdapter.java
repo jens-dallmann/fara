@@ -17,7 +17,7 @@ import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
 import fitArchitectureAdapter.interfaces.HasCommands;
 
-import javax.swing.AbstractButton;
+import javax.swing.*;
 
 public class SwingAbstractButtonUIAdapter implements AbstractButtonUIAdapter, HasCommands {
 

@@ -13,7 +13,7 @@ public class DocGeneratorService {
   private FileService fileService;
 
   public DocGeneratorService() {
-      fileService = new FileService();
+    fileService = new FileService();
   }
 
   public void generateDocsByClasses(DocPathNamePair targetDescription, List<Class<?>> classes) {
@@ -30,8 +30,8 @@ public class DocGeneratorService {
     String buildHtml = new HTMLBuilder().build(process);
     try {
       fileService.writeToFileCreateIfNotExist(htmlFileName + ".html",
-          buildHtml);
-    }  catch (WriteFileException e) {
+              buildHtml);
+    } catch (WriteFileException e) {
       e.printStackTrace();
     } catch (CreateFileException e) {
       e.printStackTrace();

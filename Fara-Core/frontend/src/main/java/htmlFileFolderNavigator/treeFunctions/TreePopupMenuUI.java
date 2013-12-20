@@ -1,8 +1,7 @@
 package htmlFileFolderNavigator.treeFunctions;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
 
 public class TreePopupMenuUI {
   private JPopupMenu menu;

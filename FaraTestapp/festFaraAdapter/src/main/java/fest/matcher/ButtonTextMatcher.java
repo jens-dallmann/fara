@@ -19,8 +19,8 @@ package fest.matcher;
 
 import org.fest.swing.core.ComponentMatcher;
 
-import javax.swing.JButton;
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 
 public class ButtonTextMatcher implements ComponentMatcher {
 

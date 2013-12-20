@@ -10,8 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-
 public class DirectoryCrawlerTest {
 
   private DirectoryCrawler crawler;
@@ -145,7 +143,7 @@ public class DirectoryCrawlerTest {
 
   private List<CrawlerAction> createCrawlerList(CrawlerAction... actions) {
     List<CrawlerAction> crawlerList = new ArrayList<CrawlerAction>();
-    for(CrawlerAction action: actions) {
+    for (CrawlerAction action : actions) {
       crawlerList.add(action);
     }
     return crawlerList;

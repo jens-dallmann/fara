@@ -11,7 +11,6 @@
 package documentor;
 
 import fitArchitectureAdapter.annotations.FitCommand;
-import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import frontend.AbstractTableCommand;
 import frontend.editorTable.FitRowTableModel;
 import frontend.editorTable.tableFunctions.commands.model.NewLineCommandModel;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 
 public class NewLineCommand extends AbstractTableCommand<NewLineCommandModel> {

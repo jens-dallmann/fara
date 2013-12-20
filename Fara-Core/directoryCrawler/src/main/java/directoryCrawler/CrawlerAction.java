@@ -29,7 +29,6 @@ public interface CrawlerAction {
   String getName();
 
   /**
-   *
    * @param file the will which is asked to execute
    * @return true if this file can be executed by this action, else false
    */

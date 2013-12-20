@@ -2,8 +2,7 @@ package labelTab;
 
 import interfaces.TabUI;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class LabelTabUI implements TabUI {
 

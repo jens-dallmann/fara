@@ -19,8 +19,7 @@ import net.miginfocom.swing.MigLayout;
 import processableTable.ProcessableTableComponent;
 import processableTable.table.ProcessableTableDelegate;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

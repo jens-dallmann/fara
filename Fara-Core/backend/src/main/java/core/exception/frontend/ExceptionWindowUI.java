@@ -2,13 +2,8 @@ package core.exception.frontend;
 
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 
 public class ExceptionWindowUI {
 

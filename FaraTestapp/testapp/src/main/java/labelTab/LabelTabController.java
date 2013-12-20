@@ -3,7 +3,7 @@ package labelTab;
 import interfaces.TabController;
 import interfaces.TabUI;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class LabelTabController implements TabController {
 

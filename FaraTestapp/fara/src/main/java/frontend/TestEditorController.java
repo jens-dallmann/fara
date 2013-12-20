@@ -13,8 +13,7 @@ import frontend.settings.TestSuiteSettingsListener;
 import htmlFileFolderNavigator.HTMLFileFolderNavigatorController;
 import htmlFileFolderNavigator.utils.WrappedFile;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
