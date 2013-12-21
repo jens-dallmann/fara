@@ -3,6 +3,7 @@ package core.service;
 import core.service.exceptions.CopyException;
 import core.service.exceptions.CreateFileException;
 import core.service.exceptions.WriteFileException;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -37,43 +38,12 @@ public class FileService {
   }
 
   public boolean writeToFile(File file, String content) throws WriteFileException {
-    Writer out = null;
     try {
-      out = new BufferedWriter(new OutputStreamWriter(
-              new FileOutputStream(file), ENCODING));
-      boolean result = writeToFile(out, content);
-      out.close();
-      return result;
+      FileUtils.writeStringToFile(file, content);
     } catch (IOException e) {
-      throw new WriteFileException(file.getAbsolutePath(), e);
-    } finally {
-      if (out != null) {
-        try {
-          out.close();
-        } catch (IOException e) {
-          throw new WriteFileException(file.getAbsolutePath(), e);
-        }
-      }
-    }
-  }
-
-  private boolean writeToFile(Writer fileWriter, String content)
-          throws IOException {
-    try {
-      fileWriter.write(content);
-    } catch (IOException ioex) {
-      throw ioex;
-    } finally {
-      if (fileWriter != null) {
-        try {
-          fileWriter.close();
-        } catch (IOException ioex2) {
-          throw ioex2;
-        }
-      }
+      new WriteFileException(file.getAbsolutePath(), e);
     }
     return true;
-
   }
 
   public boolean writeToFile(String filepath, String content) throws WriteFileException {
@@ -87,10 +57,8 @@ public class FileService {
     return writeToFile(filepath, content);
   }
 
-  public String readFile(File file) throws FileNotFoundException {
-    String content = "";
-    content = new Scanner(file, ENCODING).useDelimiter("\\Z").next();
-    return content;
+  public String readFile(File file) throws IOException {
+    return  FileUtils.readFileToString(file);
   }
 
   public void copyResourceToFile(String resourceFile, String targetFile) throws CreateFileException, FileNotFoundException, CopyException {

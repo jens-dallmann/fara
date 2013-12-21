@@ -7,6 +7,7 @@ import org.apache.maven.plugin.logging.Log;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,7 +41,7 @@ public class TestProcessorFileFilter implements FileFilter {
       if (testfileprocessorname.equals(fixture)) {
         return true;
       }
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       logger.info("Can not find file: " + pathname);
     } catch (FitParseException e) {
       logger.info("Can not parse file: " + pathname);

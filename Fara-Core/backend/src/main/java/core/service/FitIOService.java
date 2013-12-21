@@ -27,7 +27,7 @@ public class FitIOService {
     Parse table = null;
     try {
       input = fileService.readFile(file);
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
     if (input != null) {
