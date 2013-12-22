@@ -1,6 +1,6 @@
 package fest.swing;
 
-import core.service.RessourceService;
+import core.service.ResourceService;
 import fest.FestResultBuilder;
 import fest.interfaces.FileChooserUIAdapter;
 import fitArchitectureAdapter.CommandResultState;
@@ -17,11 +17,11 @@ public class SwingFileChooserAdapter implements HasCommands,
         FileChooserUIAdapter {
 
   private final SwingFrameWrapper frameWrapper;
-  private final RessourceService ressourceService;
+  private final ResourceService resourceService;
 
   public SwingFileChooserAdapter(SwingFrameWrapper frameWrapper) {
     this.frameWrapper = frameWrapper;
-    ressourceService = new RessourceService();
+    resourceService = new ResourceService();
   }
 
   @FitCommand({"The name of the resource file which should be selected"})
@@ -29,7 +29,7 @@ public class SwingFileChooserAdapter implements HasCommands,
     CommandResult result = new CommandResult();
     String resourcePath = null;
     try {
-      resourcePath = ressourceService.loadRessourceFilePath(this.getClass(), resource);
+      resourcePath = resourceService.loadRessourceFilePath(this.getClass(), resource);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }

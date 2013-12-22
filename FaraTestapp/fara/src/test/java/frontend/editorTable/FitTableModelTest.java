@@ -1,6 +1,6 @@
 package frontend.editorTable;
 
-import core.service.RessourceService;
+import core.service.ResourceService;
 import fit.Parse;
 import fit.exception.FitParseException;
 import fitArchitectureAdapter.HtmlTableUtils;
@@ -82,7 +82,7 @@ public class FitTableModelTest {
 
   @Test
   public void deleteRowsWithRealTestFile() throws URISyntaxException, IOException, FitParseException {
-    File testFile = new RessourceService().loadRessourceFile(FitTableModel.class, "test.html");
+    File testFile = new ResourceService().loadRessourceFile(FitTableModel.class, "test.html");
     String content = FileUtils.readFileToString(testFile);
     Parse table = new Parse(content);
 

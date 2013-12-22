@@ -1,6 +1,6 @@
 package fileCommands;
 
-import core.service.RessourceService;
+import core.service.ResourceService;
 import fitArchitectureAdapter.CommandResultState;
 import fitArchitectureAdapter.annotations.FitCommand;
 import fitArchitectureAdapter.container.CommandResult;
@@ -13,10 +13,10 @@ import java.net.URISyntaxException;
 
 public class FileCommands implements HasCommands {
 
-  private final RessourceService ressourceSerivce;
+  private final ResourceService ressourceSerivce;
 
   public FileCommands() {
-    ressourceSerivce = new RessourceService();
+    ressourceSerivce = new ResourceService();
   }
 
   @FitCommand({"The ressource file path", "the path of the file in the home directory of the system user"})
