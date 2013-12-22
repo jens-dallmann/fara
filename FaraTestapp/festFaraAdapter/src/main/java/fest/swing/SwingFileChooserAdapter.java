@@ -29,7 +29,7 @@ public class SwingFileChooserAdapter implements HasCommands,
     CommandResult result = new CommandResult();
     String resourcePath = null;
     try {
-      resourcePath = resourceService.loadRessourceFilePath(this.getClass(), resource);
+      resourcePath = resourceService.loadResourceFilePath(this.getClass(), resource);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }

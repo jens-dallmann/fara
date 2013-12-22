@@ -5,11 +5,11 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class ResourceService {
-  public String loadRessourceFilePath(Class<?> clazz, String filename) throws URISyntaxException {
-    return loadRessourceFile(clazz, filename).getAbsolutePath();
+  public String loadResourceFilePath(Class<?> clazz, String filename) throws URISyntaxException {
+    return loadResourceFile(clazz, filename).getAbsolutePath();
   }
 
-  public File loadRessourceFile(Class<?> clazz, String filename) throws URISyntaxException {
+  public File loadResourceFile(Class<?> clazz, String filename) throws URISyntaxException {
     ClassLoader loader = clazz.getClassLoader();
     URL url = loader.getResource(filename);
     if (url == null) {

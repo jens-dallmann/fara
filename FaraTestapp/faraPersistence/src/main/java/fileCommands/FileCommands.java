@@ -25,7 +25,7 @@ public class FileCommands implements HasCommands {
     String userHome = System.getProperty("user.home");
     File userHomeFile = new File(userHome + File.separator + expectedNameInHomeDirectory);
     try {
-      File ressourceFile = ressourceSerivce.loadRessourceFile(this.getClass(), filename);
+      File ressourceFile = ressourceSerivce.loadResourceFile(this.getClass(), filename);
       FileUtils.copyFile(ressourceFile, userHomeFile);
       result.setResultState(CommandResultState.RIGHT);
 
