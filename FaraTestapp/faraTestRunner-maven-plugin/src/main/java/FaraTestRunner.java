@@ -27,6 +27,7 @@ import java.util.List;
  * @threadSafe false
  * @goal test
  * @phase integration-test
+ * @configurator include-project-test-dependencies
  * @requiresDependencyResolution test
  * @requiresDependencyCollection test
  */
