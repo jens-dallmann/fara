@@ -24,7 +24,7 @@ import java.util.List;
  * @since Aug 1, 2008 3:04:17 PM
  *
  * @plexus.component role="org.codehaus.plexus.component.configurator.ComponentConfigurator"
- *                   role-hint="include-project-dependencies"
+ *                   role-hint="include-project-test-dependencies"
  * @plexus.requirement role="org.codehaus.plexus.component.configurator.converters.lookup.ConverterLookup"
  *                   role-hint="default"
  */
