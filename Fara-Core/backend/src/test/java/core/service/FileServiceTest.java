@@ -13,6 +13,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.io.File;
 import java.io.IOException;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -53,6 +54,15 @@ public class FileServiceTest {
     when(inputMock.exists()).thenReturn(false);
     when(inputMock.createNewFile()).thenThrow(IOException.class);
     service.createFileIfNotExist(inputMock);
+  }
+
+  @Test
+  public void testCreateFileIfNotExistWithMocks() throws Exception {
+    File inputMock = mock(File.class);
+    when(inputMock.exists()).thenReturn(true);
+    when(inputMock.createNewFile()).thenThrow(IOException.class);
+    File fileIfNotExist = service.createFileIfNotExist(inputMock);
+    assertSame(inputMock, fileIfNotExist);
   }
 
   @Test(expected = CreateFileException.class)
