@@ -41,7 +41,7 @@ public class FileService {
     try {
       FileUtils.writeStringToFile(file, content);
     } catch (IOException e) {
-      new WriteFileException(file.getAbsolutePath(), e);
+      throw new WriteFileException(file.getAbsolutePath(), e);
     }
     return true;
   }

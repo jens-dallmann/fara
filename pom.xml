@@ -10,6 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
     <cobertura.version>2.0.3</cobertura.version>
+    <powermock.version>1.5.2</powermock.version>
   </properties>
   <modules>
     <module>Fara-Core</module>
@@ -231,7 +232,24 @@
         <artifactId>slf4j-simple</artifactId>
         <version>1.7.5</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <version>${powermock.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-mockito</artifactId>
+        <version>${powermock.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-core</artifactId>
+        <version>${powermock.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <profiles>
