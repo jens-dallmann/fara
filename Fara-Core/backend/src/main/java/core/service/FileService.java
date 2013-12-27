@@ -37,24 +37,23 @@ public class FileService {
     return createFileIfNotExist(file);
   }
 
-  public boolean writeToFile(File file, String content) throws WriteFileException {
+  public void writeToFile(File file, String content) throws WriteFileException {
     try {
       FileUtils.writeStringToFile(file, content);
     } catch (IOException e) {
       throw new WriteFileException(file.getAbsolutePath(), e);
     }
-    return true;
   }
 
-  public boolean writeToFile(String filepath, String content) throws WriteFileException {
+  public void writeToFile(String filepath, String content) throws WriteFileException {
     File file = new File(filepath);
-    return writeToFile(file, content);
+    writeToFile(file, content);
   }
 
-  public boolean writeToFileCreateIfNotExist(String filepath, String content)
+  public void writeToFileCreateIfNotExist(String filepath, String content)
           throws CreateFileException, WriteFileException {
     createFileIfNotExist(filepath);
-    return writeToFile(filepath, content);
+    writeToFile(filepath, content);
   }
 
   public String readFile(File file) throws IOException {

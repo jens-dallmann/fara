@@ -79,8 +79,7 @@ public class FileServiceTest {
     String content = "anyContent";
     mockStatic(FileUtils.class);
 
-    boolean result = service.writeToFile(inputMock, content);
-    assertTrue(result);
+    service.writeToFile(inputMock, content);
     verifyStatic(times(1));
     FileUtils.writeStringToFile(inputMock, content);
   }
@@ -93,8 +92,7 @@ public class FileServiceTest {
     PowerMockito.doThrow(new IOException()).when(FileUtils.class);
     FileUtils.writeStringToFile(inputMock, content);
 
-    boolean result = service.writeToFile(inputMock, content);
-    assertTrue(result);
+     service.writeToFile(inputMock, content);
     verifyStatic(times(1));
     FileUtils.writeStringToFile(inputMock, content);
   }
