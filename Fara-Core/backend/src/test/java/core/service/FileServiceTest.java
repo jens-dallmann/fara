@@ -8,6 +8,7 @@ import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
@@ -118,11 +120,12 @@ public class FileServiceTest {
   @Test
   public void testWriteToFileCreateIfNotExist() throws Exception {
     FileService spy = spy(service);
-    doNothing().when(spy).createFileIfNotExist("/anyPath");
-    doNothing().when(spy).writeToFile("/anyPath", "anyContent");
+    File createdFile = mock(File.class);
+    doReturn(createdFile).when(spy).createFileIfNotExist("/anyPath");
+    doNothing().when(spy).writeToFile(same(createdFile), eq("anyContent"));
     spy.writeToFileCreateIfNotExist("/anyPath", "anyContent");
     verify(spy, times(1)).createFileIfNotExist("/anyPath");
-    verify(spy, times(1)).writeToFile("/anyPath", "anyContent");
+    verify(spy, times(1)).writeToFile(same(createdFile), eq("anyContent"));
   }
 
   private class FileMatcher extends BaseMatcher<File> {

@@ -52,8 +52,8 @@ public class FileService {
 
   public void writeToFileCreateIfNotExist(String filepath, String content)
           throws CreateFileException, WriteFileException {
-    createFileIfNotExist(filepath);
-    writeToFile(filepath, content);
+    File file = createFileIfNotExist(filepath);
+    writeToFile(file, content);
   }
 
   public String readFile(File file) throws IOException {
