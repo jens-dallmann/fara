@@ -45,3 +45,17 @@ job {
         findbugs('**/findbugsXml.xml', false)
     }
 }
+view(type: BuildPipelineView) { // since 1.21
+    name "fara core"
+    filterBuildQueue()
+    filterExecutors()
+    displayedBuilds(5)
+    // common options
+    description "Fara Core"
+    // BuildPipelineView options
+    selectedJob "Fara-Core"
+    title "fara core"
+    alwaysAllowManualTrigger()
+    refreshFrequency(60)
+    showPipelineParameters()
+}

@@ -38,3 +38,20 @@ job {
         archiveArtifacts('**/FitCommands/*.html')
     }
 }
+view(type: BuildPipelineView) { // since 1.21
+    name "fara documentation"
+    filterBuildQueue()
+    filterExecutors()
+    displayedBuilds(5)
+    // common options
+    description "Generate Documentation"
+    /*filterBuildQueue(boolean filterBuildQueue)
+    filterExecutors(boolean filterExecutors)
+*/
+    // BuildPipelineView options
+    selectedJob "documentation build trigger"
+    title "fara documentation"
+    alwaysAllowManualTrigger()
+    refreshFrequency(60)
+    showPipelineParameters()
+}

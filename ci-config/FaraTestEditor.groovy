@@ -44,3 +44,17 @@ job {
         findbugs('**/findbugsXml.xml', false)
     }
 }
+view(type: BuildPipelineView) { // since 1.21
+    name "Fara Test Editor"
+    filterBuildQueue()
+    filterExecutors()
+    displayedBuilds(5)
+    // common options
+    description "Fara Test Editor"
+    // BuildPipelineView options
+    selectedJob "Fara Test Editor"
+    title "Fara Test Editor"
+    alwaysAllowManualTrigger()
+    refreshFrequency(60)
+    showPipelineParameters()
+}
