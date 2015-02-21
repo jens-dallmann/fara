@@ -82,7 +82,8 @@ public class FitTableModelTest {
 
   @Test
   public void deleteRowsWithRealTestFile() throws URISyntaxException, IOException, FitParseException {
-    File testFile = new ResourceService().loadResourceFile(FitTableModel.class, "test.html");
+    //FitTableModelTest.class.getResourceAsStream("test.html");
+    File testFile = new ResourceService().loadResourceFile(FitTableModelTest.class, "test.html");
     String content = FileUtils.readFileToString(testFile);
     Parse table = new Parse(content);
 
