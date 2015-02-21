@@ -1,5 +1,5 @@
 job {
-    name 'Fara Test Editor'
+    name 'Fara_Test_Editor'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -15,12 +15,12 @@ job {
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
-        downstream('Fara Test Editor QA')
+        downstream('Fara_Test_Editor_QA')
     }
 }
 
 job {
-    name 'Fara Test Editor QA'
+    name 'Fara_Test_Editor_QA'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -53,15 +53,15 @@ job {
     }
 }
 view(type: BuildPipelineView) { // since 1.21
-    name "Fara Test Editor"
+    name "Fara_Test_Editor"
     filterBuildQueue()
     filterExecutors()
     displayedBuilds(5)
     // common options
-    description "Fara Test Editor"
+    description "Fara_Test_Editor"
     // BuildPipelineView options
-    selectedJob "Fara Test Editor"
-    title "Fara Test Editor"
+    selectedJob "Fara_Test_Editor"
+    title "Fara_Test_Editor"
     alwaysAllowManualTrigger()
     refreshFrequency(60)
     showPipelineParameters()

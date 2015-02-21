@@ -15,13 +15,13 @@ job {
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
-        downstream('Tools QA')
+        downstream('Tools_QA')
         downstream('Fara Test Editor')
     }
 }
 
 job {
-    name 'Tools QA'
+    name 'Tools_QA'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }

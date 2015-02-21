@@ -1,5 +1,5 @@
 job {
-    name 'documentation build trigger'
+    name 'documentation_build_trigger'
     publishers {
         downstream('fara persistence docs')
         downstream('fara fest docs')
@@ -66,7 +66,7 @@ view(type: BuildPipelineView) { // since 1.21
     filterExecutors(boolean filterExecutors)
 */
     // BuildPipelineView options
-    selectedJob "documentation build trigger"
+    selectedJob "documentation_build_trigger"
     title "fara documentation"
     alwaysAllowManualTrigger()
     refreshFrequency(60)
