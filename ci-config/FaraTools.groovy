@@ -7,7 +7,11 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install", "Tools/pom.xml")
+        maven {
+            goals "clean install"
+            rootPOM "Tools/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
@@ -25,7 +29,11 @@ job {
         githubPush()
     }
     steps {
-        maven("site -Pqa", "Tools/pom.xml")
+        maven {
+            goals "site -Pqa"
+            rootPOM "Tools/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         cobertura("**/target/site/cobertura/coverage.xml") {

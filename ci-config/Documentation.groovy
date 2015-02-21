@@ -14,8 +14,16 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install -pl :fitCommandDocumentor -am -DskipTests", "pom.xml")
-        maven("package jd-tools:fitCommandDocumentor:install", "FaraTestapp/faraPersistence/pom.xml")
+        maven {
+            goals "clean install -pl :fitCommandDocumentor -am -DskipTests"
+            rootPOM "pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
+        maven {
+            goals "package jd-tools:fitCommandDocumentor:install"
+            rootPOM "FaraTestapp/faraPersistence/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         archiveArtifacts('**/FitCommands/*.html')
@@ -31,13 +39,22 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install -pl :fitCommandDocumentor -am -DskipTests", "pom.xml")
-        maven("package jd-tools:fitCommandDocumentor:install", "FaraTestapp/festFaraAdapter/pom.xml")
+        maven {
+            goals "clean install -pl :fitCommandDocumentor -am -DskipTests"
+            rootPOM "pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
+        maven {
+            goals "package jd-tools:fitCommandDocumentor:install"
+            rootPOM "FaraTestapp/festFaraAdapter/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         archiveArtifacts('**/FitCommands/*.html')
     }
 }
+
 view(type: BuildPipelineView) { // since 1.21
     name "fara documentation"
     filterBuildQueue()

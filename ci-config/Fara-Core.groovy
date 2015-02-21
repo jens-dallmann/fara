@@ -7,7 +7,11 @@ job {
         githubPush()
     }
     steps {
-        maven("clean install -f Fara-Core/pom.xml", "Fara-Core/pom.xml")
+        maven {
+            goals "clean install -f Fara-Core/pom.xml"
+            rootPOM "Fara-Core/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
@@ -25,7 +29,11 @@ job {
         githubPush()
     }
     steps {
-        maven("site -Pqa", "Fara-Core/pom.xml")
+        maven {
+            goals "site -Pqa"
+            rootPOM "Fara-Core/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
     }
     publishers {
         cobertura("**/target/site/cobertura/coverage.xml") {
