@@ -15,12 +15,12 @@ job {
     }
     steps {
         maven {
-            goals "clean install -pl :fitCommandDocumentor -am -DskipTests"
+            goals "clean install -pl :commandDocumentor-maven-plugin -am -DskipTests"
             rootPOM "pom.xml"
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "process-classes"
+            goals "clean process-classes"
             rootPOM "FaraTestapp/faraPersistence/pom.xml"
             mavenInstallation "maven-3.2.3"
         }
@@ -40,12 +40,12 @@ job {
     }
     steps {
         maven {
-            goals "clean install -pl :fitCommandDocumentor -am -DskipTests"
+            goals "clean install -pl :commandDocumentor-maven-plugin -am -DskipTests"
             rootPOM "pom.xml"
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "process-classes"
+            goals "clean process-classes"
             rootPOM "FaraTestapp/festFaraAdapter/pom.xml"
             mavenInstallation "maven-3.2.3"
         }
