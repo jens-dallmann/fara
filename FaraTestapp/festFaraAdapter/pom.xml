@@ -25,7 +25,7 @@
         <plugins>
           <plugin>
             <groupId>jd-tools</groupId>
-            <artifactId>fitCommandDocumentor</artifactId>
+            <artifactId>commandDocumentor-maven-plugin</artifactId>
             <configuration>
               <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
             </configuration>

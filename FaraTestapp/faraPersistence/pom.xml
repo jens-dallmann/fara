@@ -23,7 +23,7 @@
         <plugins>
           <plugin>
             <groupId>jd-tools</groupId>
-            <artifactId>fitCommandDocumentor</artifactId>
+            <artifactId>commandDocumentor-maven-plugin</artifactId>
             <executions>
               <execution>
                 <phase>process-classes</phase>

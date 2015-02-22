@@ -17,7 +17,7 @@
                 <plugins>
                     <plugin>
                         <groupId>jd-tools</groupId>
-                        <artifactId>fitCommandDocumentor</artifactId>
+                        <artifactId>commandDocumentor-maven-plugin</artifactId>
                         <version>0.0.1-SNAPSHOT</version>
                         <executions>
                             <execution>
