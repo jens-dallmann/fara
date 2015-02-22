@@ -5,55 +5,41 @@ import directoryCrawler.DirectoryCrawler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 import java.util.List;
 
-/**
- * @goal install
- * @phase process-classes
- * @requiresDependencyResolution compile+runtime
- */
+@Mojo(name = "install", defaultPhase = LifecyclePhase.PROCESS_CLASSES, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class FitCommandDocMavenPlugin extends AbstractMojo {
 
   /**
    * Directory where compiled classes will be
-   *
-   * @parameter expression="${project.build.outputDirectory}"
-   * @required
-   * @readonly
    */
+  @Parameter(readonly = true, required = true, defaultValue = "${project.build.outputDirectory}")
   private String outputDirectory;
   /**
    * Directory where compiled classes will be
-   *
-   * @parameter expression="${project.compileClasspathElements}"
-   * @required
-   * @readonly
    */
+  @Parameter(readonly=true, required=true, defaultValue="${project.compileClasspathElements}")
   private List<String> compileClasspathElements;
 
   /**
    * Artifact ID of compile project
-   *
-   * @parameter expression="${project.artifactId}"
-   * @required
-   * @readonly
    */
+  @Parameter(readonly=true, required=true, defaultValue="${project.artifactId}")
   private String artifactId;
 
   /**
    * The projects target directory
-   *
-   * @parameter expression="${project.build.directory}"
-   * @required
-   * @readonly
    */
+  @Parameter(readonly = true, required = true, defaultValue = "${project.build.directory}")
   private String targetDirectory;
 
-  /**
-   * @parameter
-   */
+  @Parameter
   private String explicitDefinedOutputDirectory;
 
   private ClassLoader loader;
