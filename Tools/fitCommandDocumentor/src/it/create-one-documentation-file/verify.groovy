@@ -7,7 +7,7 @@ import org.xml.sax.InputSource
 import java.io.*;
 
 File file = new File(basedir, "target/FitCommands/firstIntegrationTestFitCommandDocs.html")
-if (file.exists()) {
+if (!file.exists()) {
   throw new FileNotFoundException("Can not find generated documentation file in target/FitCommands/firstIntegrationTestFitCommandDocs.html");
 }
 
