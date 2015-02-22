@@ -20,7 +20,7 @@ job {
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "package jd-tools:fitCommandDocumentor:install"
+            goals "process-classes"
             rootPOM "FaraTestapp/faraPersistence/pom.xml"
             mavenInstallation "maven-3.2.3"
         }
@@ -45,7 +45,7 @@ job {
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "package jd-tools:fitCommandDocumentor:install"
+            goals "process-classes"
             rootPOM "FaraTestapp/festFaraAdapter/pom.xml"
             mavenInstallation "maven-3.2.3"
         }
