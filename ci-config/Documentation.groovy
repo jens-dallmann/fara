@@ -1,12 +1,12 @@
 job {
     name 'documentation_build_trigger'
     publishers {
-        downstream('fara persistence docs')
-        downstream('fara fest docs')
+        downstream('fara_persistence_docs')
+        downstream('fara_fest_docs')
     }
 }
 job {
-    name 'fara persistence docs'
+    name 'fara_persistence_docs'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -31,7 +31,7 @@ job {
 }
 
 job {
-    name 'fara fest docs'
+    name 'fara_fest_docs'
     scm {
         git('git://github.com/Dace/fara.git', 'master')
     }
@@ -56,7 +56,7 @@ job {
 }
 
 view(type: BuildPipelineView) { // since 1.21
-    name "fara documentation"
+    name "Fara-Documentation"
     filterBuildQueue()
     filterExecutors()
     displayedBuilds(5)
@@ -67,7 +67,7 @@ view(type: BuildPipelineView) { // since 1.21
 */
     // BuildPipelineView options
     selectedJob "documentation_build_trigger"
-    title "fara documentation"
+    title "Fara-Documentation"
     alwaysAllowManualTrigger()
     refreshFrequency(60)
     showPipelineParameters()

@@ -54,15 +54,15 @@ job {
     }
 }
 view(type: BuildPipelineView) { // since 1.21
-    name "fara core"
+    name "Fara-Core"
     filterBuildQueue()
     filterExecutors()
     displayedBuilds(5)
     // common options
-    description "Fara Core"
+    description "Fara-Core"
     // BuildPipelineView options
     selectedJob "Fara-Core"
-    title "fara core"
+    title "Fara-Core"
     alwaysAllowManualTrigger()
     refreshFrequency(60)
     showPipelineParameters()

@@ -55,7 +55,7 @@ job {
 }
 
 view(type: BuildPipelineView) { // since 1.21
-    name "Fara Tools"
+    name "Fara-Tools"
     filterBuildQueue()
     filterExecutors()
     displayedBuilds(5)

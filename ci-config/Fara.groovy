@@ -52,3 +52,18 @@ job {
         findbugs('**/findbugsXml.xml', false)
     }
 }
+
+view(type: BuildPipelineView) { // since 1.21
+    name "Fara-Complete-Workspace"
+    filterBuildQueue()
+    filterExecutors()
+    displayedBuilds(5)
+    // common options
+    description "Fara-Complete-Workspace"
+    // BuildPipelineView options
+    selectedJob "Fara"
+    title "Fara-Complete-Workspace"
+    alwaysAllowManualTrigger()
+    refreshFrequency(60)
+    showPipelineParameters()
+}

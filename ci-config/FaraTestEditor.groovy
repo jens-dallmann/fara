@@ -53,7 +53,7 @@ job {
     }
 }
 view(type: BuildPipelineView) { // since 1.21
-    name "Fara_Test_Editor"
+    name "Fara-Test-Editor"
     filterBuildQueue()
     filterExecutors()
     displayedBuilds(5)
