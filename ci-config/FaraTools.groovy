@@ -15,8 +15,30 @@ job {
     }
     publishers {
         archiveJunit('**/target/surefire-reports/*.xml')
+        downstream('Tools-Integration-tests')
+        downstream('Fara_Test_Editor')
+    }
+}
+
+job {
+    name 'Tools-Integration-Tests'
+    scm {
+        git('git://github.com/Dace/fara.git', 'master')
+    }
+    triggers {
+        githubPush()
+    }
+    steps {
+        maven {
+            goals "verify -PrunIntegrationTests"
+            rootPOM "Tools/pom.xml"
+            mavenInstallation "maven-3.2.3"
+        }
+    }
+    publishers {
+        archiveJunit('**/target/surefire-reports/*.xml')
+
         downstream('Tools_QA')
-        downstream('Fara Test Editor')
     }
 }
 
