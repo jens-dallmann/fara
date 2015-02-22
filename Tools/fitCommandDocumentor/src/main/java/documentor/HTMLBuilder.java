@@ -62,7 +62,7 @@ public class HTMLBuilder {
 
   private void addCommand(StringBuffer buffer, FitCommandDoc oneDoc, int highestCountOfParams) {
     buffer.append("<tr>");
-    buffer.append("<td>" + oneDoc.getClassName() + "" + oneDoc.getCommandName() + "</td>");
+    buffer.append("<td>" + oneDoc.getClassName() + "." + oneDoc.getCommandName() + "</td>");
     List<String> commandParams = oneDoc.getCommandParams();
     for (String oneParam : commandParams) {
       buffer.append("<td>" + oneParam + "</td>");
