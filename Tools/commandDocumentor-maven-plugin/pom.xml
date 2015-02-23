@@ -47,7 +47,7 @@
               <postBuildHookScript>verify</postBuildHookScript>
 
               <goals>
-                <goal>compile</goal>
+                <goal>install</goal>
                 <goal>commandDocumentor:install</goal>
               </goals>
               <profiles>
