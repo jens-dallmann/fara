@@ -11,22 +11,32 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>faraPersistence</name>
   <description>a module with persistence commands</description>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>jd-tools</groupId>
-        <artifactId>commandDocumentor-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>install</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+  <profiles>
+    <profile>
+      <id>documentCommands</id>
+      <activation>
+        <property>
+          <name>documentCommands</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>jd-tools</groupId>
+            <artifactId>commandDocumentor-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>install</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>jd-core</groupId>

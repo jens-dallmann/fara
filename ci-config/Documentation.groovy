@@ -20,7 +20,7 @@ job {
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "clean process-classes"
+            goals "package jd-tools:commandDocumentor-maven-plugin:install"
             rootPOM "FaraTestapp/faraPersistence/pom.xml"
             mavenInstallation "maven-3.2.3"
         }
@@ -45,7 +45,7 @@ job {
             mavenInstallation "maven-3.2.3"
         }
         maven {
-            goals "clean process-classes"
+            goals "package jd-tools:commandDocumentor-maven-plugin:install"
             rootPOM "FaraTestapp/festFaraAdapter/pom.xml"
             mavenInstallation "maven-3.2.3"
         }

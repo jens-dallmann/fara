@@ -13,26 +13,35 @@
     <version>1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>jd-tools</groupId>
-        <artifactId>commandDocumentor-maven-plugin</artifactId>
-        <configuration>
-          <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>install</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
+  <profiles>
+    <profile>
+      <id>documentCommands</id>
+      <activation>
+        <property>
+          <name>documentCommands</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>jd-tools</groupId>
+            <artifactId>commandDocumentor-maven-plugin</artifactId>
+            <configuration>
+              <explicitDefinedOutputDirectory>FitCommands</explicitDefinedOutputDirectory>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>install</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
