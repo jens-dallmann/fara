@@ -49,6 +49,9 @@
             <version>1.0-SNAPSHOT</version>
             <executions>
               <execution>
+                <configuration>
+                  <faraTestsDirectoryPath>automatisierte_tests</faraTestsDirectoryPath>
+                </configuration>
                 <phase>integration-test</phase>
                 <goals>
                   <goal>test</goal>
